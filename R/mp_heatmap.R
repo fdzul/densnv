@@ -62,7 +62,7 @@ mp_heatmap <- function(locality,
         ggplot2::stat_density_2d(data = z,
                                  ggplot2::aes(x = x,
                                               y = y,
-                                              fill = ..level..),
+                                              fill = ggplot2::after_stat(level)),
                                  geom = "polygon",
                                  alpha = alpha) +
         ggplot2::scale_fill_gradient(low = "green",

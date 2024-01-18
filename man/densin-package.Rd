@@ -8,6 +8,15 @@
 \description{
 The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables with the aim of contributing to the making of rational and timely decisions in the Cenaprece national VBD program.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/fdzul/densnv}
+  \item \url{https://fdzul.github.io/densnv/}
+  \item Report bugs at \url{https://github.com/fdzul/densnv/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/0000-0002-2085-9141}{ORCID})
 
