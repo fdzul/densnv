@@ -6,6 +6,8 @@
 \alias{densnv-package}
 \title{densnv: densnv is a package designed to perform exploratory analysis of the SINAVE dengue dataset}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables with the aim of contributing to the making of rational and timely decisions in the Cenaprece national VBD program.
 }
 \seealso{

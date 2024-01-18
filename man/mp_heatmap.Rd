@@ -36,7 +36,7 @@ mp_heatmap(
 ggplot object
 }
 \description{
-mp_heatmap
+The mp_heatmap function generates a heat map.
 }
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
