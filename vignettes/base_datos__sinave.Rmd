@@ -1,8 +1,8 @@
 ---
-title: "Bases de Datos del Sinave"
+title: "Bases de dotos del SINAVE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Leer Bases de Datos del Sinave}
+  %\VignetteIndexEntry{Bases de dotos del SINAVE}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
