@@ -1,5 +1,5 @@
 ---
-title: "Bases de dotos del SINAVE"
+title: "Bases de datos del SINAVE"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Bases de dotos del SINAVE}
