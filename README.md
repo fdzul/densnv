@@ -6,6 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+<img align="center" src="man/figures/logo.png" alt="logo" width="140">
+
 El objetivo central del paquete densnv es realizar el análisis
 exploratorio de las bases de datos de las Enfermedades Transmitidas por
 Vector (ETV) e Intoxicación por Veneno de Artrópodos (IVA) del Sistema
