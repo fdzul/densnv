@@ -46,7 +46,7 @@ read <- function(x, vbd, arbovirus){
                               header = TRUE,
                               quote = "",
                               select = vect_cols,
-                              #encoding = "Latin-1
+                              encoding = "Latin-1",
                               fill = TRUE)
         }
         purrr::map_dfr(l, read_arbo)
@@ -54,7 +54,7 @@ read <- function(x, vbd, arbovirus){
         data.table::fread(l,
                           header = TRUE,
                           quote = "",
-                          #encoding = "Latin-1
+                          encoding = "Latin-1",
                           fill = TRUE)
     }
 }
