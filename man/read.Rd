@@ -4,14 +4,14 @@
 \alias{read}
 \title{read}
 \usage{
-read(path, vbd, arbovirus)
+read(path, vbd, complete)
 }
 \arguments{
 \item{path}{is the directory where the files are located.}
 
 \item{vbd}{is the parameter for define the vector-borne diseases.}
 
-\item{arbovirus}{is a logical value for define the group of vector-borne diseases, if is TRUE, the define DENV, CHIKV & ZIKV, else for other etvs.}
+\item{complete}{is a logical value for define the group of vector-borne diseases, if is TRUE, the define DENV, CHIKV & ZIKV, else for other etvs.}
 }
 \value{
 a dataframe

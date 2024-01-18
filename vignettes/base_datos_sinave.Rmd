@@ -24,7 +24,19 @@ Dentro del ETVerse y dengueverse, estas bases pueden ser cargada en R con las fu
 
 ## **read**
 
-La función read del [densnv](https://fdzul.github.io/densnv/)
+La función read del [densnv](https://fdzul.github.io/densnv/) tiene tres argumentos, path, vbd, & complete.
+
+```{r, echo=FALSE}
+tibble::tibble(argumentos = c("path", "vbd", "complete"),
+               valor = c("string", "string", "logical"),
+               definición = c("Es la ruta del carpeta donde esta alojado el archivo txt",
+                              "Define la ETVS de interes. Hay 11 opciones (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, & DENGUE)", "Es un valor lógico para definir si sube varias bases de datos de la misma ETV de diferentes años o diferentes ETVs del mismo año, o diferentes ETVs de diferentes años, de lo contrario solo sube una ETV completa" )) |>
+  gt::gt() |>
+  gt::opt_stylize(style = 6, color = "gray")
+  
+```
+
+
 
 ## **read_dengue_dataset**
 

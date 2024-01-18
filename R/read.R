@@ -4,7 +4,7 @@
 #'
 #' @param path is the directory where the files are located.
 #' @param vbd is the parameter for define the vector-borne diseases.
-#' @param arbovirus is a logical value for define the group of vector-borne diseases, if is TRUE, the define DENV, CHIKV & ZIKV, else for other etvs.
+#' @param complete is a logical value for define the group of vector-borne diseases, if is TRUE, the define DENV, CHIKV & ZIKV, else for other etvs.
 #'
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @return a dataframe
@@ -16,7 +16,7 @@
 #' @importFrom purrr map
 #'
 #' @examples 1+1
-read <- function(path, vbd, arbovirus){
+read <- function(path, vbd, complete){
 
     # Step 1 create the list directories ####
     l_files <- list.files(path = path,
@@ -29,7 +29,7 @@ read <- function(path, vbd, arbovirus){
 
     # Step 3. read the dataset ####
 
-    if(arbovirus == TRUE){
+    if(complete == FALSE){
         read_arbo <- function(x){
             vect_cols <- c("VEC_ID","FOL_ID","IDE_EDA_ANO", "IDE_SEX",
                            "DES_CAL","IDE_CAL", "NUM_EXT", "NUM_INT",
