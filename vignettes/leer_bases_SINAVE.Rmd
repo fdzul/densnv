@@ -1,5 +1,5 @@
 ---
-title: "Leer Bases de Datos del Sinave"
+title: "Bases de Datos del Sinave"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Leer Bases de Datos del Sinave}

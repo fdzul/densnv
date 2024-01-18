@@ -2,7 +2,7 @@ Package: densin
 Type: Package
 Title: densin is a package designed to perform exploratory analysis of the SINAVE dengue dataset
 Version: 0.1.0
-Authors: c(person(given = "Felipe Antonio",
+Authors@R: c(person(given = "Felipe Antonio",
                         family = "Dzul Manzanilla",
                         role = c("aut", "cre"),
                         email = "felipe.dzul.m@gmail.com",
@@ -13,7 +13,7 @@ Authors: c(person(given = "Felipe Antonio",
                         email = "fabiancorrea@msn.com",
                         comment = c(ORCID = "https://orcid.org/0000-0002-6193-1242")))
 Maintainer: The package maintainer <felipe.dzul.m@gmail.com>
-Description: The package reads the SINAVE Vector-Borne Diseases databases, creates graphs, maps and tables 
+Description: The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables 
     with the aim of contributing to the making of rational and timely decisions in the Cenaprece national VBD program.
 License: MIT + file LICENSE
 Encoding: UTF-8
