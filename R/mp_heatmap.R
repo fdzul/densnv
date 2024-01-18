@@ -1,6 +1,6 @@
 #' mp_heatmap
 #'
-#'
+#' The mp_heatmap function generates a heat map.
 #'
 #' @param locality is the locality locality target.
 #' @param cve_edo is a string of the state id.
