@@ -4,10 +4,10 @@
 \alias{read}
 \title{read}
 \usage{
-read(x, vbd, arbovirus)
+read(path, vbd, arbovirus)
 }
 \arguments{
-\item{x}{is the directory where the files are located.}
+\item{path}{is the directory where the files are located.}
 
 \item{vbd}{is the parameter for define the vector-borne diseases.}
 

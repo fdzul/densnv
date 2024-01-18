@@ -18,6 +18,19 @@ knitr::opts_chunk$set(
 library(densnv)
 ```
 
-Las bases de datos de las enfermedades transmitidas por vector del Sistema Nacional de Vigilancia Epidemiológica de la Secretaría de Salud, cuenta actualmente (2024) con 11 bases de datos (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, DENGUE). El uso de las bases esta restringido al personal de la Secretaría de Salud (tanto estatales o como federales), especifícamente a personal del area de epidemiología y vectores de la Secretaría de Salud. La resolución temporal ybespacial de las bases son de manera diaria y a nivel de casa, por lo que puede agregarse por colonia, localidad, muicipio y estado.
+Las bases de datos de las enfermedades transmitidas por vector del Sistema Nacional de Vigilancia Epidemiológica de la Secretaría de Salud, cuenta actualmente (2024) con 11 bases de datos (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, & DENGUE). El uso de las bases es esclusivo al personal de la Secretaría de Salud (tanto estatales o como federales), especifícamente a personal de los departamentos de Epidemiología y ETVs. La resolución temporal y espacial de las bases son de manera diaria y a nivel de casa, respectivamente. Las bases pueden agregarse por colonia, localidad, muicipio y estado para elaborar tablas, gráficos y mapas.
 
-Dentro del ETVerse y dengueverse, estas bases pueden ser cargada en R con las funciones.
+Dentro del ETVerse y dengueverse, estas bases pueden ser cargada en R con las funciones **read_dengue_dataset** del paquete [denhotspots](https://fdzul.github.io/denhotspots/), **read_vbd** del paquete [boldenr](https://fdzul.github.io/boldenr/) y **read** del paquete [densnv](https://fdzul.github.io/densnv/). Las tres funciones están en desarollo y paquete [boldenr](https://fdzul.github.io/boldenr/) va ser retirado en el 2024, sin embargo puede este año (2024) ser utilizado. Las funciones **read_vbd** y **read**, ambas tienen los mismos argumentos, y hay que considerar que el paquete [densnv](https://fdzul.github.io/densnv/) esta sustituyendo al paquete [boldenr](https://fdzul.github.io/boldenr/), por lo que se recomienda usar las funciones **read_dengue_dataset** y la funcion **read**.
+
+## **read**
+
+La función read del [densnv](https://fdzul.github.io/densnv/)
+
+## **read_dengue_dataset**
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@
 #'
 #' The read function reads the dataset of sinave vector-borne diseases.
 #'
-#' @param x is the directory where the files are located.
+#' @param path is the directory where the files are located.
 #' @param vbd is the parameter for define the vector-borne diseases.
 #' @param arbovirus is a logical value for define the group of vector-borne diseases, if is TRUE, the define DENV, CHIKV & ZIKV, else for other etvs.
 #'
@@ -16,10 +16,10 @@
 #' @importFrom purrr map
 #'
 #' @examples 1+1
-read <- function(x, vbd, arbovirus){
+read <- function(path, vbd, arbovirus){
 
     # Step 1 create the list directories ####
-    l_files <- list.files(x,
+    l_files <- list.files(path = path,
                           pattern = "txt",
                           full.names = TRUE)
 
