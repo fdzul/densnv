@@ -1,6 +1,6 @@
-#' snv_read_vbd
+#' read
 #'
-#' The sin_read_vbd function reads the dataset of sinave vector-borne diseases.
+#' The read function reads the dataset of sinave vector-borne diseases.
 #'
 #' @param x is the directory where the files are located.
 #' @param vbd is the parameter for define the vector-borne diseases.
@@ -16,7 +16,7 @@
 #' @importFrom purrr map
 #'
 #' @examples 1+1
-snv_read_vbd <- function(x, vbd, arbovirus){
+read <- function(x, vbd, arbovirus){
 
     # Step 1 create the list directories ####
     l_files <- list.files(x,
