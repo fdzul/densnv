@@ -2,6 +2,7 @@ pandoc: 3.1.1
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
-  leer_bases_SINAVE: leer_bases_SINAVE.html
-last_built: 2024-01-18T20:38Z
+  base_datos__sinave: base_datos__sinave.html
+  mapas_de_calor: mapas_de_calor.html
+last_built: 2024-01-18T21:19Z
 

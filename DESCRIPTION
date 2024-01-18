@@ -1,6 +1,6 @@
-Package: densin
+Package: densnv
 Type: Package
-Title: densin is a package designed to perform exploratory analysis of the SINAVE dengue dataset
+Title: densnv is a package designed to perform exploratory analysis of the SINAVE dengue dataset
 Version: 0.1.0
 Authors@R: c(person(given = "Felipe Antonio",
                         family = "Dzul Manzanilla",
