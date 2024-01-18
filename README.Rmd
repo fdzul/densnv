@@ -42,3 +42,28 @@ La version en desarrollo del paquete densnv esta alojada en  [GitHub](https://gi
 # install.packages("devtools")
 pak::pkg_install("fdzul/densnv")
 ```
+
+
+## Creditos
+
+Las bases de datos de las Enfermedades Transmitidas por Vector (ETV) e Intoxicación por Veneno de Artrópodos (IVA) del Sistema Nacional de Vigilancia Epidemiológica ([SINAVE](https://www.sinave.gob.mx)) de la Secretaría de Salud de México son bases para uso exlusivo del personal de las Secretarías de Salud de los Estados y del nivel federal.
+
+Original shapefiles are created by official government institutions ([INEGI](https://www.inegi.org.mx/temas/mg) & [INE](https://pautas.ine.mx/transparencia/mapas/)).
+
+## Licencia
+
+
+Este proyecto tiene la licencia MIT - consulte el archivo [LICENSE.md](LICENSE.md) para obtener más detalles.
+
+
+## Inspiración
+
+El paquete se inspiró en la necesidad de contribuir a la toma de decisiones en el programa de prevención y control del dengue, específicamente a través de la identificación de los escenarios operativos de la transmisión activa.
+
+## Ayuda.
+
+Si encuentra un error en el codigo, presente un ejemplo mínimo reproducible en [github](https://github.com/fdzul/rgeomex/issues). Para preguntas y otras discusiones, no dudes en contactarme (felipe.dzul.m@gmail.com)
+
+-----
+Tenga en cuenta que este proyecto se publica con un [Código de
+Conducta](https://dplyr.tidyverse.org/CODE_OF_CONDUCT). Al participar en este proyecto usted acepta cumplir con sus términos.
