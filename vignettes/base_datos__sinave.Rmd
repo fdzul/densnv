@@ -17,3 +17,11 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(densin)
 ```
+
+Las bases de datos de las enfermedades transmitidas por vector del Sistema Nacional de Vigilancia Epidemiológica de la Secretaría de Salud, cuenta actualmente (2024) con 11 bases de datos (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, DENGUE). El uso de las bases esta restringido al personal de la Secretaría de Salud (tanto estatales o como federales), especifícamente a personal del area de epidemiología y vectores de la Secretaría de Salud. La resolución temporal ybespacial de las bases son de manera diaria y a nivel de casa, por lo que puede agregarse por colonia, localidad, muicipio y estado.
+
+Dentro del ETVerse y dengueverse, estas bases pueden ser cargada en R con las funciones.
+
+
+
+
