@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# densin
+# densnv
 
 <!-- badges: start -->
 <!-- badges: end -->
