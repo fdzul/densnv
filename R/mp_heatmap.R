@@ -10,7 +10,8 @@
 #' @param week It is epidemiological week.
 #' @param alpha is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.
 #' @param map_type character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"
-#'
+#' @param static is a logical valur, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.
+#' @param palette is the palette for kde. example palette = viridis::turbo.
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @return ggplot object
 #' @export
@@ -26,10 +27,12 @@ mp_heatmap <- function(locality,
                        cve_edo,
                        geocoded_datasets,
                        status_caso,
-                       zoom,
                        week,
                        alpha,
-                       map_type){
+                       zoom,
+                       map_type,
+                       static,
+                       palette = NULL){
 
     # Step 1. transform dataset #####
     z <- geocoded_datasets |>
@@ -45,29 +48,97 @@ mp_heatmap <- function(locality,
 
     # Step 3. extract the geocoded cases of merida ####
     z <- z[locality, ]  |>
-        sf::st_drop_geometry() |>
+        #sf::st_drop_geometry() |>
         dplyr::filter(SEM %in% c(week))
 
+    if(static == TRUE) {
+        a <- sf::st_centroid(sf::st_union(locality)) |>
+            sf::st_coordinates()
+        ggmap_sf <- ggmap::get_googlemap(c(as.vector(a)[1],
+                                           as.vector(a)[2]),
+                                         zoom = zoom,
+                                         maptype = map_type)
+        ggmap::ggmap(ggmap_sf) +
+            ggplot2::stat_density_2d(data = z,
+                                     ggplot2::aes(x = x,
+                                                  y = y,
+                                                  fill = ggplot2::after_stat(level)),
+                                     geom = "polygon",
+                                     alpha = alpha) +
+            ggplot2::scale_fill_gradient(low = "#A2FC3CFF",
+                                         high = "#E01E5A",
+                                         guide = "none") +
+            cowplot::theme_map()
+    } else{
 
-    a <- sf::st_centroid(sf::st_union(locality)) |>
-        sf::st_coordinates()
+        # Step 3. extract the geocoded cases of locality
+        confirmados <- z |>
+            dplyr::filter(ESTATUS_CASO == 2)
+        probables <- z |>
+            dplyr::filter(ESTATUS_CASO == 1)
 
+        # Step 4. Create kernel density output
+        kde <- KernSmooth::bkde2D(x = cbind(z$x, z$y),
+                                  bandwidth = c(0.0045, 0.0068),
+                                  gridsize = c(500,500))
 
-    ggmap_sf <- ggmap::get_googlemap(c(as.vector(a)[1],
-                                       as.vector(a)[2]),
-                                     zoom = zoom,
-                                     maptype = map_type)
+        # Step 5. Create Raster from Kernel Density output
+        KernelDensityRaster <- raster::raster(list(x = kde$x1 ,
+                                                   y = kde$x2 ,
+                                                   z = kde$fhat))
 
-    ggmap::ggmap(ggmap_sf) +
-        ggplot2::stat_density_2d(data = z,
-                                 ggplot2::aes(x = x,
-                                              y = y,
-                                              fill = ggplot2::after_stat(level)),
-                                 geom = "polygon",
-                                 alpha = alpha) +
-        ggplot2::scale_fill_gradient(low = "green",
-                                     high = "red",
-                                     guide = "none") +
-        cowplot::theme_map()
+        # Step 6. convert the raster to rast
+        kde_rast <- KernelDensityRaster |>
+            terra::rast() |>
+            terra::mask(mask = locality)
+
+        # Step 7. make the map
+        if(nrow(probables) == 0){
+            mapview::mapview(kde_rast,
+                             layer.name = "kde",
+                             na.color = "transparent",
+                             alpha.regions = alpha,
+                             legend = FALSE,
+                             col.regions = palette,
+                             trim = TRUE) +
+                mapview::mapview(confirmados,
+                                 col.regions = "#E01E5A",
+                                 alpha.regions = alpha,
+                                 color = "white",
+                                 layer.name = "Confirmado")
+        } else if(nrow(confirmados) == 0) {
+            mapview::mapview(kde_rast,
+                             layer.name = "kde",
+                             na.color = "transparent",
+                             alpha.regions = alpha,
+                             legend = FALSE,
+                             col.regions = palette,
+                             trim = TRUE) +
+                mapview::mapview(probables,
+                                 col.regions = "#2EB67D",
+                                 alpha.regions = alpha,
+                                 color = "white",
+                                 layer.name = "Probable")
+        } else{
+            mapview::mapview(kde_rast,
+                             layer.name = "kde",
+                             na.color = "transparent",
+                             alpha.regions = alpha,
+                             legend = FALSE,
+                             col.regions = palette,
+                             trim = TRUE) +
+                mapview::mapview(probables,
+                                 col.regions = "#2EB67D",
+                                 alpha.regions = alpha,
+                                 color = "white",
+                                 layer.name = "Probable") +
+                mapview::mapview(confirmados,
+                                 col.regions = "#E01E5A",
+                                 alpha.regions = alpha,
+                                 color = "white",
+                                 layer.name = "Confirmado")
+        }
+    }
+
 
 }

@@ -9,10 +9,12 @@ mp_heatmap(
   cve_edo,
   geocoded_datasets,
   status_caso,
-  zoom,
   week,
   alpha,
-  map_type
+  zoom,
+  map_type,
+  static,
+  palette = NULL
 )
 }
 \arguments{
@@ -24,13 +26,17 @@ mp_heatmap(
 
 \item{status_caso}{It is a numerical value to select the Status of the case. There are three options, 1 for the probable cases database, 2 for the confirmed cases database, and 3 for the discarded cases database.}
 
-\item{zoom}{map zoom; an integer from 3 (continent) to 21 (building), default value 10 (city).}
-
 \item{week}{It is epidemiological week.}
 
 \item{alpha}{is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.}
 
+\item{zoom}{map zoom; an integer from 3 (continent) to 21 (building), default value 10 (city).}
+
 \item{map_type}{character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"}
+
+\item{static}{is a logical valur, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.}
+
+\item{palette}{is the palette for kde. example palette = viridis::turbo.}
 }
 \value{
 ggplot object
