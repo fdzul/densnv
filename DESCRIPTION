@@ -25,3 +25,22 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Imports: 
+    cowplot,
+    data.table,
+    denhotspots,
+    dplyr,
+    ggmap,
+    ggplot2,
+    gt,
+    kableExtra,
+    KernSmooth,
+    mapview,
+    raster,
+    rgeomex,
+    sf,
+    skimr,
+    stringr,
+    terra,
+    tibble,
+    tidyr
