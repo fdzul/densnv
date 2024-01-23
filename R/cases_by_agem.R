@@ -1,6 +1,4 @@
-#' cases_by_agem
-#'
-#' This function counts ETV cases per agem
+#' This function counts  cases per agem
 #'
 #' @param path_vbd Is the directory where the file is located.
 #' @param vbd Is the parameter for define the vector-borne diseases
@@ -8,11 +6,11 @@
 #' @param country It is a logical value to define if the result is by state (set TRUE) or by country (set FALSE)
 #' @param cve_edo Is a string of the state id-
 #'
-#' @return
+#' @return a sf object
 #' @export
 #'
-#' @examples
-cases_by_agem <- function(path_vbd, vbd, status_case, country, cve_edo){
+#' @examples cases_by_agem(".",vbd = "DENGUE",status_case = 2, country = TRUE)
+cases_by_agem <- function(path_vbd, vbd, status_case, country, cve_edo = NULL){
 
 
     # Step 1. read the dataset ####
