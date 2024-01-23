@@ -20,8 +20,8 @@ programas de ETVS
 El paquete esta dividido en cuatro grupo de funciones identificadas con
 los prefijos rd, gr, mps, & tbl.
 
-- **rd** es una contración de la palabra read y carga las bases de datos
-  en R.
+- **rd** es una contracción de la palabra read y carga las bases de
+  datos en R.
 
 - **gr** genera un gráfico.
 
@@ -39,7 +39,7 @@ paquetes: [devtools](https://devtools.r-lib.org),
 [pak](https://pak.r-lib.org)
 
 ``` r
-# install.packages("devtools")
+# install.packages("pak")
 pak::pkg_install("fdzul/densnv")
 ```
 

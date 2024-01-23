@@ -2,7 +2,7 @@
 % Please edit documentation in R/read.R
 \name{read}
 \alias{read}
-\title{read}
+\title{The read function reads the dataset of sinave vector-borne diseases.}
 \usage{
 read(path, vbd, complete)
 }

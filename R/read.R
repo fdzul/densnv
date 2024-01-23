@@ -1,5 +1,3 @@
-#' read
-#'
 #' The read function reads the dataset of sinave vector-borne diseases.
 #'
 #' @param path is the directory where the files are located.

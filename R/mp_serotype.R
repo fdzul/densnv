@@ -1,5 +1,3 @@
-#' mp_serotype
-#'
 #' This function creates maps of serotypes by municipality.
 #'
 #' @param path_sinave is the directory where the files are located.

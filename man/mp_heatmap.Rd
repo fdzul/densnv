@@ -2,7 +2,7 @@
 % Please edit documentation in R/mp_heatmap.R
 \name{mp_heatmap}
 \alias{mp_heatmap}
-\title{mp_heatmap}
+\title{The mp_heatmap function generates a heat map.}
 \usage{
 mp_heatmap(
   locality,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mp_serotype.R
 \name{mp_serotype}
 \alias{mp_serotype}
-\title{mp_serotype}
+\title{This function creates maps of serotypes by municipality.}
 \usage{
 mp_serotype(path_sinave, cve_edo, palette)
 }

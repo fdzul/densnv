@@ -1,4 +1,4 @@
-#' This function counts  cases per agem
+#' This function counts VBD cases per agem.
 #'
 #' @param path_vbd Is the directory where the file is located.
 #' @param vbd Is the parameter for define the vector-borne diseases

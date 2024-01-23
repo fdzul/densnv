@@ -2,7 +2,7 @@
 % Please edit documentation in R/cases_by_agem.R
 \name{cases_by_agem}
 \alias{cases_by_agem}
-\title{This function counts  cases per agem}
+\title{This function counts VBD cases per agem.}
 \usage{
 cases_by_agem(path_vbd, vbd, status_case, country, cve_edo = NULL)
 }
@@ -21,7 +21,7 @@ cases_by_agem(path_vbd, vbd, status_case, country, cve_edo = NULL)
 a sf object
 }
 \description{
-This function counts  cases per agem
+This function counts VBD cases per agem.
 }
 \examples{
 cases_by_agem(".",vbd = "DENGUE",status_case = 2, country = TRUE)
