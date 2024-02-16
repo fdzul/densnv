@@ -48,7 +48,7 @@ pak::pkg_install("fdzul/densnv")
 Las bases de datos de las Enfermedades Transmitidas por Vector (ETV) e
 Intoxicación por Veneno de Artrópodos (IVA) del Sistema Nacional de
 Vigilancia Epidemiológica ([SINAVE](https://www.sinave.gob.mx)) de la
-Secretaría de Salud de México son bases para uso exlusivo del personal
+Secretaría de Salud de México son bases para uso exclusivo del personal
 de las Secretarías de Salud de los Estados y del nivel federal.
 
 Original shapefiles are created by official government institutions
@@ -70,7 +70,7 @@ operativos de la transmisión activa.
 ## Ayuda.
 
 Si encuentra un error en el codigo, presente un ejemplo mínimo
-reproducible en [github](https://github.com/fdzul/rgeomex/issues). Para
+reproducible en [github](https://github.com/fdzul/densnv/issues). Para
 preguntas y otras discusiones, no dudes en contactarme
 (<felipe.dzul.m@gmail.com>)
 
