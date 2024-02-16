@@ -1,12 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# densnv
+# densnv <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-<img align="center" src="man/figures/logo.png" alt="logo" width="140">
 
 El objetivo central del paquete densnv es realizar el análisis
 exploratorio de las bases de datos de las Enfermedades Transmitidas por
