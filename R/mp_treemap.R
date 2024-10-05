@@ -10,7 +10,7 @@
 #' @examples
 mp_treemap <- function(snv_dataset, country, cve_edo = NULL){
     if(country == TRUE){
-        x  |>
+        snv_dataset  |>
             dplyr::filter(ANO == 2024)  |>
             dplyr::filter(!DES_EDO_RES %in% c("OTROS PAISES",
                                               "OTROS PAISES DE LATINOAMERICA",
