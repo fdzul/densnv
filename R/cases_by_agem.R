@@ -18,23 +18,23 @@ cases_by_agem <- function(path_vbd, vbd, status_case, country, cve_edo = NULL){
                       vbd = vbd,
                       complete = TRUE) |>
         dplyr::filter(ESTATUS_CASO %in% c(status_case)) |>
-        dplyr::mutate(CVE_EDO_RES = stringr::str_pad(CVE_EDO_RES,
+        dplyr::mutate(CVE_EDO_REP = stringr::str_pad(CVE_EDO_REP,
                                                      width = 2,
                                                      side = "left",
                                                      pad = "0")) |>
-        dplyr::mutate(CVE_MPO_RES = stringr::str_pad(CVE_MPO_RES,
+        dplyr::mutate(CVE_MPO_REP = stringr::str_pad(CVE_MPO_REP,
                                                      width = 3,
                                                      side = "left",
                                                      pad = "0")) |>
         dplyr::summarise(n = dplyr::n(),
-                         .by = c(CVE_EDO_RES, CVE_MPO_RES))
+                         .by = c(CVE_EDO_REP, CVE_MPO_REP))
 
 
     # step 2. left joint between aggregated data and AGEM ######
     xy <- dplyr::left_join(x = rgeomex::AGEM_inegi19_mx,
                            y = y,
-                           by = c("CVE_ENT"  = "CVE_EDO_RES",
-                                  "CVE_MUN"  = "CVE_MPO_RES"))
+                           by = c("CVE_ENT"  = "CVE_EDO_REP",
+                                  "CVE_MUN"  = "CVE_MPO_REP"))
 
     # step 3. sustitute the NA values by 0 ####
     xy[is.na(xy)] <- 0
