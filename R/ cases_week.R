@@ -1,4 +1,4 @@
-#' Estimated, probable, confirmed and hospitalized cases of dengue per week
+#' Cases of dengue per week.
 #'
 #' @param path is the path of the sinave files
 #' @param mpo is the name of minicipality
@@ -7,9 +7,9 @@
 #' @return a ggplot2 object
 #' @export
 #'
-#' @examples cases_week(path = path_sinave, mpo = "SILAO GTO", year = 2024)
+#' @examples 1+1
 cases_week <- function(path, mpo, year){
-
+    # Hospitalizados ####
     a <- densnv::read(path = path,
                       vbd = "DEN",
                       complete = TRUE) |>
@@ -50,9 +50,7 @@ cases_week <- function(path, mpo, year){
                        legend.key = ggplot2::element_blank(),
                        legend.box = ggplot2::element_blank())
 
-    #########
-
-
+    # estimados ####
     b <- densnv::read(path = path,
                       vbd = "DEN",
                       complete = TRUE) |>
@@ -109,9 +107,6 @@ cases_week <- function(path, mpo, year){
                                                  by = 2)) +
         ggplot2::ylab("Número de Casos") +
         ggplot2::xlab("Semanas Epidemiológicas")
-
-
-
 
     a / b
 
