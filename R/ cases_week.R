@@ -3,7 +3,7 @@
 #' @param path is the path of the sinave files
 #' @param mpo is the name of minicipality
 #' @param year is the year the dataset
-#'
+#' @name name is the name
 #' @return a ggplot2 object
 #' @export
 #'
@@ -88,7 +88,6 @@ cases_week <- function(path, mpo, year){
                             color = "white",
                             shape = 21,
                             size = 5) +
-        #ggplot2::facet_wrap("DES_MPO_RES",scales = "free_y") +
         ggplot2::theme(legend.position = c(.1, .85),
                        legend.background = ggplot2::element_blank()) +
         ggplot2::scale_color_manual("",
