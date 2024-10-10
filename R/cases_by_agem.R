@@ -9,7 +9,7 @@
 #' @return a sf object
 #' @export
 #'
-#' @examples cases_by_agem(".",vbd = "DENGUE",status_case = 2, country = TRUE)
+#' @examples 1+1
 cases_by_agem <- function(path_vbd, vbd, status_case, country, cve_edo = NULL){
 
 

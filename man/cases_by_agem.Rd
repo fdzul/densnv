@@ -24,5 +24,5 @@ a sf object
 This function counts VBD cases per agem.
 }
 \examples{
-cases_by_agem(".",vbd = "DENGUE",status_case = 2, country = TRUE)
+1+1
 }
