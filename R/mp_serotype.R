@@ -11,14 +11,16 @@
 mp_serotype <- function(path_sinave, cve_edo, palette){
 
     # Step 1. load the dengue dataset ####
-    x_serotipo <- denhotspots::read_dengue_dataset(path = path_sinave,
-                                                   spatial_resolution = "country",
-                                                   status_caso = c(2)) |>
-        dplyr::mutate(CVE_EDO_RES = stringr::str_pad(CVE_EDO_RES,
+    x_serotipo <- data.table::fread(path_sinave,
+                                    encoding = "Latin-1",
+                                    quote="",
+                                    fill=TRUE) |>
+        dplyr::filter(ESTATUS_CASO == 2) |>
+        dplyr::mutate(CVE_EDO_REP = stringr::str_pad(CVE_EDO_REP,
                                                      width = 2,
                                                      side = "left",
                                                      pad = "0")) |>
-        dplyr::mutate(CVE_MPO_RES = stringr::str_pad(CVE_MPO_RES,
+        dplyr::mutate(CVE_MPO_REP = stringr::str_pad(CVE_MPO_REP,
                                                      width = 3,
                                                      side = "left",
                                                      pad = "0")) |>
@@ -26,7 +28,7 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
         dplyr::filter(!is.na(DENGUE_SER_TRIPLEX)) |>
         dplyr::summarise(n = dplyr::n(),
                          .by = c(CVE_EDO_RES, CVE_MPO_RES,DENGUE_SER_TRIPLEX)) |>
-        tidyr::pivot_wider(id_cols = c(CVE_EDO_RES, CVE_MPO_RES),
+        tidyr::pivot_wider(id_cols = c(CVE_EDO_REP, CVE_MPO_REP),
                            names_from = DENGUE_SER_TRIPLEX,
                            values_from = n,
                            names_prefix = "D",
@@ -45,10 +47,10 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
                                                   D3_text,
                                                   D4_text,
                                                   sep = "")) |>
-        dplyr::select(CVE_EDO_RES, CVE_MPO_RES,
+        dplyr::select(CVE_EDO_REP, CVE_MPO_REP,
                       D1, D2, D3, D4,
                       n_serotipo, serotype_combination) |>
-        dplyr::filter(CVE_EDO_RES %in% c(cve_edo))
+        dplyr::filter(CVE_EDO_REP %in% c(cve_edo))
 
     # Step 1. load the dengue dataset ####
     x_casos <- denhotspots::read_dengue_dataset(path = path_sinave,
@@ -63,8 +65,8 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
                                                      side = "left",
                                                      pad = "0")) |>
         dplyr::summarise(n = dplyr::n(),
-                         .by = c(CVE_EDO_RES, CVE_MPO_RES)) |>
-        dplyr::filter(CVE_EDO_RES %in% c(cve_edo))
+                         .by = c(CVE_EDO_REP, CVE_MPO_REP)) |>
+        dplyr::filter(CVE_EDO_REP %in% c(cve_edo))
 
 
     # Step 2. load boundary of municipality ####
