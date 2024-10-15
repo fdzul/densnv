@@ -27,7 +27,9 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
         dplyr::filter(DENGUE_SER_TRIPLEX %in% c(1:4)) |>
         dplyr::filter(!is.na(DENGUE_SER_TRIPLEX)) |>
         dplyr::summarise(n = dplyr::n(),
-                         .by = c(CVE_EDO_RES, CVE_MPO_RES,DENGUE_SER_TRIPLEX)) |>
+                         .by = c(CVE_EDO_REP,
+                                 CVE_MPO_REP,
+                                 DENGUE_SER_TRIPLEX)) |>
         tidyr::pivot_wider(id_cols = c(CVE_EDO_REP, CVE_MPO_REP),
                            names_from = DENGUE_SER_TRIPLEX,
                            values_from = n,
