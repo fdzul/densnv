@@ -55,9 +55,11 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
         dplyr::filter(CVE_EDO_REP %in% c(cve_edo))
 
     # Step 1. load the dengue dataset ####
-    x_casos <- denhotspots::read_dengue_dataset(path = path_sinave,
-                                                spatial_resolution = "country",
-                                                status_caso = c(2)) |>
+    x_casos <- data.table::fread(path_sinave,
+                                 encoding = "Latin-1",
+                                 quote="",
+                                 fill=TRUE) |>
+        dplyr::filter(ESTATUS_CASO == 2)  |>
         dplyr::mutate(CVE_EDO_REP = stringr::str_pad(CVE_EDO_REP,
                                                      width = 2,
                                                      side = "left",
