@@ -77,14 +77,14 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
     # Step 3. left joint between munipality and serotype ####
     xy_serotipo <- dplyr::left_join(x = y,
                                     y = x_serotipo,
-                                    by = c("CVE_ENT" = "CVE_EDO_RES",
-                                           "CVE_MUN" = "CVE_MPO_RES")) |>
+                                    by = c("CVE_ENT" = "CVE_EDO_REP",
+                                           "CVE_MUN" = "CVE_MPO_REP")) |>
         dplyr::filter(!is.na(D1))
 
     xy_casos <- dplyr::left_join(x = y,
                                  y = x_casos,
-                                 by = c("CVE_ENT" = "CVE_EDO_RES",
-                                        "CVE_MUN" = "CVE_MPO_RES")) |>
+                                 by = c("CVE_ENT" = "CVE_EDO_REP",
+                                        "CVE_MUN" = "CVE_MPO_REP")) |>
         dplyr::filter(!is.na(n))
 
 
