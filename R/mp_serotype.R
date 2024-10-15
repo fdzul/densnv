@@ -56,11 +56,11 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
     x_casos <- denhotspots::read_dengue_dataset(path = path_sinave,
                                                 spatial_resolution = "country",
                                                 status_caso = c(2)) |>
-        dplyr::mutate(CVE_EDO_RES = stringr::str_pad(CVE_EDO_RES,
+        dplyr::mutate(CVE_EDO_REP = stringr::str_pad(CVE_EDO_REP,
                                                      width = 2,
                                                      side = "left",
                                                      pad = "0")) |>
-        dplyr::mutate(CVE_MPO_RES = stringr::str_pad(CVE_MPO_RES,
+        dplyr::mutate(CVE_MPO_REP = stringr::str_pad(CVE_MPO_REP,
                                                      width = 3,
                                                      side = "left",
                                                      pad = "0")) |>
