@@ -4,7 +4,7 @@
 \alias{mp_treemap}
 \title{Treemap of dengue cases}
 \usage{
-mp_treemap(snv_dataset, country, cve_edo = NULL)
+mp_treemap(snv_dataset, country, cve_edo = NULL, year)
 }
 \arguments{
 \item{snv_dataset}{is the sinave dataset}
@@ -12,6 +12,8 @@ mp_treemap(snv_dataset, country, cve_edo = NULL)
 \item{country}{It is a logical value to indicate whether the data of the SINAVE is from the country (TRUE) or from a specific state (FALSE)}
 
 \item{cve_edo}{is the state id of INEGI.}
+
+\item{year}{is the year dataset.}
 }
 \description{
 Treemap of dengue cases

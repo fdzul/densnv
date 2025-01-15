@@ -8,10 +8,10 @@
 #' @export
 #'
 #' @examples
-mp_treemap <- function(snv_dataset, country, cve_edo = NULL){
+mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
     if(country == TRUE){
         snv_dataset  |>
-            dplyr::filter(ANO == lubridate::year(Sys.Date()))  |>
+            dplyr::filter(ANO == year)  |>
             dplyr::filter(!DES_EDO_RES %in% c("OTROS PAISES",
                                               "OTROS PAISES DE LATINOAMERICA",
                                               "ESTADOS UNIDOS DE NORTEAMERICA"))  |>
@@ -52,7 +52,7 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL){
             ggplot2::scale_fill_viridis_d()
     } else {
         snv_dataset  |>
-            dplyr::filter(ANO == lubridate::year(Sys.Date()))  |>
+            dplyr::filter(ANO == year)  |>
             dplyr::filter(!DES_EDO_RES %in% c("OTROS PAISES",
                                               "OTROS PAISES DE LATINOAMERICA",
                                               "ESTADOS UNIDOS DE NORTEAMERICA"))  |>
