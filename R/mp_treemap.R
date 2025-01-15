@@ -3,6 +3,7 @@
 #' @param snv_dataset is the sinave dataset
 #' @param country It is a logical value to indicate whether the data of the SINAVE is from the country (TRUE) or from a specific state (FALSE)
 #' @param cve_edo is the state id of INEGI.
+#' @param year is the year dataset.
 #'
 #' @return
 #' @export
