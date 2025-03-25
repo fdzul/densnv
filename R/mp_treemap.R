@@ -19,10 +19,10 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
             dplyr::filter(DES_DIAG_FINAL %in%
                               c("DENGUE CON SIGNOS DE ALARMA", "DENGUE NO GRAVE",
                                 "DENGUE GRAVE"))  |>
-            dplyr::group_by(DES_EDO_RES,DES_DIAG_FINAL)  |>
+            dplyr::group_by(DES_EDO_REP, DES_DIAG_FINAL)  |>
             dplyr::summarise(value = dplyr::n(),
                              .groups = "drop")  |>
-            dplyr::mutate(DES_EDO_RES = stringr::str_to_title(DES_EDO_RES),
+            dplyr::mutate(DES_EDO_REP = stringr::str_to_title(DES_EDO_REP),
                           DES_DIAG_FINAL = stringr::str_to_title(DES_DIAG_FINAL))  |>
             dplyr::mutate(DES_DIAG_FINAL = factor(DES_DIAG_FINAL,
                                                   levels = c("Dengue Con Signos De Alarma",
@@ -30,8 +30,8 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
                                                              "Dengue No Grave"),
                                                   labels = c("DSA", "DG", "DNG")))  |>
             ggplot2::ggplot(ggplot2::aes(area = value,
-                                         fill = DES_EDO_RES,
-                                         subgroup = DES_EDO_RES,
+                                         fill = DES_EDO_REP,
+                                         subgroup = DES_EDO_REP,
                                          subgroup2 = value,
                                          label = paste(DES_DIAG_FINAL, value, sep = "\n"))) +
             treemapify::geom_treemap() +
@@ -61,10 +61,10 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
                               c("DENGUE CON SIGNOS DE ALARMA", "DENGUE NO GRAVE",
                                 "DENGUE GRAVE"))  |>
             dplyr::filter(CVE_EDO_REP %in% c(cve_edo)) |>
-            dplyr::group_by(DES_MPO_RES,DES_DIAG_FINAL)  |>
+            dplyr::group_by(DES_MPO_REP,DES_DIAG_FINAL)  |>
             dplyr::summarise(value = dplyr::n(),
                              .groups = "drop")  |>
-            dplyr::mutate(DES_MPO_RES = stringr::str_to_title(DES_MPO_RES),
+            dplyr::mutate(DES_MPO_REP = stringr::str_to_title(DES_MPO_REP),
                           DES_DIAG_FINAL = stringr::str_to_title(DES_DIAG_FINAL))  |>
             dplyr::mutate(DES_DIAG_FINAL = factor(DES_DIAG_FINAL,
                                                   levels = c("Dengue Con Signos De Alarma",
@@ -72,8 +72,8 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
                                                              "Dengue No Grave"),
                                                   labels = c("DSA", "DG", "DNG")))  |>
             ggplot2::ggplot(ggplot2::aes(area = value,
-                                         fill = DES_MPO_RES,
-                                         subgroup = DES_MPO_RES,
+                                         fill = DES_MPO_REP,
+                                         subgroup = DES_MPO_REP,
                                          subgroup2 = value,
                                          #label = paste(DES_DIAG_FINAL, value, sep = "\n"),
                                          label = paste(DES_DIAG_FINAL, value, sep = "\n"))) + #DES_DIAG_FINAL
