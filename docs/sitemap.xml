@@ -1,60 +1,21 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/base_datos__sinave.html</loc>
-  </url>
-  <url>
-    <loc>/articles/base_datos_sinave.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/leer_bases_SINAVE.html</loc>
-  </url>
-  <url>
-    <loc>/articles/mapas_de_calor.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/cases_by_agem.html</loc>
-  </url>
-  <url>
-    <loc>/reference/densin-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/densnv-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mp_heatmap.html</loc>
-  </url>
-  <url>
-    <loc>/reference/mp_serotype.html</loc>
-  </url>
-  <url>
-    <loc>/reference/read.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sin_read_vbd.html</loc>
-  </url>
-  <url>
-    <loc>/reference/snv_read_vbd.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE-text.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/base_datos_sinave.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/mapas_de_calor.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/reference/cases_by_agem.html</loc></url>
+<url><loc>/reference/densnv-package.html</loc></url>
+<url><loc>/reference/estimated_eggs.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mp_heatmap.html</loc></url>
+<url><loc>/reference/mp_heatmap_edo.html</loc></url>
+<url><loc>/reference/mp_serotype.html</loc></url>
+<url><loc>/reference/mp_treemap.html</loc></url>
+<url><loc>/reference/name-is-the-name.html</loc></url>
+<url><loc>/reference/read.html</loc></url>
 </urlset>
+
