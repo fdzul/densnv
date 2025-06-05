@@ -6,6 +6,7 @@
 #' @param status_caso It is a numerical value to select the Status of the case. There are three options, 1 for the probable cases database, 2 for the confirmed cases database, and 3 for the discarded cases database.
 #' @param zoom map zoom; an integer from 3 (continent) to 21 (building), default value 10 (city).
 #' @param week It is epidemiological week.
+#' @kernel It is kernel density for select the blocks.
 #' @param alpha is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.
 #' @param map_type character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"
 #' @param static is a logical valur, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.
@@ -20,7 +21,7 @@
 #' @import ggplot2
 #' @import cowplot
 #'
-#' @examples
+#' @examples 1+1
 mp_heatmap <- function(locality,
                        cve_edo,
                        geocoded_datasets,
@@ -34,6 +35,7 @@ mp_heatmap <- function(locality,
 
     # Step 1. transform dataset #####
     z <- geocoded_datasets |>
+        dplyr::filter(accuracy != "locality") |>
         dplyr::filter(ESTATUS_CASO %in% c(status_caso)) |>
         dplyr::mutate(x = long,
                       y = lat) |>
@@ -78,7 +80,7 @@ mp_heatmap <- function(locality,
         # Step 4. Create kernel density output
         kde <- KernSmooth::bkde2D(x = cbind(z$x, z$y),
                                   bandwidth = c(0.0045, 0.0068),
-                                  gridsize = c(500,500))
+                                  gridsize = c(500,500)) # 500
 
         # Step 5. Create Raster from Kernel Density output
         KernelDensityRaster <- raster::raster(list(x = kde$x1 ,
@@ -90,8 +92,50 @@ mp_heatmap <- function(locality,
             terra::rast() |>
             terra::mask(mask = locality)
 
+        # Step 1. load the blocks ####
+
+        if(cve_edo %in% c("01", "02", "03", "04", "05", "06", "07",
+                          "08", "09", "10")){
+            blocks <- rgeomex::blocks_ine20_mx_a |>
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+        }
+
+        if(cve_edo %in% c("11", "12", "13", "14")){
+            blocks <- rgeomex::blocks_ine20_mx_b |>
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+        }
+
+        if(cve_edo %in% c("15", "16", "17", "18", "19")){
+            blocks <- rgeomex::blocks_ine20_mx_c |>
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+        }
+
+        if(cve_edo %in% c("20", "21", "22",
+                          "23", "24", "25")){
+            blocks <- rgeomex::blocks_ine20_mx_d |>
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+        }
+
+        if(cve_edo %in% c("26", "27", "28", "29", "30", "31", "32")){
+            blocks <- rgeomex::blocks_ine20_mx_e |>
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+        }
+
+        # Step 2. load the kernel density ###
+        library(tidyterra)
+        kde_rast_b <- kde_rast |>
+            dplyr::filter(layer >= kernel) |>
+            ppmData::rast_to_sf()
+
+        # Step 3 extract the blocks in the heatmaps ###
+        blocks_heatmap <- blocks[kde_rast_b,]
+
         # Step 7. make the map
         if(nrow(probables) == 0){
+            mapview::mapview(locality,
+                             alpha.regions = 0.1,
+                             legend = FALSE,
+                             layer.name = "Limite Estatal") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -103,8 +147,17 @@ mp_heatmap <- function(locality,
                                  col.regions = "#E01E5A",
                                  alpha.regions = alpha,
                                  color = "white",
-                                 layer.name = "Confirmado")
+                                 layer.name = "Confirmado") +
+                mapview::mapview(blocks_heatmap,
+                                 alpha.regions = 0.1,
+                                 color = "white",
+                                 legend = FALSE,
+                                 layer.name = "Manzana")
         } else if(nrow(confirmados) == 0) {
+            mapview::mapview(locality,
+                             alpha.regions = 0.1,
+                             legend = FALSE,
+                             layer.name = "Limite Estatal") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -116,8 +169,17 @@ mp_heatmap <- function(locality,
                                  col.regions = "#2EB67D",
                                  alpha.regions = alpha,
                                  color = "white",
-                                 layer.name = "Probable")
+                                 layer.name = "Probable") +
+                mapview::mapview(blocks_heatmap,
+                                 alpha.regions = 0.1,
+                                 color = "white",
+                                 legend = FALSE,
+                                 layer.name = "Manzana")
         } else{
+            mapview::mapview(locality,
+                             alpha.regions = 0.1,
+                             legend = FALSE,
+                             layer.name = "Limite Estatal") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -134,7 +196,12 @@ mp_heatmap <- function(locality,
                                  col.regions = "#E01E5A",
                                  alpha.regions = alpha,
                                  color = "white",
-                                 layer.name = "Confirmado")
+                                 layer.name = "Confirmado") +
+                mapview::mapview(blocks_heatmap,
+                                 alpha.regions = 0.1,
+                                 color = "white",
+                                 legend = FALSE,
+                                 layer.name = "Manzana")
         }
     }
 

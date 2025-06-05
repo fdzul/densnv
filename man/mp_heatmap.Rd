@@ -44,6 +44,9 @@ ggplot object
 \description{
 The mp_heatmap function generates a heat map.
 }
+\examples{
+1+1
+}
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 }
