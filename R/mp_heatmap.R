@@ -98,28 +98,33 @@ mp_heatmap <- function(locality,
         if(cve_edo %in% c("01", "02", "03", "04", "05", "06", "07",
                           "08", "09", "10")){
             blocks <- rgeomex::blocks_ine20_mx_a |>
-                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo))) |>
+                sf::st_make_valid()
         }
 
         if(cve_edo %in% c("11", "12", "13", "14")){
             blocks <- rgeomex::blocks_ine20_mx_b |>
-                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo))) |>
+                sf::st_make_valid()
         }
 
         if(cve_edo %in% c("15", "16", "17", "18", "19")){
             blocks <- rgeomex::blocks_ine20_mx_c |>
-                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo))) |>
+                sf::st_make_valid()
         }
 
         if(cve_edo %in% c("20", "21", "22",
                           "23", "24", "25")){
             blocks <- rgeomex::blocks_ine20_mx_d |>
-                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo))) |>
+                sf::st_make_valid()
         }
 
         if(cve_edo %in% c("26", "27", "28", "29", "30", "31", "32")){
             blocks <- rgeomex::blocks_ine20_mx_e |>
-                dplyr::filter(entidad %in% c(as.numeric(cve_edo)))
+                dplyr::filter(entidad %in% c(as.numeric(cve_edo))) |>
+                sf::st_make_valid()
         }
 
         # Step 2. load the kernel density ###
