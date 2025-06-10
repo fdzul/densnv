@@ -6,7 +6,7 @@
 \arguments{
 \item{path}{is the path of the sinave files}
 
-\item{mpo}{is the name of minicipality}
+\item{mpo}{is the name of municipality}
 
 \item{year}{is the year the dataset}
 }

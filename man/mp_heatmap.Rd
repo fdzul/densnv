@@ -10,6 +10,7 @@ mp_heatmap(
   geocoded_datasets,
   status_caso,
   week,
+  kernel,
   alpha,
   zoom,
   map_type,
