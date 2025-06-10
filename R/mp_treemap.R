@@ -60,6 +60,10 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
             dplyr::filter(DES_DIAG_FINAL %in%
                               c("DENGUE CON SIGNOS DE ALARMA", "DENGUE NO GRAVE",
                                 "DENGUE GRAVE"))  |>
+            dplyr::mutate(CVE_EDO_REP = stringr::str_pad(CVE_EDO_REP,
+                                                         width = 2,
+                                                         side = "left",
+                                                         pad = "0")) |>
             dplyr::filter(CVE_EDO_REP %in% c(cve_edo)) |>
             dplyr::group_by(DES_MPO_REP,DES_DIAG_FINAL)  |>
             dplyr::summarise(value = dplyr::n(),
