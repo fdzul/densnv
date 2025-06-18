@@ -29,6 +29,8 @@ mp_heatmap(
 
 \item{week}{It is epidemiological week.}
 
+\item{kernel}{It is kernel density for select the blocks.}
+
 \item{alpha}{is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.}
 
 \item{zoom}{map zoom; an integer from 3 (continent) to 21 (building), default value 10 (city).}

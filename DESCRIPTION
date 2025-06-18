@@ -28,6 +28,7 @@ VignetteBuilder: knitr
 Imports: 
     cowplot,
     data.table,
+    deneggs,
     denhotspots,
     dplyr,
     ggmap,
@@ -35,7 +36,10 @@ Imports:
     gt,
     kableExtra,
     KernSmooth,
+    lubridate,
     mapview,
+    ppmData,
+    purrr,
     raster,
     rgeomex,
     sf,
@@ -43,4 +47,6 @@ Imports:
     stringr,
     terra,
     tibble,
-    tidyr
+    tidyr,
+    tidyterra,
+    treemapify
