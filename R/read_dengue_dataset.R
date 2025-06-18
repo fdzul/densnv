@@ -6,7 +6,7 @@
 #' @param spatial_resolution is the spatial resolution or the administrative level. The values are country, state and municipality.
 #' @param des_edo_res is a string for define the state in uppercase.
 #' @param des_mpo_res is a string for define the municipality in uppercase.
-#' @param estatus_caso 1 probable, 2 confirmado, & 3 descartado.
+#' @param status_caso 1 probable, 2 confirmado, & 3 descartado.
 #'
 #' @return a data.table object.
 #' @export

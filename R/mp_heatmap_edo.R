@@ -2,7 +2,6 @@
 #'
 #' @param cve_edo is a string of the state id.
 #' @param geocoded_dataset is geocoded dataset.
-#' @param status_caso It is a numerical value to select the Status of the case. There are three options, 1 for the probable cases database, 2 for the confirmed cases database, and 3 for the discarded cases database.
 #' @param week It is epidemiological week.
 #' @param kernel It is kernel density for select the blocks.
 #' @param alpha is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.

@@ -28,4 +28,5 @@ utils::globalVariables(c("VEC_ID","FOL_ID","IDE_EDA_ANO", "IDE_SEX",
                          "D4_binary",
                          "D1_text", "D2_text", "D3_text", "D4_text",
                          "n_serotipo", "serotype_combination",
-                         "value"))
+                         "value", "kernel",
+                         "status_caso", "estatus_caso"))
