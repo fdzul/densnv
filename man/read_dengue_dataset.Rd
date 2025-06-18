@@ -30,7 +30,7 @@ a data.table object.
 Read the dengue dataset of [SINAVE](https://www.sinave.gob.mx/)
 }
 \examples{
-read_dengue_dataset(path = "1.data/2.ultima_semana_acumulado/DENGUE2_.txt", spatial_resolution = "state", des_edo_res = "NUEVO LEON", status_caso = c(1, 2))
+read_dengue_dataset(path = "/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt", spatial_resolution = "state", des_edo_res = "NUEVO LEON", status_caso = c(1, 2))
 }
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
