@@ -88,7 +88,7 @@ table(x$DES_EDO_RES, x$ESTATUS_CASO) |>
 ```
 
 ```{r b}
-denhotspots::read_dengue_dataset(path = "/Users/felipedzul/OneDrive/datasets/DGE/denv/2025/DENGUE2_.txt",
+densnv::read_dengue_dataset(path = "/Users/felipedzul/OneDrive/datasets/DGE/denv/2025/DENGUE2_.txt",
                                       spatial_resolution = "state",
                                       des_edo_res = "YUCATAN",
                                       status_caso = c(2)) |>
@@ -100,7 +100,7 @@ denhotspots::read_dengue_dataset(path = "/Users/felipedzul/OneDrive/datasets/DGE
 
 
 ```{r c}
-denhotspots::read_dengue_dataset(path = "/Users/felipedzul/OneDrive/datasets/DGE/denv/2025/DENGUE2_.txt",
+densnv::read_dengue_dataset(path = "/Users/felipedzul/OneDrive/datasets/DGE/denv/2025/DENGUE2_.txt",
                                  spatial_resolution = "municipality",
                                  des_edo_res = "GUERRERO",
                                  des_mpo_res = "ACAPULCO DE JUAREZ",
