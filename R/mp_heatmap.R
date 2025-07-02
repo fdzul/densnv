@@ -139,7 +139,7 @@ mp_heatmap <- function(locality,
         # Step 7. make the map
         if(nrow(probables) == 0){
             mapview::mapview(locality,
-                             col.regions = "#4662D7FF",
+                             col.regions = "#4454C4FF", #"#4662D7FF", "#4454C4FF"
                              alpha.regions = alpha,
                              legend = FALSE,
                              layer.name = "Límite de la Ciudad") +
@@ -162,7 +162,7 @@ mp_heatmap <- function(locality,
                                  layer.name = "Manzana")
         } else if(nrow(confirmados) == 0) {
             mapview::mapview(locality,
-                             col.regions = "#4662D7FF",
+                             col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
                              layer.name = "Límite de la Ciudad") +
@@ -185,7 +185,7 @@ mp_heatmap <- function(locality,
                                  layer.name = "Manzana")
         } else{
             mapview::mapview(locality,
-                             col.regions = "#4662D7FF",
+                             col.regions = "#4454C4FF","#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
                              layer.name = "Límite de la Ciudad") +
