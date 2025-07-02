@@ -2,7 +2,7 @@
 #'
 #' @param locality is the locality locality target.
 #' @param cve_edo is a string of the state id.
-#' @param geocoded_datasets is geocoded dataset.
+#' @param geocoded_dataset is geocoded dataset.
 #' @param status_caso It is a numerical value to select the Status of the case. There are three options, 1 for the probable cases database, 2 for the confirmed cases database, and 3 for the discarded cases database.
 #' @param zoom map zoom; an integer from 3 (continent) to 21 (building), default value 10 (city).
 #' @param week It is epidemiological week.
@@ -24,7 +24,7 @@
 #' @examples 1+1
 mp_heatmap <- function(locality,
                        cve_edo,
-                       geocoded_datasets,
+                       geocoded_dataset,
                        status_caso,
                        week,
                        kernel,
@@ -35,7 +35,7 @@ mp_heatmap <- function(locality,
                        palette = NULL){
 
     # Step 1. transform dataset #####
-    z <- geocoded_datasets |>
+    z <- geocoded_dataset |>
         dplyr::filter(accuracy != "locality") |>
         dplyr::filter(ESTATUS_CASO %in% c(status_caso)) |>
         dplyr::mutate(x = long,

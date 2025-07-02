@@ -7,7 +7,7 @@
 mp_heatmap(
   locality,
   cve_edo,
-  geocoded_datasets,
+  geocoded_dataset,
   status_caso,
   week,
   kernel,
@@ -23,7 +23,7 @@ mp_heatmap(
 
 \item{cve_edo}{is a string of the state id.}
 
-\item{geocoded_datasets}{is geocoded dataset.}
+\item{geocoded_dataset}{is geocoded dataset.}
 
 \item{status_caso}{It is a numerical value to select the Status of the case. There are three options, 1 for the probable cases database, 2 for the confirmed cases database, and 3 for the discarded cases database.}
 
