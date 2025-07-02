@@ -139,9 +139,10 @@ mp_heatmap <- function(locality,
         # Step 7. make the map
         if(nrow(probables) == 0){
             mapview::mapview(locality,
-                             alpha.regions = 0.1,
+                             col.regions = "#4662D7FF",
+                             alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Limite Estatal") +
+                             layer.name = "Límite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -161,9 +162,10 @@ mp_heatmap <- function(locality,
                                  layer.name = "Manzana")
         } else if(nrow(confirmados) == 0) {
             mapview::mapview(locality,
-                             alpha.regions = 0.1,
+                             col.regions = "#4662D7FF",
+                             alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Limite Estatal") +
+                             layer.name = "Límite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -183,9 +185,10 @@ mp_heatmap <- function(locality,
                                  layer.name = "Manzana")
         } else{
             mapview::mapview(locality,
-                             alpha.regions = 0.1,
+                             col.regions = "#4662D7FF",
+                             alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Limite Estatal") +
+                             layer.name = "Límite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
