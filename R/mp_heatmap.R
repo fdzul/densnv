@@ -185,7 +185,7 @@ mp_heatmap <- function(locality,
                                  layer.name = "Manzana")
         } else{
             mapview::mapview(locality,
-                             col.regions = "#4454C4FF","#4662D7FF",
+                             col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
                              layer.name = "Límite de la Ciudad") +
