@@ -84,16 +84,16 @@
 <dd><p>is the spatial resolution or the administrative level. The values are country, state and municipality.</p></dd>
 
 
+<dt id="arg-status-caso">status_caso<a class="anchor" aria-label="anchor" href="#arg-status-caso"></a></dt>
+<dd><p>1 probable, 2 confirmado, &amp; 3 descartado.</p></dd>
+
+
 <dt id="arg-des-edo-res">des_edo_res<a class="anchor" aria-label="anchor" href="#arg-des-edo-res"></a></dt>
 <dd><p>is a string for define the state in uppercase.</p></dd>
 
 
 <dt id="arg-des-mpo-res">des_mpo_res<a class="anchor" aria-label="anchor" href="#arg-des-mpo-res"></a></dt>
 <dd><p>is a string for define the municipality in uppercase.</p></dd>
-
-
-<dt id="arg-estatus-caso">estatus_caso<a class="anchor" aria-label="anchor" href="#arg-estatus-caso"></a></dt>
-<dd><p>1 probable, 2 confirmado, &amp; 3 descartado.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -108,110 +108,7 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">read_dengue_dataset</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt"</span>, spatial_resolution <span class="op">=</span> <span class="st">"state"</span>, des_edo_res <span class="op">=</span> <span class="st">"NUEVO LEON"</span>, status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               FOL_ID  VEC_ID IDE_EDA_ANO IDE_SEX DES_CAL        IDE_CAL NUM_EXT</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;char&gt;   &lt;int&gt;       &lt;int&gt;   &lt;int&gt;  &lt;char&gt;         &lt;char&gt;  &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 190260000000000 1962337           1       1   CALLE      EUCALIPTO     204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 190260000000000 1962349          12       2   CALLE          PIRUL     302</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 19039CAMJ130418 1962432          11       1 AVENIDA    ARTICULO 27     813</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:   223DOFM031004 1913787          21       2   CALLE          TITAN     204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 30086LOMA911028 1913997          33       1   CALLE      BOCANEGRA     821</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195: 19046LOBF090910 1972319          15       2   CALLE           ABAD     836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196: 19038MARP851216 1972340          39       2   CALLE       CONOCIDO      SN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197: 19038SACG680602 1972347          57       1   CALLE       GUERRERO    1103</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198: 19039AAFD191021 1972364           5       1   CALLE       ORQUIDEA    1045</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199: 19044FOGA811018 1972434          43       2   CALLE BERNARDO REYES     260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      NUM_INT                                          IDE_COL IDE_CP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;char&gt;                                           &lt;char&gt;  &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:                             PRADOS DE SANTA ROSA Colonia  66610</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:                             PRADOS DE SANTA ROSA Colonia  66610</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          VALLE DE SANTA LUCIA (GRANJA SANITARIA) Colonia  64140</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:                                       COSMÓPOLIS Colonia  66612</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:                                 MUJERES ILUSTRES Colonia  66635</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195:         EL MIRADOR DE SAN NICOLÁS (FOMERREY 129) Colonia  66422</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:                              CIUDAD GENERAL TERÁN Pueblo  67400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:                                         MATAMOROS Barrio  67510</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:                                         VICTORIA Colonia  64520</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199:                                          EL DÓLAR Barrio  65200</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      CVE_LOC_RES              DES_LOC_RES CVE_MPO_RES              DES_MPO_RES</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;int&gt;                   &lt;char&gt;       &lt;int&gt;                   &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:         379     PRADOS DE SANTA ROSA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:         379     PRADOS DE SANTA ROSA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:           1                MONTERREY          39       MONTERREY NVO LEON</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:           1           CIUDAD APODACA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:           1           CIUDAD APODACA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195:           1 SAN NICOLÁS DE LOS GARZA          46 SAN NICOLAS DE LOS GARZA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:         232                 SAN JOSÉ          22            GENERAL TERAN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:           1             MONTEMORELOS          38             MONTEMORELOS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:           1                MONTERREY          39       MONTERREY NVO LEON</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199:           1   CIUDAD SABINAS HIDALGO          44          SABINAS HIDALGO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          DES_JUR_RES CVE_EDO_RES DES_EDO_RES CVE_LOC_REP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;char&gt;       &lt;int&gt;      &lt;char&gt;       &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       GUADALUPE          19  NUEVO LEON         379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       GUADALUPE          19  NUEVO LEON         379</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       MONTERREY          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       GUADALUPE          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:       GUADALUPE          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195:         HIDALGO          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:    MONTEMORELOS          19  NUEVO LEON         232</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:    MONTEMORELOS          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:         HIDALGO          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199: SABINAS HIDALGO          19  NUEVO LEON           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   DES_LOC_REP CVE_MPO_REP              DES_MPO_REP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;char&gt;       &lt;int&gt;                   &lt;char&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:     PRADOS DE SANTA ROSA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:     PRADOS DE SANTA ROSA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:                MONTERREY          39       MONTERREY NVO LEON</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:           CIUDAD APODACA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:           CIUDAD APODACA           6                  APODACA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195: SAN NICOLÁS DE LOS GARZA          46 SAN NICOLAS DE LOS GARZA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:                 SAN JOSÉ          22            GENERAL TERAN</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:             MONTEMORELOS          38             MONTEMORELOS</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:                MONTERREY          39       MONTERREY NVO LEON</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199:   CIUDAD SABINAS HIDALGO          44          SABINAS HIDALGO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          DES_JUR_REP CVE_EDO_REP DES_EDO_REP ESTATUS_CASO CVE_DIAG_PROBABLE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;char&gt;       &lt;int&gt;      &lt;char&gt;        &lt;int&gt;             &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       GUADALUPE          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       GUADALUPE          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:       MONTERREY          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:       GUADALUPE          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:       GUADALUPE          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195:         HIDALGO          19  NUEVO LEON            1                 2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:    MONTEMORELOS          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:    MONTEMORELOS          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:         HIDALGO          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199: SABINAS HIDALGO          19  NUEVO LEON            1                 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                DES_DIAG_PROBABLE DES_DIAG_FINAL FEC_INI_SIGNOS_SINT   ANO   SEM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           &lt;char&gt;         &lt;char&gt;              &lt;IDat&gt; &lt;int&gt; &lt;int&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:             DENGUE NO GRAVE                         2025-05-10  2025    19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:             DENGUE NO GRAVE                         2025-05-19  2025    21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:             DENGUE NO GRAVE                         2025-05-17  2025    20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:             DENGUE NO GRAVE                         2025-01-02  2025     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:             DENGUE NO GRAVE                         2025-01-01  2025     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195: DENGUE CON SIGNOS DE ALARMA                         2025-06-08  2025    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:             DENGUE NO GRAVE                         2025-06-13  2025    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:             DENGUE NO GRAVE                         2025-06-13  2025    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:             DENGUE NO GRAVE                         2025-06-15  2025    25</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199:             DENGUE NO GRAVE                         2025-06-11  2025    24</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      MANEJO DES_INS_UNIDAD DENGUE_SER_TRIPLEX FEC_INGRESO</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;int&gt;         &lt;char&gt;              &lt;int&gt;      &lt;IDat&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:      2            SSA                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:      2            SSA                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:      2            SSA                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:      2           IMSS                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      2           IMSS                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 195:      1            SSA                 NA  2025-06-16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 196:      2            SSA                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 197:      2        PRIVADO                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 198:      2           IMSS                 NA        &lt;NA&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 199:      2            SSA                 NA        &lt;NA&gt;</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.table::fread(path, header = TRUE, quote = "", select = vect_cols,     fill = TRUE, encoding = "Latin-1"):</span> File '/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt' does not exist or is non-readable. getwd()=='/Users/fdzul/Desktop/densnv/docs/reference'</span>
 </code></pre></div>
     </div>
   </div>
