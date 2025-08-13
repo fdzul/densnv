@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
-#' @examples read_dengue_dataset(path = "/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt", spatial_resolution = "state", des_edo_res = "NUEVO LEON", status_caso = c(1, 2))
+#' @examples read_dengue_dataset(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt", spatial_resolution = "state", des_edo_res = "NUEVO LEON", status_caso = c(1, 2))
 read_dengue_dataset <- function(path, spatial_resolution,status_caso, des_edo_res = NULL, des_mpo_res = NULL){
     vect_cols <- c("FOL_ID","VEC_ID","IDE_EDA_ANO", "IDE_SEX",
                    "DES_CAL","IDE_CAL", "NUM_EXT", "NUM_INT",
