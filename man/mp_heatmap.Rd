@@ -15,7 +15,8 @@ mp_heatmap(
   zoom,
   map_type,
   static,
-  palette = NULL
+  palette = NULL,
+  save_csv
 )
 }
 \arguments{

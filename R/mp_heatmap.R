@@ -33,7 +33,8 @@ mp_heatmap <- function(locality,
                        zoom,
                        map_type,
                        static,
-                       palette = NULL){
+                       palette = NULL,
+                       save_csv){
 
     # Step 1. transform dataset #####
     z <- geocoded_dataset |>
