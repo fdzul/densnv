@@ -9,8 +9,9 @@
 #' @param kernel It is kernel density for select the blocks.
 #' @param alpha is a numerical parameter that controls the transparency of the heatmap. Values range from 0 to 1, where 0 is completely transparent and 1 does not make the heat map transparent.
 #' @param map_type character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"
-#' @param static is a logical valur, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.
+#' @param static is a logical value, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.
 #' @param palette is the palette for kde. example palette = viridis::turbo.
+#' @param save is a logical value, if value == TRUE, the funcion save the blocks.
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @return ggplot object
 #' @export
@@ -135,6 +136,12 @@ mp_heatmap <- function(locality,
 
         # Step 3 extract the blocks in the heatmaps ###
         blocks_heatmap <- blocks[kde_rast_b,]
+
+        if(save == TRUE){
+            write.csv(blocks_heatmap |>
+                          sf::st_drop_geometry(),
+                      file = "blocks_heatmap.csv")
+        }
 
         # Step 7. make the map
         if(nrow(probables) == 0){

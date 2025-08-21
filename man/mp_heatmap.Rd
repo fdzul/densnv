@@ -37,9 +37,11 @@ mp_heatmap(
 
 \item{map_type}{character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"}
 
-\item{static}{is a logical valur, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.}
+\item{static}{is a logical value, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.}
 
 \item{palette}{is the palette for kde. example palette = viridis::turbo.}
+
+\item{save}{is a logical value, if value == TRUE, the funcion save the blocks.}
 }
 \value{
 ggplot object
