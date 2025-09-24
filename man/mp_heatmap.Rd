@@ -16,7 +16,7 @@ mp_heatmap(
   map_type,
   static,
   palette = NULL,
-  save_csv
+  save
 )
 }
 \arguments{
@@ -42,7 +42,7 @@ mp_heatmap(
 
 \item{palette}{is the palette for kde. example palette = viridis::turbo.}
 
-\item{save_csv}{is a logical value, if value == TRUE, the funcion save the blocks.}
+\item{save}{is a logical value, if value == TRUE, the funcion save the blocks.}
 }
 \value{
 ggplot object
