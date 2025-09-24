@@ -139,7 +139,7 @@ mp_heatmap <- function(locality,
         blocks_heatmap <- blocks[kde_rast_b,]
 
         if(save == TRUE){
-            sf::st_write(blocks_heatmap, file = "blocks_heatmap.shp")
+            sf::st_write(blocks_heatmap, "blocks_heatmap.shp")
         }
 
         # Step 7. make the map
