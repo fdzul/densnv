@@ -11,7 +11,7 @@
 #' @param map_type character string providing google map theme. options available are "terrain", "satellite", "roadmap", and "hybrid"
 #' @param static is a logical value, if static == TRUE the map is static, else (statis = FALSE) the maps is interactive.
 #' @param palette is the palette for kde. example palette = viridis::turbo.
-#' @param save_csv is a logical value, if value == TRUE, the funcion save the blocks.
+#' @param save is a logical value, if value == TRUE, the funcion save the blocks.
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @return ggplot object
 #' @export
@@ -34,7 +34,7 @@ mp_heatmap <- function(locality,
                        map_type,
                        static,
                        palette = NULL,
-                       save_csv){
+                       save){
 
     # Step 1. transform dataset #####
     z <- geocoded_dataset |>
@@ -138,10 +138,8 @@ mp_heatmap <- function(locality,
         # Step 3 extract the blocks in the heatmaps ###
         blocks_heatmap <- blocks[kde_rast_b,]
 
-        if(save_csv == TRUE){
-            write.csv(blocks_heatmap |>
-                          sf::st_drop_geometry(),
-                      file = "blocks_heatmap.csv")
+        if(save == TRUE){
+            sf::st_write(blocks_heatmap, file = "blocks_heatmap.shp")
         }
 
         # Step 7. make the map
