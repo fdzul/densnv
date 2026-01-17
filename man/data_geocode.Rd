@@ -4,7 +4,7 @@
 \alias{data_geocode}
 \title{data_geocode}
 \usage{
-data_geocode(infile, data, sinave_new)
+data_geocode(infile, data)
 }
 \arguments{
 \item{infile}{is the name of file create with \link[denhotspots]{subset_den}.}
