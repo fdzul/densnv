@@ -107,8 +107,124 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">read_dengue_dataset</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt"</span>, spatial_resolution <span class="op">=</span> <span class="st">"state"</span>, des_edo_res <span class="op">=</span> <span class="st">"NUEVO LEON"</span>, status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in data.table::fread(path, header = TRUE, quote = "", select = vect_cols,     fill = TRUE, encoding = "Latin-1"):</span> File '/Users/felipedzul/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt' does not exist or is non-readable. getwd()=='/Users/fdzul/Desktop/densnv/docs/reference'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">read_dengue_dataset</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt"</span>, spatial_resolution <span class="op">=</span> <span class="st">"state"</span>, des_edo_res <span class="op">=</span> <span class="st">"NUEVO LEON"</span>, status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               FOL_ID  VEC_ID IDE_EDA_ANO IDE_SEX DES_CAL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               &lt;char&gt;   &lt;int&gt;       &lt;int&gt;   &lt;int&gt;  &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1: 19039SAMM010109 1927443          24       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2: 19039CURP000727 1927123          24       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: 28019MAAM600505 1929417          64       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: 19038EEAE050622 1928778          19       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5: 24028AARJ881221 1928971          36       1   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521: 19039RAGF770822 1919248          47       1   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522: 19026RISY970701 1919145          27       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523: 19039HEML881119 1921051          36       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524: 19039MAMM040416 1921224          20       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525: 19033CAPA011101 1922124          23       2   CALLE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        IDE_CAL NUM_EXT NUM_INT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         &lt;char&gt;  &lt;char&gt;  &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:         HIPOLITO IRIGOYEN     371        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:             LOS RODRIGUEZ    6433        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:                   BOLIVIA     206        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:                 MEMBRILLO     228        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:                   NARANJO     232        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:                   BEGONIA     647        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:                     COLON     415        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:      RICARDO FLORES MAGON    1976        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:  SEGUNDA DE SAN FRANCISCO    1312        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525: CARLOS SALINAS DE GORTARI      SN        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                    IDE_COL IDE_CP CVE_LOC_RES</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                     &lt;char&gt;  &lt;int&gt;       &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:                    SAN MARTÍN Colonia  64210           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:                 RAFAEL BUELNA Colonia  64240           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  LOS ÁNGELES SECTOR 7 Fraccionamiento  66475           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4: HACIENDA LOS NARANJOS Fraccionamiento  67528           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:                  UNIÓN MODELO Colonia  67165           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:            LAS FLORES Fraccionamiento  66064           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:                   DEL MAESTRO Colonia  67140           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:        JOSE MARIA PINO SUÁREZ Colonia  64103           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:                         CANTÚ Colonia  64550           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:                       CAMACHO Colonia  67730           1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   DES_LOC_RES CVE_MPO_RES              DES_MPO_RES  DES_JUR_RES</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;char&gt;       &lt;int&gt;                   &lt;char&gt;       &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:                MONTERREY          39       MONTERREY NVO LEON    MONTERREY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:                MONTERREY          39       MONTERREY NVO LEON    MONTERREY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: SAN NICOLÁS DE LOS GARZA          46 SAN NICOLAS DE LOS GARZA      HIDALGO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:             MONTEMORELOS          38             MONTEMORELOS MONTEMORELOS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:                GUADALUPE          26      GUADALUPE  NVO LEON    GUADALUPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:  CIUDAD GENERAL ESCOBEDO          21         GENERAL ESCOBEDO      HIDALGO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:                GUADALUPE          26      GUADALUPE  NVO LEON    GUADALUPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:                MONTERREY          39       MONTERREY NVO LEON    MONTERREY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:                MONTERREY          39       MONTERREY NVO LEON      HIDALGO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:                  LINARES          33                  LINARES MONTEMORELOS</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      CVE_EDO_RES DES_EDO_RES CVE_LOC_REP              DES_LOC_REP CVE_MPO_REP</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;int&gt;      &lt;char&gt;       &lt;int&gt;                   &lt;char&gt;       &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:          19  NUEVO LEON           1                MONTERREY          39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:          19  NUEVO LEON           1                MONTERREY          39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          19  NUEVO LEON           1 SAN NICOLÁS DE LOS GARZA          46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:          19  NUEVO LEON           1             MONTEMORELOS          38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:          19  NUEVO LEON           1                GUADALUPE          26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:          19  NUEVO LEON           1  CIUDAD GENERAL ESCOBEDO          21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:          19  NUEVO LEON           1                GUADALUPE          26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:          19  NUEVO LEON           1                MONTERREY          39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:          19  NUEVO LEON           1                MONTERREY          39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:          19  NUEVO LEON           1                  LINARES          33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   DES_MPO_REP  DES_JUR_REP CVE_EDO_REP DES_EDO_REP ESTATUS_CASO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        &lt;char&gt;       &lt;char&gt;       &lt;int&gt;      &lt;char&gt;        &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:       MONTERREY NVO LEON    MONTERREY          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:       MONTERREY NVO LEON    MONTERREY          19  NUEVO LEON            2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3: SAN NICOLAS DE LOS GARZA      HIDALGO          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:             MONTEMORELOS MONTEMORELOS          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:      GUADALUPE  NVO LEON    GUADALUPE          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:         GENERAL ESCOBEDO      HIDALGO          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:      GUADALUPE  NVO LEON    GUADALUPE          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:       MONTERREY NVO LEON    MONTERREY          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:       MONTERREY NVO LEON      HIDALGO          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:                  LINARES MONTEMORELOS          19  NUEVO LEON            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      CVE_DIAG_PROBABLE           DES_DIAG_PROBABLE              DES_DIAG_FINAL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  &lt;int&gt;                      &lt;char&gt;                      &lt;char&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:                 2 DENGUE CON SIGNOS DE ALARMA DENGUE CON SIGNOS DE ALARMA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:                 1             DENGUE NO GRAVE                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      FEC_INI_SIGNOS_SINT   ANO   SEM MANEJO DES_INS_UNIDAD DENGUE_SER_TRIPLEX</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   &lt;IDat&gt; &lt;int&gt; &lt;int&gt;  &lt;int&gt;         &lt;char&gt;              &lt;int&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:          2025-02-04  2025     6      2           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:          2025-01-25  2025     4      2            SSA                  0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          2025-01-30  2025     5      1           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:          2025-02-06  2025     6      1           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:          2025-02-04  2025     6      2            SSA                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:          2025-01-03  2025     1      2           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:          2025-01-05  2025     2      2           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:          2025-01-09  2025     2      2           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:          2025-01-14  2025     3      2           IMSS                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:          2025-01-18  2025     3      2            SSA                 NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      FEC_INGRESO</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;IDat&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   2:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  2025-02-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  2025-02-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   5:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  ---            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 521:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 522:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 523:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 524:        &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 525:        &lt;NA&gt;</span>
 </code></pre></div>
     </div>
   </div>
@@ -123,7 +239,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer></div>
