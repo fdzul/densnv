@@ -7,7 +7,7 @@
 #' @param municipio is the municipality
 #' @param path_ovitraps It is the path of the dataset of ovitrap
 #'
-#' @return
+#' @return ggplot object
 #' @export
 #'
 #' @examples 1+1

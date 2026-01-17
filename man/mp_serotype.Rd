@@ -19,6 +19,9 @@ a mapview objetc
 \description{
 This function creates maps of serotypes by municipality.
 }
+\examples{
+1+1
+}
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 }

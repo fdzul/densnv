@@ -15,6 +15,12 @@ mp_treemap(snv_dataset, country, cve_edo = NULL, year)
 
 \item{year}{is the year dataset.}
 }
+\value{
+a ggplot objest
+}
 \description{
 Treemap of dengue cases
+}
+\examples{
+1+1
 }

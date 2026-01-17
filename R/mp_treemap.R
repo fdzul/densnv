@@ -5,10 +5,10 @@
 #' @param cve_edo is the state id of INEGI.
 #' @param year is the year dataset.
 #'
-#' @return
+#' @return a ggplot objest
 #' @export
 #'
-#' @examples
+#' @examples 1+1
 mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
     if(country == TRUE){
         snv_dataset  |>

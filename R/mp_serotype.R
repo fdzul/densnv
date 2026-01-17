@@ -7,7 +7,7 @@
 #' @return a mapview objetc
 #' @export
 #'
-#' @examples
+#' @examples 1+1
 mp_serotype <- function(path_sinave, cve_edo, palette){
 
     # Step 1. load the dengue dataset ####

@@ -26,6 +26,9 @@ estimated_eggs(
 
 \item{path_ovitraps}{It is the path of the dataset of ovitrap}
 }
+\value{
+ggplot object
+}
 \description{
 Estimated cases of dengue and eggs
 }
