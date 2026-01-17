@@ -10,7 +10,7 @@
 #'
 #' @examples 1+1
 data_geocode <- function(infile, data){
-    x <- data.table::fread(paste0("./", infile, ".csv" )) |>
+    w <- data.table::fread(paste0("./", infile, ".csv" )) |>
         dplyr::mutate(CVE_LOC_REP = stringr::str_pad(CVE_LOC_REP,
                                                      width = 4,
                                                      side = "left",
