@@ -33,7 +33,7 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
                                          fill = DES_EDO_REP,
                                          subgroup = DES_EDO_REP,
                                          subgroup2 = value,
-                                         label = paste(DES_DIAG_FINAL, value, sep = "\n"))) +
+                                         label = paste(DES_EDO_REP, DES_DIAG_FINAL, value, sep = "\n"))) +
             treemapify::geom_treemap() +
             treemapify::geom_treemap_subgroup_border(color = "white",
                                                      size = 2) +
