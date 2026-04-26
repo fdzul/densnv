@@ -45,10 +45,10 @@ mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
                                           alpha = 0.5,
                                           size = 10,
                                           grow = F) +
-            treemapify::geom_treemap_subgroup_text(place = "middle",
-                                                   colour = "White",
-                                                   #alpha = 0.8,
-                                                   grow = T)+
+            #treemapify::geom_treemap_subgroup_text(place = "middle",
+            #                                       colour = "White",
+            #                                       #alpha = 0.8,
+             #                                      grow = T)+
             ggplot2::theme(legend.position = "none") +
             ggplot2::scale_fill_viridis_d()
     } else {
