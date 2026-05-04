@@ -11,7 +11,17 @@ Authors@R: c(person(given = "Felipe Antonio",
                         family = "Correa-Morales",
                         role = c("ctb"),
                         email = "fabiancorrea@msn.com",
-                        comment = c(ORCID = "https://orcid.org/0000-0002-6193-1242")))
+                        comment = c(ORCID = "https://orcid.org/0000-0002-6193-1242")),
+                 person(given = "Emmanuel",
+                        family = "Morales García",
+                        role = c("aut"),
+                        email = "emmorales@uv.mx",
+                        comment = c(ORCID = "orcid.org/0000-0002-6837-9227")),
+                person(given = "Cecilia",
+                        family = "Cruz López",
+                        role = c("ctb"),
+                        email = "ceccruz@uv.mx",
+                        comment = c(ORCID = "https://orcid.org/0000-0002-9156-5669")))
 Maintainer: The package maintainer <felipe.dzul.m@gmail.com>
 Description: The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables 
     with the aim of contributing to the making of rational and timely decisions in the Cenaprece national VBD program.
