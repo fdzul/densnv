@@ -38,7 +38,7 @@ mp_heatmap <- function(locality,
 
     # Step 1. transform dataset #####
     z <- geocoded_dataset |>
-        dplyr::filter(accuracy != "locality") |>
+        #dplyr::filter(accuracy != "locality") |>
         dplyr::filter(ESTATUS_CASO %in% c(status_caso)) |>
         dplyr::mutate(x = long,
                       y = lat) |>
@@ -139,7 +139,7 @@ mp_heatmap <- function(locality,
         blocks_heatmap <- blocks[kde_rast_b,]
 
         if(save == TRUE){
-            sf::st_write(blocks_heatmap, "blocks_heatmap.shp")
+            sf::st_write(blocks_heatmap, paste0(locality,"_blocks_heatmap.shp"))
         }
 
         # Step 7. make the map
