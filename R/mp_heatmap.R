@@ -46,16 +46,16 @@ mp_heatmap <- function(locality,
                      crs = 4326)
 
     # Step 2. extract the locality ####
-    locality <- rgeomex::extract_locality(cve_edo = cve_edo,
+    loc <- rgeomex::extract_locality(cve_edo = cve_edo,
                                           locality = locality)
 
     # Step 3. extract the geocoded cases of merida ####
-    z <- z[locality, ]  |>
+    z <- z[loc, ]  |>
         #sf::st_drop_geometry() |>
         dplyr::filter(SEM %in% c(week))
 
     if(static == TRUE) {
-        a <- sf::st_centroid(sf::st_union(locality)) |>
+        a <- sf::st_centroid(sf::st_union(loc)) |>
             sf::st_coordinates()
         ggmap_sf <- ggmap::get_googlemap(c(as.vector(a)[1],
                                            as.vector(a)[2]),
@@ -93,7 +93,7 @@ mp_heatmap <- function(locality,
         # Step 6. convert the raster to rast
         kde_rast <- KernelDensityRaster |>
             terra::rast() |>
-            terra::mask(mask = locality)
+            terra::mask(mask = loc)
 
         # Step 1. load the blocks ####
 
@@ -144,7 +144,7 @@ mp_heatmap <- function(locality,
 
         # Step 7. make the map
         if(nrow(probables) == 0){
-            mapview::mapview(locality,
+            mapview::mapview(loc,
                              col.regions = "#4454C4FF", #"#4662D7FF", "#4454C4FF"
                              alpha.regions = alpha,
                              legend = FALSE,
@@ -167,7 +167,7 @@ mp_heatmap <- function(locality,
                                  legend = FALSE,
                                  layer.name = "Manzana")
         } else if(nrow(confirmados) == 0) {
-            mapview::mapview(locality,
+            mapview::mapview(loc,
                              col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
@@ -190,7 +190,7 @@ mp_heatmap <- function(locality,
                                  legend = FALSE,
                                  layer.name = "Manzana")
         } else{
-            mapview::mapview(locality,
+            mapview::mapview(loc,
                              col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
