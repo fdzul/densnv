@@ -22,8 +22,7 @@ Authors@R: c(person(given = "Felipe Antonio",
                         role = c("ctb"),
                         email = "ceccruz@uv.mx",
                         comment = c(ORCID = "https://orcid.org/0000-0002-9156-5669")))
-Maintainer: The package maintainer <felipe.dzul.m@gmail.com>
-Description: The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables 
+Description: The package reads the SINAVE Vector-Borne Diseases dataset, creates graphs, maps and tables
     with the aim of contributing to the making of rational and timely decisions in the Cenaprece national VBD program.
 License: MIT + file LICENSE
 URL: https://github.com/fdzul/densnv, https://fdzul.github.io/densnv/
@@ -31,11 +30,11 @@ BugReports: https://github.com/fdzul/densnv/issues
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.3
-Suggests: 
+Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Imports: 
+Imports:
     cowplot,
     data.table,
     deneggs,
@@ -60,3 +59,8 @@ Imports:
     tidyr,
     tidyterra,
     treemapify
+Remotes:
+    fdzul/deneggs,
+    fdzul/denhotspots,
+    fdzul/rgeomex,
+    skiptoniam/ppmData
