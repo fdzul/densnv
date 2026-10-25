@@ -24,6 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/0000-0002-2085-9141}{ORCID})
   \item Emmanuel Morales García \email{emmorales@uv.mx} (\href{https://orcid.org/orcid.org/0000-0002-6837-9227}{ORCID})
 }
 

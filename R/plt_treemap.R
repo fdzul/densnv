@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples 1+1
-mp_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
+plt_treemap <- function(snv_dataset, country, cve_edo = NULL, year){
     if(country == TRUE){
         snv_dataset  |>
             dplyr::filter(ANO == year)  |>
