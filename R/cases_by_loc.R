@@ -70,7 +70,7 @@ cases_by_loc <- function(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"),
     # Step 1. load the ITER 2020 ####
     loc <- rgeomex::iter_2020_loc |>
         dplyr::mutate(cvegeo = paste0(entidad, mun, loc)) |>
-        dplyr::select(cvegeo, longitud, latitud, altitud, pobtot)
+        dplyr::select(cvegeo, nom_mun, nom_loc, longitud, latitud, altitud, pobtot)
 
     # Step 2. load the sinave dataset (common steps) ####
     x <- data.table::fread(path,
