@@ -37,7 +37,7 @@ mp_animated <- function(data,
                         pal = NULL){
 
     # Step 1. aggregate the cases by municipality and week ###
-    x <- dataset |>
+    x <- data |>
         dplyr::filter(ESTATUS_CASO %in% c(2)) |>
         dplyr::filter(ANO %in% c(year))|>
         dplyr::filter(!DES_EDO_RES %in% c("OTROS PAISES",
