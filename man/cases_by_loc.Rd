@@ -4,7 +4,12 @@
 \alias{cases_by_loc}
 \title{Arbovirus cases by locality}
 \usage{
-cases_by_loc(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"), year = NULL)
+cases_by_loc(
+  path,
+  snv_dataset = c("DENV", "ZIKV", "CHIKV"),
+  year = NULL,
+  week = NULL
+)
 }
 \arguments{
 \item{path}{path to the SINAVE txt file (e.g. `"DENGUE2_.txt"`,
@@ -15,6 +20,9 @@ cases_by_loc(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"), year = NULL)
 
 \item{year}{year to keep (ANO column). If NULL (default), the most recent
 year in the dataset is used.}
+
+\item{week}{epidemiological weeks to keep (SEM column), e.g. `1:10` or
+`c(5, 6, 7)`. If NULL (default), all weeks are used.}
 }
 \value{
 an sf object of points (EPSG:4326), one row per locality with
@@ -60,6 +68,10 @@ chik <- cases_by_loc(path = "CHIKUNGUNYA2_.txt", snv_dataset = "CHIKV")
 # a specific year
 den25 <- cases_by_loc(path = "DENGUE2_.txt", snv_dataset = "DENV",
                       year = 2025)
+
+# epidemiological weeks 1 to 10
+den_w <- cases_by_loc(path = "DENGUE2_.txt", snv_dataset = "DENV",
+                      week = 1:10)
 
 mapview::mapview(den, zcol = "confirmado", cex = "probable")
 }

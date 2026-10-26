@@ -11,6 +11,8 @@
 #'   (Zika) or `"CHIKV"` (chikungunya).
 #' @param year year to keep (ANO column). If NULL (default), the most recent
 #'   year in the dataset is used.
+#' @param week epidemiological weeks to keep (SEM column), e.g. `1:10` or
+#'   `c(5, 6, 7)`. If NULL (default), all weeks are used.
 #'
 #' @details
 #' Only probable and confirmed cases are kept (`ESTATUS_CASO` 1 and 2);
@@ -56,10 +58,15 @@
 #' den25 <- cases_by_loc(path = "DENGUE2_.txt", snv_dataset = "DENV",
 #'                       year = 2025)
 #'
+#' # epidemiological weeks 1 to 10
+#' den_w <- cases_by_loc(path = "DENGUE2_.txt", snv_dataset = "DENV",
+#'                       week = 1:10)
+#'
 #' mapview::mapview(den, zcol = "confirmado", cex = "probable")
 #' }
 cases_by_loc <- function(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"),
-                         year = NULL){
+                         year = NULL,
+                         week = NULL){
 
     # Step 0. checks ####
     snv_dataset <- match.arg(snv_dataset)
@@ -70,7 +77,7 @@ cases_by_loc <- function(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"),
     # Step 1. load the ITER 2020 ####
     loc <- rgeomex::iter_2020_loc |>
         dplyr::mutate(cvegeo = paste0(entidad, mun, loc)) |>
-        dplyr::select(cvegeo, nom_mun, nom_loc, longitud, latitud, altitud, pobtot)
+        dplyr::select(cvegeo, longitud, latitud, altitud, pobtot)
 
     # Step 2. load the sinave dataset (common steps) ####
     x <- data.table::fread(path,
@@ -93,9 +100,14 @@ cases_by_loc <- function(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"),
         year <- max(x$ANO, na.rm = TRUE)
     }
     x <- x |> dplyr::filter(ANO %in% year)
+    if(!is.null(week)){
+        x <- x |> dplyr::filter(SEM %in% week)
+    }
 
     if(nrow(x) == 0){
-        stop("There are no probable or confirmed cases for year ", year, ".")
+        stop("There are no probable or confirmed cases for year ", year,
+             if(!is.null(week)) paste0(" and weeks ", min(week), "-", max(week)),
+             ".")
     }
 
     # Step 3. aggregate by locality ####
