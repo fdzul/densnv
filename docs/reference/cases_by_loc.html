@@ -69,7 +69,12 @@ locality with cases.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cases_by_loc</span><span class="op">(</span><span class="va">path</span>, snv_dataset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DENV"</span>, <span class="st">"ZIKV"</span>, <span class="st">"CHIKV"</span><span class="op">)</span>, year <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cases_by_loc</span><span class="op">(</span></span>
+<span>  <span class="va">path</span>,</span>
+<span>  snv_dataset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DENV"</span>, <span class="st">"ZIKV"</span>, <span class="st">"CHIKV"</span><span class="op">)</span>,</span>
+<span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  week <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -90,6 +95,11 @@ locality with cases.</p>
 <dd><p>year to keep (ANO column). If NULL (default), the most recent
 year in the dataset is used.</p></dd>
 
+
+<dt id="arg-week">week<a class="anchor" aria-label="anchor" href="#arg-week"></a></dt>
+<dd><p>epidemiological weeks to keep (SEM column), e.g. `1:10` or
+`c(5, 6, 7)`. If NULL (default), all weeks are used.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -106,6 +116,10 @@ from the state, municipality and locality of report
 dropped.</p>
 <p>Columns returned for every arbovirus:</p><dl><dt>cvegeo</dt>
 <dd><p>INEGI locality key (state + municipality + locality).</p></dd>
+
+  <dt>nom_ent, nom_mun, nom_loc</dt>
+<dd><p>names of the state, municipality and
+    locality (ITER 2020).</p></dd>
 
   <dt>probable</dt>
 <dd><p>number of notified cases (probable + confirmed).</p></dd>
@@ -151,6 +165,10 @@ dropped.</p>
 <span class="r-in"><span><span class="co"># a specific year</span></span></span>
 <span class="r-in"><span><span class="va">den25</span> <span class="op">&lt;-</span> <span class="fu">cases_by_loc</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"DENGUE2_.txt"</span>, snv_dataset <span class="op">=</span> <span class="st">"DENV"</span>,</span></span>
 <span class="r-in"><span>                      year <span class="op">=</span> <span class="fl">2025</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># epidemiological weeks 1 to 10</span></span></span>
+<span class="r-in"><span><span class="va">den_w</span> <span class="op">&lt;-</span> <span class="fu">cases_by_loc</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"DENGUE2_.txt"</span>, snv_dataset <span class="op">=</span> <span class="st">"DENV"</span>,</span></span>
+<span class="r-in"><span>                      week <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/mapview/reference/mapView.html" class="external-link">mapview</a></span><span class="op">(</span><span class="va">den</span>, zcol <span class="op">=</span> <span class="st">"confirmado"</span>, cex <span class="op">=</span> <span class="st">"probable"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>

@@ -25,6 +25,8 @@
 #' Columns returned for every arbovirus:
 #' \describe{
 #'   \item{cvegeo}{INEGI locality key (state + municipality + locality).}
+#'   \item{nom_ent, nom_mun, nom_loc}{names of the state, municipality and
+#'     locality (ITER 2020).}
 #'   \item{probable}{number of notified cases (probable + confirmed).}
 #'   \item{confirmado}{number of confirmed cases.}
 #'   \item{altitud}{altitude of the locality (m).}
@@ -77,7 +79,9 @@ cases_by_loc <- function(path, snv_dataset = c("DENV", "ZIKV", "CHIKV"),
     # Step 1. load the ITER 2020 ####
     loc <- rgeomex::iter_2020_loc |>
         dplyr::mutate(cvegeo = paste0(entidad, mun, loc)) |>
-        dplyr::select(cvegeo, longitud, latitud, altitud, pobtot)
+        dplyr::select(cvegeo,
+                      dplyr::any_of(c("nom_ent", "nom_mun", "nom_loc")),
+                      longitud, latitud, altitud, pobtot)
 
     # Step 2. load the sinave dataset (common steps) ####
     x <- data.table::fread(path,

@@ -45,6 +45,8 @@ dropped.
 Columns returned for every arbovirus:
 \describe{
   \item{cvegeo}{INEGI locality key (state + municipality + locality).}
+  \item{nom_ent, nom_mun, nom_loc}{names of the state, municipality and
+    locality (ITER 2020).}
   \item{probable}{number of notified cases (probable + confirmed).}
   \item{confirmado}{number of confirmed cases.}
   \item{altitud}{altitude of the locality (m).}
