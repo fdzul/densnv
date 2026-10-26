@@ -14,6 +14,8 @@ plt_serotype(
 )
 }
 \arguments{
+\item{data}{is the dataset of \href{**SINAVE**}{http://vectores.sinave.gob.mx/}.}
+
 \item{year}{is the year of dataset.}
 
 \item{scale_serotype}{is the scale of the dengue serotype plot.}
@@ -23,8 +25,6 @@ plt_serotype(
 \item{y_serotype}{The y location of the dengue serotype plot. Sea also cowplot::draw_plot?.}
 
 \item{cve_edo}{The id of state, values from 01 to 32.}
-
-\item{dataset}{is the dataset of \href{**SINAVE**}{http://vectores.sinave.gob.mx/}.}
 }
 \value{
 a plot of class ggplot.

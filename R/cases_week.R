@@ -3,7 +3,6 @@
 #' @param path is the path of the sinave files
 #' @param mpo is the name of municipality
 #' @param year is the year the dataset
-#' @name name is the name
 #' @return a ggplot2 object
 #' @export
 #'

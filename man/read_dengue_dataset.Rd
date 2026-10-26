@@ -30,7 +30,12 @@ a data.table object.
 Read the dengue dataset of [SINAVE](https://www.sinave.gob.mx/)
 }
 \examples{
-read_dengue_dataset(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt", spatial_resolution = "state", des_edo_res = "NUEVO LEON", status_caso = c(1, 2))
+\dontrun{
+read_dengue_dataset(path = "DENGUE2_.txt",
+                    spatial_resolution = "state",
+                    des_edo_res = "NUEVO LEON",
+                    status_caso = c(1, 2))
+}
 }
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}

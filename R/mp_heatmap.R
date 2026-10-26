@@ -15,12 +15,6 @@
 #' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @return ggplot object
 #' @export
-#' @import dplyr
-#' @import rgeomex
-#' @import sf
-#' @import ggmap
-#' @import ggplot2
-#' @import cowplot
 #'
 #' @examples 1+1
 mp_heatmap <- function(locality,

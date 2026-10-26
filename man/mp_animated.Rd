@@ -21,6 +21,8 @@ mp_animated(
 \arguments{
 \item{data}{is dengue dataset.}
 
+\item{year}{is the year of dataset}
+
 \item{name}{is the name of the gif file.}
 
 \item{dir}{is the directory where the animation will be saved.}

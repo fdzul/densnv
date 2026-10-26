@@ -3,6 +3,7 @@
 #' Animated map areal of dengue cases by municipality
 #'
 #' @param data is dengue dataset.
+#' @param year is the year of dataset
 #' @param name is the name of the gif file.
 #' @param dir is the directory where the animation will be saved.
 #' @param country is logical value for indicating if the map is for all country o by state.

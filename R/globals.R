@@ -29,4 +29,12 @@ utils::globalVariables(c("VEC_ID","FOL_ID","IDE_EDA_ANO", "IDE_SEX",
                          "D1_text", "D2_text", "D3_text", "D4_text",
                          "n_serotipo", "serotype_combination",
                          "value", "kernel",
-                         "status_caso", "estatus_caso"))
+                         "status_caso", "estatus_caso",
+                         "confirmado", "descartado", "probable", "status",
+                         "CVEGEO", "CVEGEO_REP", "CVEGEO_RES", "autoctono",
+                         "CVE_MUN", "NOMGEO", "geometry",
+                         "fine_cap", "country", "X", "Y",
+                         "x_axis_start", "x_line_end",
+                         "hospitalizado", "DES_EDO_REP2", "DES_MPO_REP2",
+                         "Total", "DCSA", "DG", "DNG", "age_class",
+                         "Masculino", "Femenino"))
