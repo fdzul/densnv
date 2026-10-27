@@ -1,4 +1,4 @@
-#' mp_animated
+#' mp_animated_mpo
 #'
 #' Animated map areal of dengue cases by municipality
 #'
@@ -24,7 +24,7 @@
 #' @details \link[tmap]{tmap_animation}.
 #'
 #' @examples
-mp_animated <- function(data,
+mp_animated_mpo <- function(data,
                         year,
                         name,
                         dir,
