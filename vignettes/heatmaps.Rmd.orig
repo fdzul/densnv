@@ -1,0 +1,212 @@
+---
+title: "Heatmaps of dengue cases"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Heatmaps of dengue cases}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Precomputed vignette. Edit heatmaps.Rmd.orig (not the .Rmd) and rebuild on
+     the computer with the data, from the vignettes/ folder:
+     knitr::knit("heatmaps.Rmd.orig", "heatmaps.Rmd")
+     CONFIDENTIALITY: in the screenshots of the interactive maps the case layers
+     (Probable, Confirmado) are hidden; only density, blocks and boundaries. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.path = "figures/heat-en-",
+  fig.width = 7,
+  fig.height = 7,
+  dpi = 150,
+  out.width = "100%"
+)
+# static screenshot of a mapview map, without the case layers (needs webshot2)
+screenshot <- function(m, file, hide = c("Probable", "Confirmado"),
+                       width = 1000, height = 800){
+  ok <- tryCatch({
+    map <- if(methods::is(m, "mapview")) m@map else m
+    map <- leaflet::hideGroup(map, hide)
+    html <- tempfile(fileext = ".html")
+    htmlwidgets::saveWidget(map, html, selfcontained = FALSE)
+    webshot2::webshot(html, file, vwidth = width, vheight = height, delay = 4)
+    TRUE
+  }, error = function(e) FALSE)
+  if(ok && file.exists(file)) knitr::include_graphics(file) else invisible(NULL)
+}
+```
+
+[Versión en español](mapas_de_calor.html)
+
+## Introduction
+
+A **heatmap** shows the density of cases: where they concentrate, even if they do not form foci under a strict criterion. It helps to delimit the areas of highest risk and to select the blocks to treat. **densnv** has two functions:
+
+```{r functions, echo = FALSE}
+knitr::kable(data.frame(
+  "function" = c("mp_heatmap()", "mp_heatmap_edo()"),
+  level = c("Locality", "State"),
+  output = c("Static (Google Maps, ggplot) or interactive (mapview) map with the density, the cases and the blocks of highest density",
+             "Interactive map (mapview) with the density, the cases and the blocks of highest density"),
+  check.names = FALSE))
+```
+
+The density is estimated with a **bivariate Gaussian kernel** (`KernSmooth::bkde2D()`, bandwidth of 0.0045° of longitude by 0.0068° of latitude, about 470 × 750 m at 20° of latitude, on a 500 × 500 grid) and clipped to the polygon of the locality or the state.
+
+```{r setup}
+library(densnv)
+```
+
+## Data
+
+```{r data, eval = FALSE}
+load("dengue_mx_2026.RData")    # geocoded cases: z
+```
+
+```{r data_local, include = FALSE}
+# local path (not shown in the vignette)
+load("/Users/fdzul/Documents/geocoding_mx_2026_dengue/4.RData/dengue_mx_2026.RData")
+```
+
+The geocoded cases with `long`, `lat`, `ESTATUS_CASO` and `SEM` (epidemiological week) are needed. `mp_heatmap_edo()` also uses `accuracy`, to drop the cases geocoded only at locality level.
+
+The last four weeks (active transmission):
+
+```{r weeks}
+year <- max(z$ANO, na.rm = TRUE)
+weeks <- max(z$SEM[z$ANO == year], na.rm = TRUE) - 3:0
+weeks
+```
+
+## How to choose the `kernel` threshold
+
+The `kernel` argument selects the blocks where the density is **greater than or equal** to that value. The scale of the density depends on the number of cases and the area, so it is better to choose it from the percentiles of the density of the locality. This chunk computes the density as `mp_heatmap()` does:
+
+```{r kernel}
+loc <- rgeomex::extract_locality(cve_edo = "31", locality = "Merida") |>
+  sf::st_transform(4326) |>
+  sf::st_make_valid()
+loc$NOMGEO <- NULL
+
+pts <- z |>
+  as.data.frame() |>
+  dplyr::filter(!is.na(long), !is.na(lat),
+                ESTATUS_CASO %in% c(1, 2), SEM %in% weeks) |>
+  sf::st_as_sf(coords = c("long", "lat"), crs = 4326, remove = FALSE)
+pts <- pts[loc, ]
+
+kde <- KernSmooth::bkde2D(x = cbind(pts$long, pts$lat),
+                          bandwidth = c(0.0045, 0.0068),
+                          gridsize = c(500, 500))
+dens <- raster::raster(list(x = kde$x1, y = kde$x2, z = kde$fhat)) |>
+  terra::rast() |>
+  terra::mask(mask = terra::vect(loc))
+v <- terra::values(dens, na.rm = TRUE)
+v <- v[v > 0]
+thresholds <- stats::quantile(v, c(0.50, 0.75, 0.90, 0.95))
+round(thresholds, 1)
+```
+
+With the 90th percentile, the blocks of the 10% of the area with the highest density are selected:
+
+```{r kernel_p90}
+kernel_p90 <- unname(thresholds["90%"])
+```
+
+## Locality: `mp_heatmap()`
+
+### Static map
+
+With `static = TRUE` the density is drawn over Google Maps. This map **does not show the cases**, only the density, so it is the one for reports and presentations. It needs a Google API key registered with `ggmap::register_google()`.
+
+```{r static, eval = FALSE}
+mp_heatmap(locality = "Merida",
+           cve_edo = "31",
+           geocoded_dataset = z,
+           status_caso = c(1, 2),
+           week = weeks,
+           kernel = kernel_p90,
+           alpha = 0.4,
+           zoom = 12,
+           map_type = "roadmap",
+           static = TRUE,
+           palette = NULL,
+           save = FALSE)
+```
+
+```{r static_fig, echo = FALSE}
+g <- tryCatch(mp_heatmap(locality = "Merida", cve_edo = "31",
+                         geocoded_dataset = z, status_caso = c(1, 2),
+                         week = weeks, kernel = kernel_p90, alpha = 0.4,
+                         zoom = 12, map_type = "roadmap", static = TRUE,
+                         palette = NULL, save = FALSE),
+              error = function(e) NULL)
+if(!is.null(g)) print(g)
+```
+
+### Interactive map
+
+With `static = FALSE` the function returns an interactive map (mapview) with five layers: the locality boundary, the density (`palette`, e.g. `viridis::turbo`), the probable and confirmed cases, and the **blocks with density ≥ `kernel`**, proposed for control. With `save = TRUE` those blocks are saved as a shapefile.
+
+```{r interactive, eval = FALSE}
+mp_heatmap(locality = "Merida",
+           cve_edo = "31",
+           geocoded_dataset = z,
+           status_caso = c(1, 2),
+           week = weeks,
+           kernel = kernel_p90,
+           alpha = 0.6,
+           zoom = 12,
+           map_type = "roadmap",
+           static = FALSE,
+           palette = viridis::turbo,
+           save = FALSE)
+```
+
+```{r interactive_fig, echo = FALSE}
+screenshot(mp_heatmap(locality = "Merida", cve_edo = "31", geocoded_dataset = z,
+                      status_caso = c(1, 2), week = weeks, kernel = kernel_p90,
+                      alpha = 0.6, zoom = 12, map_type = "roadmap", static = FALSE,
+                      palette = viridis::turbo, save = FALSE),
+           "figures/heat-en-interactive.png")
+```
+
+For confidentiality, the case layers ("Probable" and "Confirmado") are hidden in the screenshot; in the interactive map they are turned on in the layers control.
+
+## State: `mp_heatmap_edo()`
+
+It does the same for a whole state:
+
+```{r state, eval = FALSE}
+mp_heatmap_edo(cve_edo = "31",
+               geocoded_dataset = z,
+               week = weeks,
+               kernel = kernel_p90,
+               alpha = 0.6,
+               palette = viridis::turbo)
+```
+
+```{r state_fig, echo = FALSE}
+screenshot(mp_heatmap_edo(cve_edo = "31", geocoded_dataset = z, week = weeks,
+                          kernel = kernel_p90, alpha = 0.6, palette = viridis::turbo),
+           "figures/heat-en-state.png")
+```
+
+The threshold chosen for a locality is not necessarily valid for the state: the density spreads over a larger area. Compute the percentiles with the cases of the state.
+
+## Heatmaps and active foci
+
+1. The **heatmap** shows where the cases of a period concentrate, without a distance or time criterion between them.
+2. The **active foci** of `mp_active_foci()` require a minimum of cases within 400 m and within the temporal window, and come with the Knox test and the diagnosis of the scenario (see the vignette *Active transmission foci and epidemiological scenarios*).
+
+They are complementary: the heatmap gives the overall picture and the foci tell where to intervene first.
+
+## Notes
+
+1. The bandwidth is fixed in degrees (about 470 × 750 m in the centre of the country); in the north or south of the country the equivalent distance changes slightly.
+2. With few cases the density depends a lot on each case; use at least 4 weeks.
+3. `mp_heatmap()` uses the cases with status `status_caso`; `mp_heatmap_edo()` uses all the geocoded cases of the given weeks.
