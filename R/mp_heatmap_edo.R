@@ -90,7 +90,7 @@ mp_heatmap_edo <- function(cve_edo,
     }
 
     # Step 2. load the kernel density ###
-    library(tidyterra)
+    requireNamespace("tidyterra", quietly = TRUE)   # dplyr verbs for SpatRaster
     kde_rast_b <- kde_rast |>
         dplyr::filter(layer >= kernel) |>
         ppmData::rast_to_sf()

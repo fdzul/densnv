@@ -42,7 +42,7 @@ cases_by_agem <- function(path_vbd, vbd, status_case, country, cve_edo = NULL){
     # Step 3. return the cases by agem ####
     if(country == FALSE){
         xy |>
-            dplyr:::filter(CVE_ENT %in% c(cve_edo))
+            dplyr::filter(CVE_ENT %in% c(cve_edo))
     } else{
         xy
     }

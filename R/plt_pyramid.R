@@ -72,7 +72,7 @@ plt_pyramid <- function(data,
                         show_zero = FALSE,
                         title = NULL,
                         subtitle = NULL,
-                        caption = "Fuente: SINAVE/DGE, Secretaría de Salud."){
+                        caption = "Fuente: SINAVE/DGE, Secretar\u00eda de Salud."){
     dat <- data |>
         janitor::clean_names() |>
         dplyr::filter(estatus_caso == 2) |>
@@ -180,7 +180,7 @@ plt_pyramid <- function(data,
         ggplot2::scale_fill_manual(values = c(Male = col_male,
                                               Female = col_female),
                                    guide = "none") +
-        ggplot2::scale_x_continuous("Número de casos",
+        ggplot2::scale_x_continuous("N\u00famero de casos",
                                     breaks = c(-g - brks, g + brks),
                                     labels = c(brks, brks),
                                     expand = ggplot2::expansion(mult = 0.02)) +

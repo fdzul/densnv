@@ -276,7 +276,7 @@ mp_animated_loc <- function(path,
         as.data.frame() |>
         sf::st_set_geometry(value = "geometry") |>
         dplyr::mutate(week = as.numeric(week)) |>
-        dplyr::mutate(week = forcats::fct_reorder(paste("Semana Epidemiológica",
+        dplyr::mutate(week = forcats::fct_reorder(paste("Semana Epidemiol\u00f3gica",
                                                         week, sep = " "),
                                                   week),
                       categoria = factor(categoria,
@@ -310,12 +310,12 @@ mp_animated_loc <- function(path,
         opt  <- sub("^-", "", pal)
         dirc <- if(startsWith(pal, "-")) -1 else 1
         semanas <- levels(droplevels(y$week))
-        sem_num <- as.numeric(sub("Semana Epidemiológica ", "", semanas))
+        sem_num <- as.numeric(sub("Semana Epidemiol\u00f3gica ", "", semanas))
 
         # weekly totals by panel (for the panel titles and the curve)
         tot <- y |>
             sf::st_drop_geometry() |>
-            dplyr::mutate(week_num = as.numeric(sub("Semana Epidemiológica ", "",
+            dplyr::mutate(week_num = as.numeric(sub("Semana Epidemiol\u00f3gica ", "",
                                                     as.character(week)))) |>
             dplyr::summarise(total = sum(n), .by = c(categoria, week_num)) |>
             tidyr::complete(categoria, week_num = sem_num,
@@ -368,7 +368,7 @@ mp_animated_loc <- function(path,
             # panel titles: category + cases of the week
             tot_i <- tot[tot$week_num == sem_num[i], ]
             etiq  <- stats::setNames(
-                paste0(tot_i$categoria, " · ",
+                paste0(tot_i$categoria, " \u00b7 ",
                        format(tot_i$total, big.mark = ","), " casos"),
                 as.character(tot_i$categoria))
 
@@ -437,7 +437,7 @@ mp_animated_loc <- function(path,
                     ggplot2::geom_line(linewidth = 1) +
                     ggplot2::geom_point(data = tot_i, size = 3.5) +
                     ggplot2::scale_color_manual(NULL, values = col_cat) +
-                    ggplot2::scale_x_continuous("Semana epidemiológica",
+                    ggplot2::scale_x_continuous("Semana epidemiol\u00f3gica",
                                                 breaks = pretty(sem_num, n = 10)) +
                     ggplot2::scale_y_continuous("Casos") +
                     ggplot2::theme_minimal(base_size = 15) +

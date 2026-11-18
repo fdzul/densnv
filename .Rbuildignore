@@ -10,3 +10,4 @@
 ^pkgdown$
 ^README\.es\.Rmd$
 ^README\.es\.md$
+^vignettes/.*\.Rmd\.orig$

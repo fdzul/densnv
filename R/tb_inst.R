@@ -122,10 +122,10 @@ tb_conf <- function(data, inst, year, state){
         }
 
         tabla_html(tabla_inst,
-                   titulo    = "Casos de dengue por institución notificante",
+                   titulo    = "Casos de dengue por instituci\u00f3n notificante",
                    #subtitulo = "Jalisco, 2026 · Fuente: SINAVE/DGE",
                    subtitulo = paste0(stringr::str_to_title(state), ", ", year, " | Fuente: SINAVE/DGE"),
-                   nota      = "DNG: dengue no grave · DCSA: dengue con signos de alarma · DG: dengue grave")
+                   nota      = "DNG: dengue no grave \u00b7 DCSA: dengue con signos de alarma \u00b7 DG: dengue grave")
 
     } else {
 

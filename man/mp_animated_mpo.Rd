@@ -19,42 +19,68 @@ mp_animated_mpo(
 )
 }
 \arguments{
-\item{data}{is dengue dataset.}
+\item{data}{SINAVE dengue dataset (e.g. read with
+`data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)`).}
 
-\item{year}{is the year of dataset}
+\item{year}{year to map (ANO column).}
 
-\item{name}{is the name of the gif file.}
+\item{name}{name of the gif file (without extension);
+`"_dot_animated_map.gif"` or `"_areal_animated_map.gif"` is added.}
 
-\item{dir}{is the directory where the animation will be saved.}
+\item{dir}{directory where the animation is saved (with "/" at the end).}
 
-\item{country}{is logical value for indicating if the map is for all country o by state.}
+\item{country}{logical. TRUE = all the municipalities of Mexico; FALSE =
+the municipalities of the state given in `cve_edo`.}
 
-\item{breaks}{is the numeric for defining the breaks of legend.}
+\item{breaks}{numeric, step between the breaks of the legend (e.g. 5 gives
+1, 6, 11, ...). If NULL, about 5 breaks are computed.}
 
-\item{save}{is the logical value for indicating if the gif is saved or not.}
+\item{save}{logical. If TRUE the gif is saved in `dir`; if FALSE it is only
+shown.}
 
-\item{cve_edo}{is the id of state according the \href{**INEGI**}{https://www.inegi.org.mx/default.html}.}
+\item{cve_edo}{INEGI state code ("20" or 20). Required if
+`country = FALSE`. See \href{https://www.inegi.org.mx/}{INEGI}.}
 
-\item{text_size}{is the size of text in the circle.}
+\item{text_size}{size of the number of cases in each municipality.}
 
-\item{dot}{is the logical value, if dot TRUE the tmap is dot, else is areal.}
+\item{dot}{logical. TRUE = proportional bubbles; FALSE = areal (choropleth)
+map.}
 
-\item{pal}{is the palette.}
+\item{pal}{palette function for the areal map (e.g. `viridis::viridis`).}
 }
 \value{
 a gif file of animation.
 }
 \description{
-Animated map areal of dengue cases by municipality
+Animated map of confirmed dengue cases by municipality and epidemiological
+week, for the whole country or for one state.
 }
 \details{
-\link[tmap]{tmap_animation}.
+Confirmed cases (`ESTATUS_CASO` 2) with final diagnosis DNG, DCSA or DG are
+counted by municipality of residence and epidemiological week. The
+animation is built with [tmap::tm_animate()] and saved with
+[tmap::tmap_animation()] (needs the \pkg{gifski} package).
 }
 \examples{
-1+1
+\dontrun{
+dataset <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+
+# Oaxaca, bubbles
+mp_animated_mpo(data = dataset,
+                year = 2026,
+                name = "Oaxaca",
+                dir = "6.Maps/",
+                country = FALSE,
+                breaks = 1,
+                save = FALSE,
+                cve_edo = "20",
+                text_size = 0.3,
+                dot = TRUE,
+                pal = viridis::viridis)
+}
 }
 \seealso{
-\link[tmap]{tmap_animation}
+[tmap::tmap_animation()], [mp_animated_loc()]
 }
 \author{
 Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}

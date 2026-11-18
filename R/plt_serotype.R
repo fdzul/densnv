@@ -43,7 +43,7 @@ plt_serotype <- function(data,
                                                              "DG",
                                                              "DNG"),
                                                   ordered = FALSE)) |>
-            dplyr::mutate(DES_DIAG_FINAL = relevel(x = DES_DIAG_FINAL, ref = "DNG"))
+            dplyr::mutate(DES_DIAG_FINAL = stats::relevel(x = DES_DIAG_FINAL, ref = "DNG"))
 
 
         p <- ggplot2::ggplot(data = as.data.frame(y),
@@ -156,7 +156,7 @@ plt_serotype <- function(data,
                                                              "DG",
                                                              "DNG"),
                                                   ordered = FALSE)) |>
-            dplyr::mutate(DES_DIAG_FINAL = relevel(x = DES_DIAG_FINAL, ref = "DNG"))
+            dplyr::mutate(DES_DIAG_FINAL = stats::relevel(x = DES_DIAG_FINAL, ref = "DNG"))
 
 
         p <- ggplot2::ggplot(data = as.data.frame(y),

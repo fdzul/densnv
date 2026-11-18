@@ -124,7 +124,7 @@ mp_heatmap <- function(locality,
         }
 
         # Step 2. load the kernel density ###
-        library(tidyterra)
+        requireNamespace("tidyterra", quietly = TRUE)   # dplyr verbs for SpatRaster
         kde_rast_b <- kde_rast |>
             dplyr::filter(layer >= kernel) |>
             ppmData::rast_to_sf()
@@ -142,7 +142,7 @@ mp_heatmap <- function(locality,
                              col.regions = "#4454C4FF", #"#4662D7FF", "#4454C4FF"
                              alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Límite de la Ciudad") +
+                             layer.name = "L\u00edmite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -165,7 +165,7 @@ mp_heatmap <- function(locality,
                              col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Límite de la Ciudad") +
+                             layer.name = "L\u00edmite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",
@@ -188,7 +188,7 @@ mp_heatmap <- function(locality,
                              col.regions = "#4454C4FF", #"#4662D7FF",
                              alpha.regions = alpha,
                              legend = FALSE,
-                             layer.name = "Límite de la Ciudad") +
+                             layer.name = "L\u00edmite de la Ciudad") +
             mapview::mapview(kde_rast,
                              layer.name = "kde",
                              na.color = "transparent",

@@ -2,14 +2,14 @@
 % Please edit documentation in R/plt_heatmap.R
 \name{plt_heatmap}
 \alias{plt_heatmap}
-\title{Title heatmap of dengue cases}
+\title{plt_heatmap}
 \usage{
 plt_heatmap(dataset, state, year, status, hospitalizados)
 }
 \arguments{
-\item{dataset}{is the dataset of \href{**SINAVE**}{http://vectores.sinave.gob.mx/}.}
+\item{dataset}{is the dataset of \href{http://vectores.sinave.gob.mx/}{SINAVE}.}
 
-\item{state}{is the name of state.}
+\item{state}{is the name of state (`DES_EDO_REP`, e.g. "GUERRERO").}
 
 \item{year}{is the year of dataset.}
 
@@ -17,6 +17,24 @@ plt_heatmap(dataset, state, year, status, hospitalizados)
 
 \item{hospitalizados}{is logical value, if true the dengue cases is hospitalized else non-hospitalized}
 }
+\value{
+a plotly heatmap: municipalities (rows) by epidemiological week
+  (columns), coloured by the number of cases.
+}
 \description{
-Title heatmap of dengue cases
+Interactive heatmap (plotly) of the dengue cases by municipality and
+epidemiological week of a state.
+}
+\examples{
+\dontrun{
+dataset <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+plt_heatmap(dataset = dataset,
+            state = "GUERRERO",
+            year = 2026,
+            status = 2,
+            hospitalizados = FALSE)
+}
+}
+\author{
+Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 }

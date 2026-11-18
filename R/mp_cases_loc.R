@@ -161,7 +161,7 @@ mp_cases_loc <- function(data,
         "width:max-content;'>",
         "<summary style='cursor:pointer;font-weight:bold;font-size:11px;",
         "color:white;background:#0E5F76;padding:3px 6px;border-radius:4px;'>",
-        "Top ", top_n, " · ", title, "</summary>",
+        "Top ", top_n, " \u00b7 ", title, "</summary>",
         "<div style='", scroll, "margin-top:4px;'>",
         "<table style='border-collapse:collapse;width:auto;'>",
         "<thead><tr style='border-bottom:1px solid #ccc;color:#555;'>",
@@ -173,8 +173,8 @@ mp_cases_loc <- function(data,
         "Clic en una fila para ir a la localidad</div></details>")
 
     # Step 5. map ####
-    overlays <- c(if(edo_boundaries) "Límite estatal",
-                  if(mun_boundaries) "Límite municipal",
+    overlays <- c(if(edo_boundaries) "L\u00edmite estatal",
+                  if(mun_boundaries) "L\u00edmite municipal",
                   title)
 
     m <- leaflet::leaflet() |>
@@ -199,7 +199,7 @@ mp_cases_loc <- function(data,
                                      color = "#0E5F76", weight = 2,
                                      bringToFront = FALSE),
                                  options = leaflet::pathOptions(pane = "limites"),
-                                 group = "Límite municipal")
+                                 group = "L\u00edmite municipal")
     }
 
     # state boundaries
@@ -210,7 +210,7 @@ mp_cases_loc <- function(data,
                                   weight = 1.5,
                                   opacity = 0.8,
                                   options = leaflet::pathOptions(pane = "limites"),
-                                  group = "Límite estatal")
+                                  group = "L\u00edmite estatal")
     }
 
     m |>
@@ -233,7 +233,7 @@ mp_cases_loc <- function(data,
         # home button: back to the state or to Mexico
         leaflet::addEasyButton(leaflet::easyButton(
             icon = "fa-home",
-            title = if(!is.null(cve_edo)) "Regresar al estado" else "Regresar a México",
+            title = if(!is.null(cve_edo)) "Regresar al estado" else "Regresar a M\u00e9xico",
             position = "topleft",
             onClick = htmlwidgets::JS(paste0(
                 "function(btn, map){ map.flyToBounds([[",

@@ -145,8 +145,8 @@ data_geocode <- function(infile, data){
 
 
     addresses <- stringr::str_replace_all(addresses,
-                                          pattern = " Colonia LOMAS DEL TAPATÍO , 45628 COL. LOMAS DEL TAPATIO,",
-                                          replacement = "  Colonia LOMAS DEL TAPATÍO,")
+                                          pattern = " Colonia LOMAS DEL TAPAT\u00cdO , 45628 COL. LOMAS DEL TAPATIO,",
+                                          replacement = "  Colonia LOMAS DEL TAPAT\u00cdO,")
     addresses <- stringr::str_replace_all(addresses,
                                           pattern = " SECC ",
                                           replacement = " SECCION ")
@@ -201,7 +201,7 @@ data_geocode <- function(infile, data){
                                           pattern = " YUC",
                                           replacement = " ")
     addresses <- stringr::str_replace_all(addresses,
-                                          pattern = ",CENTRO IXHUATLÁN DEL SURESTE ,",
+                                          pattern = ",CENTRO IXHUATL\u00c1N DEL SURESTE ,",
                                           replacement = ",CENTRO,")
 
     addresses <- stringr::str_replace_all(addresses,

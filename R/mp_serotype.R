@@ -102,7 +102,7 @@ mp_serotype <- function(path_sinave, cve_edo, palette){
         mapview::mapview(x = xy_casos,
                          zcol = "n",
                          col.regions = palette,
-                         layer.name = "Número de Casos")
+                         layer.name = "N\u00famero de Casos")
 
 
     # Step 4. maps ####

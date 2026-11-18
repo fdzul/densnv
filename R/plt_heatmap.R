@@ -1,15 +1,28 @@
-#' Title heatmap of dengue cases
+#' plt_heatmap
 #'
-#' @param dataset is the dataset of \href{**SINAVE**}{http://vectores.sinave.gob.mx/}.
-#' @param state is the name of state.
+#' Interactive heatmap (plotly) of the dengue cases by municipality and
+#' epidemiological week of a state.
+#'
+#' @param dataset is the dataset of \href{http://vectores.sinave.gob.mx/}{SINAVE}.
+#' @param state is the name of state (`DES_EDO_REP`, e.g. "GUERRERO").
 #' @param year is the year of dataset.
 #' @param status Represent the status case with three option: 1 = probable, 2 = confirmed, and 3 discarted.
 #' @param hospitalizados is logical value, if true the dengue cases is hospitalized else non-hospitalized
 #'
-#' @returns
+#' @returns a plotly heatmap: municipalities (rows) by epidemiological week
+#'   (columns), coloured by the number of cases.
+#' @author Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com}
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' dataset <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+#' plt_heatmap(dataset = dataset,
+#'             state = "GUERRERO",
+#'             year = 2026,
+#'             status = 2,
+#'             hospitalizados = FALSE)
+#' }
 plt_heatmap <- function(dataset, state, year, status, hospitalizados){
 
     if(is.null(state) == FALSE){
@@ -75,7 +88,7 @@ plt_heatmap <- function(dataset, state, year, status, hospitalizados){
                 plotly::layout(title = list(text = "<b>Casos Hospitalizados</b>",
                                             font = list(color = "#E01E5A",
                                                         size = 14)),
-                               xaxis = list(title= "<b>Semanas Epidemiológicas</b>",
+                               xaxis = list(title= "<b>Semanas Epidemiol\u00f3gicas</b>",
                                             color = "#E01E5A",
                                             tick = list(color = "#006AFF"),
                                             tickfont = list(color = "#006AFF")),
@@ -138,7 +151,7 @@ plt_heatmap <- function(dataset, state, year, status, hospitalizados){
                 plotly::layout(title = list(text = "<b>Casos Confirmados de Dengue</b>",
                                             font = list(color = "#E01E5A",
                                                         size = 14)),
-                               xaxis = list(title= "<b>Semanas Epidemiológicas</b>",
+                               xaxis = list(title= "<b>Semanas Epidemiol\u00f3gicas</b>",
                                             color = "#E01E5A",
                                             tick = list(color = "#006AFF"),
                                             tickfont = list(color = "#006AFF")),
@@ -215,7 +228,7 @@ plt_heatmap <- function(dataset, state, year, status, hospitalizados){
                 plotly::layout(title = list(text = "<b>Casos Hospitalizados</b>",
                                             font = list(color = "#E01E5A",
                                                         size = 14)),
-                               xaxis = list(title= "<b>Semanas Epidemiológicas</b>",
+                               xaxis = list(title= "<b>Semanas Epidemiol\u00f3gicas</b>",
                                             color = "#E01E5A",
                                             tick = list(color = "#006AFF"),
                                             tickfont = list(color = "#006AFF")),
@@ -278,7 +291,7 @@ plt_heatmap <- function(dataset, state, year, status, hospitalizados){
                 plotly::layout(title = list(text = "<b>Casos Confirmados de Dengue</b>",
                                             font = list(color = "#E01E5A",
                                                         size = 14)),
-                               xaxis = list(title= "<b>Semanas Epidemiológicas</b>",
+                               xaxis = list(title= "<b>Semanas Epidemiol\u00f3gicas</b>",
                                             color = "#E01E5A",
                                             tick = list(color = "#006AFF"),
                                             tickfont = list(color = "#006AFF")),

@@ -42,8 +42,8 @@ cases_week <- function(path, mpo, year){
         ggplot2::scale_x_continuous(breaks = seq(from = 0,
                                                  to = 52,
                                                  by = 2)) +
-        ggplot2::ylab("Número de Casos") +
-        ggplot2::xlab("Semanas Epidemiológicas") +
+        ggplot2::ylab("N\u00famero de Casos") +
+        ggplot2::xlab("Semanas Epidemiol\u00f3gicas") +
         ggplot2::theme(strip.text = ggplot2::element_text(size = 12),
                        legend.background = ggplot2::element_blank(),
                        legend.key = ggplot2::element_blank(),
@@ -103,8 +103,8 @@ cases_week <- function(path, mpo, year){
         ggplot2::scale_x_continuous(breaks = seq(from = 0,
                                                  to = 52,
                                                  by = 2)) +
-        ggplot2::ylab("Número de Casos") +
-        ggplot2::xlab("Semanas Epidemiológicas")
+        ggplot2::ylab("N\u00famero de Casos") +
+        ggplot2::xlab("Semanas Epidemiol\u00f3gicas")
 
     a / b
 

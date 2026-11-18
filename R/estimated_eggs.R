@@ -95,10 +95,10 @@ estimated_eggs <- function(path_dengue,
         ggplot2::scale_x_continuous(breaks = seq(from = 0,
                                                  to = lubridate::epiweek(Sys.Date()),
                                                  by = 2)) +
-        ggplot2::ylab("Número de Casos Estimados") +
-        ggplot2::xlab("Semanas Epidemiológicas") +
+        ggplot2::ylab("N\u00famero de Casos Estimados") +
+        ggplot2::xlab("Semanas Epidemiol\u00f3gicas") +
         ggplot2::theme(strip.text = ggplot2::element_text(size = 12)) +
-        ggplot2::scale_y_continuous(name = "Número de Casos Estimados",
+        ggplot2::scale_y_continuous(name = "N\u00famero de Casos Estimados",
                                     # Add a second axis and specify its features
                                     sec.axis = ggplot2::sec_axis(~.*fac_axes,
                                                                  name="Promedio de Huevos por Manzana")) +
