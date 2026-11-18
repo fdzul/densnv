@@ -1,0 +1,162 @@
+---
+title: "Gráficos de casos de dengue"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Gráficos de casos de dengue}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Vignette precalculado. Editar graficos.Rmd.orig (no el .Rmd) y regenerar
+     en la computadora con los datos, desde la carpeta vignettes/:
+     knitr::knit("graficos.Rmd.orig", "graficos.Rmd")
+     Solo se publican conteos agregados. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.path = "figures/plt-es-",
+  fig.width = 8,
+  fig.height = 6,
+  dpi = 150,
+  out.width = "100%"
+)
+# captura estática de un gráfico plotly (requiere webshot2 y Chrome)
+captura <- function(widget, archivo, ancho = 1000, alto = 700){
+  ok <- tryCatch({
+    html <- tempfile(fileext = ".html")
+    htmlwidgets::saveWidget(widget, html, selfcontained = FALSE)
+    webshot2::webshot(html, archivo, vwidth = ancho, vheight = alto, delay = 3)
+    TRUE
+  }, error = function(e) FALSE)
+  if(ok && file.exists(archivo)) knitr::include_graphics(archivo) else invisible(NULL)
+}
+```
+
+[English version](graphs.html)
+
+## Introducción
+
+**densnv** tiene cuatro funciones para graficar los casos de dengue de la base del SINAVE:
+
+```{r funciones, echo = FALSE}
+knitr::kable(data.frame(
+  función = c("plt_pyramid()", "plt_serotype()", "plt_treemap()", "plt_heatmap()"),
+  gráfico = c("Pirámide de casos confirmados por grupo de edad y sexo",
+              "Casos confirmados por estado o municipio y diagnóstico, con los serotipos",
+              "Treemap de casos por estado o municipio y diagnóstico final",
+              "Mapa de calor interactivo (plotly) de casos por municipio y semana"),
+  salida = c("ggplot", "ggplot (cowplot)", "ggplot", "plotly")))
+```
+
+```{r setup}
+library(densnv)
+```
+
+## Datos
+
+```{r datos, eval = FALSE}
+x <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+```
+
+```{r datos_local, include = FALSE}
+# ruta local (no se muestra en el vignette); ajustar al año vigente
+x <- data.table::fread("/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2026/DENGUE2_.txt",
+                       quote = "", fill = TRUE)
+```
+
+```{r anio}
+anio <- max(x$ANO, na.rm = TRUE)
+anio
+```
+
+## Pirámide por edad y sexo
+
+`plt_pyramid()` usa los casos confirmados (`ESTATUS_CASO == 2`) en 15 grupos de edad, con hombres a la izquierda y mujeres a la derecha. Cada lado lleva un ícono de Font Awesome y el total de casos por sexo, que funcionan como leyenda. Para un estado o municipio, se filtra la base antes:
+
+```{r piramide, fig.height = 7}
+oax <- x[x$CVE_EDO_REP == 20 & x$ANO == anio, ]
+plt_pyramid(data = oax,
+            col_male = "#0072B2",
+            col_female = "#CC79A7",
+            gap = 0.18,
+            size_age = 3.5,
+            size_count = 3,
+            icon_male = "person",
+            icon_female = "person-dress",
+            show_zero = FALSE,
+            title = "Casos confirmados de dengue por grupo de edad y sexo",
+            subtitle = paste0("Oaxaca, ", anio),
+            caption = "Fuente: SINAVE/DGE, Secretaría de Salud.")
+```
+
+Para guardarla en alta resolución: `ggplot2::ggsave("piramide.png", width = 8, height = 7, dpi = 300)`.
+
+## Casos por diagnóstico y serotipo
+
+`plt_serotype()` grafica los casos confirmados por estado (o por municipio, con `cve_edo`) y diagnóstico final, e inserta un gráfico de los serotipos. `scale_serotype`, `x_serotype` y `y_serotype` definen el tamaño y la posición del gráfico insertado (ver `cowplot::draw_plot()`); conviene ajustarlos según el número de barras.
+
+```{r serotipo_pais}
+plt_serotype(data = x,
+             year = anio,
+             scale_serotype = 1.7,
+             x_serotype = 0.5,
+             y_serotype = 0.17,
+             cve_edo = NULL)
+```
+
+Un estado (Oaxaca), por municipio:
+
+```{r serotipo_oaxaca}
+plt_serotype(data = x,
+             year = anio,
+             scale_serotype = 1.7,
+             x_serotype = 0.5,
+             y_serotype = 0.17,
+             cve_edo = 20)
+```
+
+## Treemap
+
+`plt_treemap()` muestra el peso de cada estado (o municipio) en el total de casos, por diagnóstico final (dengue no grave, con signos de alarma y grave).
+
+```{r treemap_pais}
+plt_treemap(snv_dataset = x,
+            country = TRUE,
+            cve_edo = NULL,
+            year = anio)
+```
+
+```{r treemap_oaxaca}
+plt_treemap(snv_dataset = x,
+            country = FALSE,
+            cve_edo = 20,
+            year = anio)
+```
+
+## Mapa de calor por municipio y semana
+
+`plt_heatmap()` hace un mapa de calor interactivo (plotly): municipios en las filas, semanas epidemiológicas en las columnas y el número de casos en el color. Con `hospitalizados = TRUE` solo cuenta los casos hospitalizados.
+
+```{r heatmap, eval = FALSE}
+plt_heatmap(dataset = x,
+            state = "OAXACA",
+            year = anio,
+            status = 2,
+            hospitalizados = FALSE)
+```
+
+```{r heatmap_fig, echo = FALSE}
+captura(plt_heatmap(dataset = x, state = "OAXACA", year = anio,
+                    status = 2, hospitalizados = FALSE),
+        "figures/plt-es-heatmap.png")
+```
+
+## Notas
+
+1. Las funciones usan el estado y municipio de **reporte** (`*_REP`).
+2. `plt_pyramid()` necesita los paquetes fontawesome y rsvg para los íconos; se conservan al guardar con `ggsave()`.
+3. Para presentaciones, los gráficos ggplot se pueden modificar con capas de ggplot2 (`+ ggplot2::theme(...)`).
