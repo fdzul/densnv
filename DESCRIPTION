@@ -23,23 +23,35 @@ BugReports: https://github.com/fdzul/densnv/issues
 Imports:
     cowplot,
     data.table,
+    dbscan,
     deneggs,
     dplyr,
+    EpiEstim,
+    fontawesome,
     forcats,
     formattable,
     ggmap,
     ggplot2,
     ggrepel,
+    gifski,
+    grDevices,
     grid,
     htmltools,
+    htmlwidgets,
+    janitor,
     KernSmooth,
+    leaflet,
     lubridate,
+    mapgl,
     mapview,
     plotly,
+    png,
     ppmData,
     purrr,
     raster,
     rgeomex,
+    rlang,
+    rsvg,
     scales,
     sf,
     stats,
@@ -50,7 +62,8 @@ Imports:
     tidyterra,
     tmap,
     treemapify,
-    utils
+    utils,
+    viridis
 Suggests:
     denhotspots,
     gt,
@@ -60,11 +73,12 @@ Suggests:
     skimr
 VignetteBuilder: 
     knitr
-Remotes:
-    fdzul/deneggs,
-    fdzul/denhotspots,
+Remotes: 
     fdzul/rgeomex,
-    skiptoniam/ppmData
+    fdzul/deneggs,
+    skiptoniam/ppmData,
+    fdzul/denhotspots
 Config/roxygen2/version: 8.1.0
 Encoding: UTF-8
 LazyData: true
+Additional_repositories: https://inla.r-inla-download.org/R/stable

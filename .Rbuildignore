@@ -6,3 +6,7 @@
 ^\.claude$
 ^\.DS_Store$
 ^dev$
+^docs$
+^pkgdown$
+^README\.es\.Rmd$
+^README\.es\.md$
