@@ -2,7 +2,10 @@
 <url><loc>/404.html</loc></url>
 <url><loc>/LICENSE-text.html</loc></url>
 <url><loc>/LICENSE.html</loc></url>
+<url><loc>/README.es.html</loc></url>
+<url><loc>/articles/active_foci.html</loc></url>
 <url><loc>/articles/base_datos_sinave.html</loc></url>
+<url><loc>/articles/focos_activos.html</loc></url>
 <url><loc>/articles/index.html</loc></url>
 <url><loc>/articles/mapas_de_calor.html</loc></url>
 <url><loc>/authors.html</loc></url>
@@ -15,6 +18,7 @@
 <url><loc>/reference/estimated_eggs.html</loc></url>
 <url><loc>/reference/geocode.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/mp_active_foci.html</loc></url>
 <url><loc>/reference/mp_animated.html</loc></url>
 <url><loc>/reference/mp_animated_loc.html</loc></url>
 <url><loc>/reference/mp_animated_mpo.html</loc></url>
@@ -31,6 +35,7 @@
 <url><loc>/reference/plt_treemap.html</loc></url>
 <url><loc>/reference/read.html</loc></url>
 <url><loc>/reference/read_dengue_dataset.html</loc></url>
+<url><loc>/reference/rt_dengue.html</loc></url>
 <url><loc>/reference/save_geocode.html</loc></url>
 <url><loc>/reference/tb_conf.html</loc></url>
 </urlset>

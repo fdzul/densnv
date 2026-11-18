@@ -2,6 +2,8 @@ pandoc: '3.10'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  active_foci: active_foci.html
   base_datos_sinave: base_datos_sinave.html
+  focos_activos: focos_activos.html
   mapas_de_calor: mapas_de_calor.html
-last_built: 2026-10-27T02:13Z
+last_built: 2026-11-18T21:16Z
