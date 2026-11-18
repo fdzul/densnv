@@ -1,0 +1,203 @@
+---
+title: "Arbovirus cases by locality"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Arbovirus cases by locality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Precomputed vignette. Edit cases_locality.Rmd.orig (not the .Rmd) and
+     rebuild on the computer with the data, from the vignettes/ folder:
+     knitr::knit("cases_locality.Rmd.orig", "cases_locality.Rmd")
+     Only aggregated counts by locality are published. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.path = "figures/loc-en-",
+  dpi = 150,
+  out.width = "100%"
+)
+# static screenshot of a leaflet map (needs webshot2 and Chrome)
+screenshot <- function(map, file, width = 1000, height = 650){
+  ok <- tryCatch({
+    html <- tempfile(fileext = ".html")
+    htmlwidgets::saveWidget(map, html, selfcontained = FALSE)
+    webshot2::webshot(html, file, vwidth = width, vheight = height, delay = 3)
+    TRUE
+  }, error = function(e) FALSE)
+  if(ok && file.exists(file)) knitr::include_graphics(file) else invisible(NULL)
+}
+```
+
+[Versión en español](casos_localidad.html)
+
+## Introduction
+
+The locality is the operational unit of the dengue program: entomological surveillance, larval control and fogging are scheduled there. **densnv** has two functions to see where the cases are at that level:
+
+1. `cases_by_loc()` reads the SINAVE dataset (dengue, Zika or chikungunya), counts the probable and confirmed cases by **locality of report** and joins them to the INEGI locality catalogue (ITER 2020). It returns one point per locality with cases.
+2. `mp_cases_loc()` makes an interactive map (leaflet) with proportional circles, state and municipal boundaries, and a panel with the localities with the most cases. Clicking a row of the panel zooms the map to that locality.
+
+Column names and map labels are in Spanish, the language of the users of the Mexican vector-borne disease program.
+
+```{r setup}
+library(densnv)
+```
+
+## Cases by locality
+
+```{r paths, eval = FALSE}
+den <- cases_by_loc(path = "DENGUE2_.txt", snv_dataset = "DENV")
+```
+
+```{r paths_local, include = FALSE}
+# local paths (not shown in the vignette); set the current year
+path_den  <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2026/DENGUE2_.txt"
+path_zik  <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/zikv/2026/ZIKA2_.txt"
+path_chik <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/chikv/2026/CHIKUNGUNYA2_.txt"
+den <- cases_by_loc(path = path_den, snv_dataset = "DENV")
+```
+
+Only probable and confirmed cases are counted (`ESTATUS_CASO` 1 and 2). The locality key (`cvegeo`, 9 digits) is built from the state, municipality and locality of report. The columns returned are:
+
+```{r columns, echo = FALSE}
+knitr::kable(data.frame(
+  column = c("cvegeo", "nom_ent, nom_mun, nom_loc", "probable", "confirmado",
+             "DNG, DCSA, DG", "DENV1 to DENV4", "altitud", "pobtot", "geometry"),
+  description = c("INEGI locality key",
+                  "Names of the state, municipality and locality (ITER 2020)",
+                  "Notified cases (probable + confirmed)",
+                  "Confirmed cases",
+                  "Cases by final diagnosis: non-severe dengue, with warning signs and severe (DENV only)",
+                  "Cases by serotype (DENV only)",
+                  "Altitude of the locality (m)",
+                  "Total population (Census 2020)",
+                  "Point of the locality (EPSG:4326)")))
+```
+
+Localities with the most probable cases in the country:
+
+```{r top}
+den |>
+  sf::st_drop_geometry() |>
+  dplyr::arrange(dplyr::desc(probable)) |>
+  dplyr::select(nom_ent, nom_loc, probable, confirmado, DCSA, DG) |>
+  head(10)
+```
+
+National summary by serotype and severity:
+
+```{r summary}
+den |>
+  sf::st_drop_geometry() |>
+  dplyr::summarise(localities = dplyr::n(),
+                   probable = sum(probable),
+                   confirmed = sum(confirmado),
+                   dplyr::across(c(DNG, DCSA, DG, DENV1, DENV2, DENV3, DENV4), sum))
+```
+
+### Incidence by locality
+
+With the 2020 Census population the incidence per 100,000 inhabitants can be computed. It is better to restrict it to localities with enough population, because in small localities a single case gives a very high incidence:
+
+```{r incidence}
+den |>
+  sf::st_drop_geometry() |>
+  dplyr::filter(pobtot >= 10000) |>
+  dplyr::mutate(incidence = round(1e5 * probable / pobtot, 1)) |>
+  dplyr::arrange(dplyr::desc(incidence)) |>
+  dplyr::select(nom_ent, nom_loc, pobtot, probable, incidence) |>
+  head(10)
+```
+
+### By epidemiological week
+
+The `week` argument filters the weeks, for example the last four (active transmission):
+
+```{r weeks}
+wk <- data.table::fread(path_den, quote = "", fill = TRUE, select = c("ANO", "SEM"))
+last4 <- max(wk$SEM[wk$ANO == max(wk$ANO)]) - 3:0
+den_4 <- cases_by_loc(path = path_den, snv_dataset = "DENV", week = last4)
+den_4 |>
+  sf::st_drop_geometry() |>
+  dplyr::arrange(dplyr::desc(probable)) |>
+  dplyr::select(nom_ent, nom_loc, probable, confirmado) |>
+  head(10)
+```
+
+### Zika and chikungunya
+
+```{r others, eval = FALSE}
+zik  <- cases_by_loc(path = "ZIKA2_.txt",        snv_dataset = "ZIKV")
+chik <- cases_by_loc(path = "CHIKUNGUNYA2_.txt", snv_dataset = "CHIKV")
+```
+
+```{r others_local, include = FALSE}
+zik  <- tryCatch(cases_by_loc(path = path_zik,  snv_dataset = "ZIKV"),  error = function(e) NULL)
+chik <- tryCatch(cases_by_loc(path = path_chik, snv_dataset = "CHIKV"), error = function(e) NULL)
+```
+
+```{r others_table}
+lapply(list(dengue = den, zika = zik, chikungunya = chik), function(x){
+  if(is.null(x)) return(NULL)
+  x <- sf::st_drop_geometry(x)
+  c(localities = nrow(x), probable = sum(x$probable), confirmed = sum(x$confirmado))
+})
+```
+
+## Interactive map
+
+```{r map_country, eval = FALSE}
+mp_cases_loc(data = den,
+             var = "probable",
+             top_n = 10,
+             title = "Casos Probables",
+             palette = "D",
+             r_min = 4,
+             r_max = 20,
+             cve_edo = NULL,
+             mun_boundaries = TRUE,
+             edo_boundaries = TRUE,
+             table_position = "topright")
+```
+
+```{r map_country_fig, echo = FALSE}
+screenshot(mp_cases_loc(data = den, var = "probable", top_n = 10,
+                        title = "Casos Probables"),
+           "figures/loc-en-map-country.png")
+```
+
+One state (Oaxaca), confirmed cases in the last four weeks:
+
+```{r map_oaxaca, eval = FALSE}
+mp_cases_loc(data = den_4,
+             var = "confirmado",
+             top_n = 15,
+             title = "Casos Confirmados",
+             palette = "D",
+             r_min = 4,
+             r_max = 20,
+             cve_edo = "20",
+             mun_boundaries = TRUE,
+             edo_boundaries = TRUE,
+             table_position = "topright")
+```
+
+```{r map_oaxaca_fig, echo = FALSE}
+screenshot(mp_cases_loc(data = den_4, var = "confirmado", top_n = 15,
+                        title = "Casos Confirmados", cve_edo = "20"),
+           "figures/loc-en-map-oaxaca.png")
+```
+
+`var` accepts any count column: `"probable"`, `"confirmado"`, `"DNG"`, `"DCSA"`, `"DG"` or a serotype (`"DENV1"`...). In the interactive map the boundaries are turned on and off in the layers control, the home button returns to the state or the country, and hovering over a municipality shows its name.
+
+## Notes
+
+1. The locality is the locality of **report**, not of residence: in non-endemic areas the cases are reported in the place of exposure.
+2. Records with empty keys (`"00"`, `"000"`, `"0000"`) and localities not in ITER 2020 are dropped.
+3. Incidence in small localities is unstable; use a population threshold.
