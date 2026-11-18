@@ -6,4 +6,6 @@ articles:
   base_datos_sinave: base_datos_sinave.html
   focos_activos: focos_activos.html
   mapas_de_calor: mapas_de_calor.html
-last_built: 2026-11-18T21:16Z
+  numero_reproductivo: numero_reproductivo.html
+  reproduction_number: reproduction_number.html
+last_built: 2026-11-18T21:34Z
