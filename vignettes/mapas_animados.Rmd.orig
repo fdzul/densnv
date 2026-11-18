@@ -1,0 +1,198 @@
+---
+title: "Mapas animados de casos de dengue"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Mapas animados de casos de dengue}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Vignette precalculado. Editar mapas_animados.Rmd.orig (no el .Rmd) y
+     regenerar en la computadora con los datos, desde la carpeta vignettes/:
+     knitr::knit("mapas_animados.Rmd.orig", "mapas_animados.Rmd")
+     Los gif (vignettes/figures/anim-*.gif) los comparte con la versión en
+     inglés; se generan solo si no existen (bórralos para actualizarlos).
+     Solo se publican conteos agregados por localidad y municipio. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  out.width = "100%"
+)
+# gif ligero para el vignette: reduce el ancho (magick) para no inflar el paquete
+gif_ligero <- function(origen, destino, ancho = 700){
+  dir.create(dirname(destino), showWarnings = FALSE)
+  ok <- tryCatch({
+    magick::image_read(origen) |>
+      magick::image_scale(as.character(ancho)) |>
+      magick::image_write(destino, format = "gif")
+    TRUE
+  }, error = function(e) file.copy(origen, destino, overwrite = TRUE))
+  invisible(ok)
+}
+mostrar <- function(f) if(file.exists(f)) knitr::include_graphics(f) else invisible(NULL)
+```
+
+[English version](animated_maps.html)
+
+## Introducción
+
+Un mapa animado muestra **cómo se mueve la transmisión** semana a semana: dónde empieza, hacia dónde se extiende y cuándo cede. **densnv** tiene dos funciones:
+
+```{r funciones, echo = FALSE}
+knitr::kable(data.frame(
+  función = c("mp_animated_loc()", "mp_animated_mpo()"),
+  unidad = c("Localidad (círculos proporcionales)", "Municipio (círculos o coroplético)"),
+  casos = c("Probables, confirmados, diagnóstico final o serotipo; uno o varios a la vez",
+            "Confirmados (DNG, DCSA y DG)"),
+  motor = c("ggplot2 + gifski, con curva epidémica opcional", "tmap + gifski")))
+```
+
+```{r setup}
+library(densnv)
+```
+
+## Datos
+
+```{r datos, eval = FALSE}
+ruta <- "DENGUE2_.txt"
+x <- data.table::fread(ruta, quote = "", fill = TRUE)
+```
+
+```{r datos_local, include = FALSE}
+# ruta local (no se muestra en el vignette); ajustar al año vigente
+ruta <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2026/DENGUE2_.txt"
+x <- data.table::fread(ruta, quote = "", fill = TRUE)
+anio <- max(x$ANO, na.rm = TRUE)
+# para el vignette se animan solo las últimas 16 semanas (gif más ligero)
+semanas <- max(x$SEM[x$ANO == anio], na.rm = TRUE) - 15:0
+```
+
+## Por localidad: `mp_animated_loc()`
+
+Cuenta los casos por localidad de reporte y semana epidemiológica, y los dibuja como círculos proporcionales sobre los límites estatales (país) o municipales (estado). Las escalas de tamaño y color son **las mismas en todos los cuadros**, así que las semanas se pueden comparar. Con `curve = TRUE` agrega debajo la curva epidémica, con la semana actual marcada.
+
+### Un estado: Oaxaca
+
+```{r loc_oaxaca, eval = FALSE}
+mp_animated_loc(path = ruta,
+                snv_dataset = "DENV",
+                year = 2026,
+                week = 1:52,
+                var = "probable",
+                multi = "sum",
+                country = FALSE,
+                cve_edo = "20",
+                breaks = NULL,
+                pal = "-viridis",
+                text_size = 0.4,
+                fps = 2,
+                curve = TRUE,
+                map_legend = TRUE,
+                legend_title = "Casos por localidad",
+                save = TRUE,
+                name = "dengue_oaxaca_2026",
+                dir = "./")
+```
+
+```{r loc_oaxaca_gif, include = FALSE}
+f <- "figures/anim-loc-oaxaca.gif"
+if(!file.exists(f)){
+  g <- mp_animated_loc(path = ruta, snv_dataset = "DENV", year = anio,
+                       week = semanas, var = "probable", multi = "sum",
+                       country = FALSE, cve_edo = "20", curve = TRUE,
+                       height = 1200, save = FALSE)
+  gif_ligero(g, f)
+}
+```
+
+```{r loc_oaxaca_fig, echo = FALSE}
+mostrar("figures/anim-loc-oaxaca.gif")
+```
+
+### Varios tipos de casos
+
+El argumento `var` acepta uno o varios valores: `"probable"`, `"confirmado"`, `"DNG"`, `"DCSA"`, `"DG"`, `"DENV1"` a `"DENV4"`. Con varios, `multi` decide cómo combinarlos:
+
+1. **`multi = "sum"`:** los suma en un solo mapa (por ejemplo, las formas graves, `c("DCSA", "DG")`).
+2. **`multi = "facet"`:** un panel por valor, con la misma escala (por ejemplo, un panel por serotipo). Un caso puede aparecer en más de un panel.
+
+```{r loc_serotipos, eval = FALSE}
+mp_animated_loc(path = ruta,
+                snv_dataset = "DENV",
+                year = 2026,
+                week = 1:52,
+                var = c("DENV1", "DENV2", "DENV3", "DENV4"),
+                multi = "facet",
+                ncol = 2,
+                country = TRUE,
+                cve_edo = NULL,
+                curve = TRUE,
+                save = TRUE,
+                name = "serotipos_mexico_2026",
+                dir = "./")
+```
+
+```{r loc_serotipos_gif, include = FALSE}
+f <- "figures/anim-loc-serotipos.gif"
+if(!file.exists(f)){
+  g <- mp_animated_loc(path = ruta, snv_dataset = "DENV", year = anio,
+                       week = semanas, var = c("DENV1", "DENV2", "DENV3", "DENV4"),
+                       multi = "facet", ncol = 2, country = TRUE, curve = TRUE,
+                       height = 1400, save = FALSE)
+  gif_ligero(g, f)
+}
+```
+
+```{r loc_serotipos_fig, echo = FALSE}
+mostrar("figures/anim-loc-serotipos.gif")
+```
+
+## Por municipio: `mp_animated_mpo()`
+
+Cuenta los casos confirmados (dengue no grave, con signos de alarma y grave) por municipio de residencia y semana. Con `dot = TRUE` dibuja círculos proporcionales; con `dot = FALSE`, un mapa coroplético con la paleta `pal`.
+
+```{r mpo_oaxaca, eval = FALSE}
+mp_animated_mpo(data = x,
+                year = 2026,
+                name = "Oaxaca",
+                dir = "./",
+                country = FALSE,
+                breaks = NULL,
+                save = TRUE,
+                cve_edo = "20",
+                text_size = 0.3,
+                dot = TRUE,
+                pal = viridis::viridis)
+```
+
+```{r mpo_oaxaca_gif, include = FALSE}
+f <- "figures/anim-mpo-oaxaca.gif"
+if(!file.exists(f)){
+  tmp <- paste0(tempdir(), "/")
+  mp_animated_mpo(data = x[x$SEM %in% semanas, ], year = anio, name = "oaxaca",
+                  dir = tmp, country = FALSE, save = TRUE, cve_edo = "20",
+                  text_size = 0.3, dot = TRUE, pal = viridis::viridis)
+  gif_ligero(paste0(tmp, "oaxaca_dot_animated_map.gif"), f)
+}
+```
+
+```{r mpo_oaxaca_fig, echo = FALSE}
+mostrar("figures/anim-mpo-oaxaca.gif")
+```
+
+## Recomendaciones
+
+1. **Tamaño del gif:** con 52 semanas y todo el país, el gif puede pesar varios MB. Para presentaciones conviene `fps = 2` o `3` y limitar `week` al periodo de interés.
+2. **Comparar semanas:** como las escalas son las mismas en todos los cuadros, un círculo del mismo tamaño significa el mismo número de casos en cualquier semana.
+3. **Guardar:** con `save = TRUE` el gif queda en `dir`; con `save = FALSE` solo se muestra en el Viewer de RStudio.
+4. Los gif de este vignette muestran solo las últimas 16 semanas y están reducidos de tamaño.
+
+## Notas
+
+1. `mp_animated_loc()` usa la localidad de **reporte** y el catálogo de localidades del INEGI 2020 (`rgeomex::iter_2020_loc`).
+2. `mp_animated_mpo()` usa el municipio de **residencia** y excluye los casos de otros países.
+3. Las dos funciones necesitan el paquete gifski.
