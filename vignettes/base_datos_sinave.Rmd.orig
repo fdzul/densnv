@@ -1,0 +1,174 @@
+---
+title: "Base de datos del SINAVE"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Base de datos del SINAVE}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Vignette precalculado. Editar base_datos_sinave.Rmd.orig (no el .Rmd) y
+     regenerar en la computadora con los datos, desde la carpeta vignettes/:
+     knitr::knit("base_datos_sinave.Rmd.orig", "base_datos_sinave.Rmd")
+     CONFIDENCIALIDAD: no imprimir renglones de la base (domicilios, folios);
+     solo dimensiones, resúmenes y conteos agregados. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+[English version](sinave_dataset.html)
+
+## Introducción
+
+El Sistema Nacional de Vigilancia Epidemiológica ([SINAVE](https://www.sinave.gob.mx)) de la Secretaría de Salud tiene 11 bases de datos de enfermedades transmitidas por vector: RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA y DENGUE. Su uso es exclusivo del personal de la Secretaría de Salud (estatal y federal), en particular de los departamentos de Epidemiología y de Enfermedades Transmitidas por Vector.
+
+La resolución temporal de las bases es diaria y la espacial es la vivienda, así que pueden agregarse por colonia, localidad, municipio y estado para elaborar tablas, gráficos y mapas.
+
+En el dengueverse, las bases se cargan en R con dos funciones de **densnv**:
+
+1. `read()`: lee uno o varios archivos txt de una carpeta.
+2. `read_dengue_dataset()`: lee la base de dengue y la filtra por nivel geográfico y estatus del caso.
+
+El paquete boldenr está siendo sustituido por densnv; se recomienda usar estas dos funciones.
+
+```{r setup}
+library(densnv)
+```
+
+```{r rutas, eval = FALSE}
+ruta     <- "dge/denv/2026"                  # carpeta con los archivos txt
+ruta_txt <- "dge/denv/2026/DENGUE2_.txt"     # archivo de dengue
+```
+
+```{r rutas_local, include = FALSE}
+# rutas locales (no se muestran en el vignette); ajustar al año vigente
+ruta     <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2026"
+ruta_txt <- file.path(ruta, "DENGUE2_.txt")
+```
+
+## Columnas principales
+
+```{r columnas, echo = FALSE}
+knitr::kable(data.frame(
+  columna = c("ANO, SEM", "FEC_INI_SIGNOS_SINT", "ESTATUS_CASO",
+              "CVE_EDO_RES, CVE_MPO_RES, CVE_LOC_RES",
+              "CVE_EDO_REP, CVE_MPO_REP, CVE_LOC_REP",
+              "DES_DIAG_FINAL", "IDE_EDA_ANO, IDE_SEX"),
+  contenido = c("Año y semana epidemiológica",
+                "Fecha de inicio de síntomas",
+                "1 probable, 2 confirmado, 3 descartado",
+                "Estado, municipio y localidad de residencia (claves INEGI)",
+                "Estado, municipio y localidad de reporte (claves INEGI)",
+                "Diagnóstico final: dengue no grave, con signos de alarma o grave",
+                "Edad (años) y sexo")))
+```
+
+En las áreas no endémicas, los casos positivos se reportan en el lugar donde se expusieron, así que el lugar de **reporte** (`*_REP`) es el lugar de transmisión. En las áreas endémicas, reporte y residencia casi coinciden.
+
+## `read()`
+
+```{r read_argumentos, echo = FALSE}
+knitr::kable(data.frame(
+  argumento = c("path", "vbd", "complete"),
+  valor = c("texto", "texto", "lógico"),
+  definición = c("Ruta de la carpeta donde están los archivos txt",
+                 "Enfermedad de interés (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA o DENGUE)",
+                 "TRUE para las arbovirosis (dengue, chikungunya y Zika); FALSE para las otras enfermedades")))
+```
+
+```{r read_complete_true}
+read(path = ruta, vbd = "DENGUE", complete = TRUE) |>
+  dim()
+```
+
+```{r read_complete_false}
+read(path = ruta, vbd = "DENGUE", complete = FALSE) |>
+  dim()
+```
+
+Un resumen de la base, sin mostrar renglones:
+
+```{r read_skim}
+read(path = ruta, vbd = "DENGUE", complete = FALSE) |>
+  dplyr::select(dplyr::any_of(c("ANO", "SEM", "ESTATUS_CASO", "IDE_EDA_ANO",
+                                "IDE_SEX", "DES_DIAG_FINAL"))) |>
+  skimr::skim()
+```
+
+## `read_dengue_dataset()`
+
+```{r rdd_argumentos, echo = FALSE}
+knitr::kable(data.frame(
+  argumento = c("path", "spatial_resolution", "status_caso", "des_edo_res", "des_mpo_res"),
+  valor = c("texto", "texto", "entero", "texto", "texto"),
+  definición = c("Ruta del archivo txt de dengue",
+                 "Nivel geográfico: \"country\", \"state\" o \"municipality\"",
+                 "Estatus del caso: 1 probable, 2 confirmado, 3 descartado (uno o varios)",
+                 "Estado de residencia, en mayúsculas (para \"state\" y \"municipality\")",
+                 "Municipio de residencia, en mayúsculas (para \"municipality\")")))
+```
+
+### País
+
+```{r rdd_pais}
+x <- read_dengue_dataset(path = ruta_txt,
+                         spatial_resolution = "country",
+                         status_caso = c(1, 2, 3))
+dim(x)
+table(x$ESTATUS_CASO)
+```
+
+Casos por estado de residencia y estatus:
+
+```{r rdd_pais_tabla}
+table(estado = x$DES_EDO_RES, estatus = x$ESTATUS_CASO) |>
+  as.data.frame.matrix() |>
+  knitr::kable()
+```
+
+### Estado: Yucatán
+
+Casos confirmados por municipio de residencia:
+
+```{r rdd_estado}
+read_dengue_dataset(path = ruta_txt,
+                    spatial_resolution = "state",
+                    des_edo_res = "YUCATAN",
+                    status_caso = 2) |>
+  dplyr::count(DES_MPO_RES, name = "casos", sort = TRUE) |>
+  knitr::kable()
+```
+
+### Municipio: Acapulco de Juárez
+
+Casos confirmados por localidad de residencia:
+
+```{r rdd_municipio}
+read_dengue_dataset(path = ruta_txt,
+                    spatial_resolution = "municipality",
+                    des_edo_res = "GUERRERO",
+                    des_mpo_res = "ACAPULCO DE JUAREZ",
+                    status_caso = 2) |>
+  dplyr::count(DES_LOC_RES, name = "casos", sort = TRUE) |>
+  knitr::kable()
+```
+
+## Otra forma de leer la base
+
+Para usar la base completa, sin filtros, con las demás funciones de densnv (`plt_pyramid()`, `mp_animated_mpo()`, `rt_dengue()`...):
+
+```{r fread, eval = FALSE}
+x <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+```
+
+Los argumentos `quote = ""` y `fill = TRUE` evitan errores con las comillas y los renglones incompletos de los archivos del SINAVE.
+
+## Confidencialidad
+
+Las bases tienen domicilios y datos personales. No deben compartirse ni publicarse renglones individuales; en informes, presentaciones y repositorios solo deben aparecer conteos agregados.

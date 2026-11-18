@@ -1,118 +1,296 @@
 ---
-title: "Base de Datos del Sinave"
+title: "Base de datos del SINAVE"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Base de Datos del Sinave}
+  %\VignetteIndexEntry{Base de datos del SINAVE}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-# Los datos de este vignette son locales (no se distribuyen con el paquete).
-# En R-universe/CRAN el código se muestra pero no se ejecuta.
-local_data <- dir.exists("/Users/fdzul/Library/CloudStorage/Dropbox/dataset")
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  eval = local_data
-)
-```
+<!-- Vignette precalculado. Editar base_datos_sinave.Rmd.orig (no el .Rmd) y
+     regenerar en la computadora con los datos, desde la carpeta vignettes/:
+     knitr::knit("base_datos_sinave.Rmd.orig", "base_datos_sinave.Rmd")
+     CONFIDENCIALIDAD: no imprimir renglones de la base (domicilios, folios);
+     solo dimensiones, resúmenes y conteos agregados. -->
 
-```{r setup}
+
+
+[English version](sinave_dataset.html)
+
+## Introducción
+
+El Sistema Nacional de Vigilancia Epidemiológica ([SINAVE](https://www.sinave.gob.mx)) de la Secretaría de Salud tiene 11 bases de datos de enfermedades transmitidas por vector: RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA y DENGUE. Su uso es exclusivo del personal de la Secretaría de Salud (estatal y federal), en particular de los departamentos de Epidemiología y de Enfermedades Transmitidas por Vector.
+
+La resolución temporal de las bases es diaria y la espacial es la vivienda, así que pueden agregarse por colonia, localidad, municipio y estado para elaborar tablas, gráficos y mapas.
+
+En el dengueverse, las bases se cargan en R con dos funciones de **densnv**:
+
+1. `read()`: lee uno o varios archivos txt de una carpeta.
+2. `read_dengue_dataset()`: lee la base de dengue y la filtra por nivel geográfico y estatus del caso.
+
+El paquete boldenr está siendo sustituido por densnv; se recomienda usar estas dos funciones.
+
+
+``` r
 library(densnv)
 ```
 
-Las bases de datos de las enfermedades transmitidas por vector del Sistema Nacional de Vigilancia Epidemiológica de la Secretaría de Salud, actualmente (2025) cuenta con 11 bases de datos (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, & DENGUE). El uso de las bases datos es exclusivo para personal de la Secretaría de Salud (tanto estatales o como federales), especifícamente para personal de los departamentos de Epidemiología y ETVs. La resolución temporal y espacial de las bases son de manera diaria y a nivel de casa, respectivamente. Las bases pueden agregarse por colonia, localidad, municipio y estado para elaborar tablas, gráficos y mapas.
 
-Dentro del ETVerse y dengueverse, estas bases pueden ser cargada en R con las funciones **read_dengue_dataset** del paquete [denhotspots](https://fdzul.github.io/denhotspots/), **read_vbd** del paquete [boldenr](https://fdzul.github.io/boldenr/) y **read** del paquete [densnv](https://fdzul.github.io/densnv/). Las tres funciones están en desarollo y paquete [boldenr](https://fdzul.github.io/boldenr/) va ser retirado en el 2024, sin embargo puede este año (2024) ser utilizado. Las funciones **read_vbd** y **read**, ambas tienen los mismos argumentos, y hay que considerar que el paquete [densnv](https://fdzul.github.io/densnv/) esta sustituyendo al paquete [boldenr](https://fdzul.github.io/boldenr/), por lo que se recomienda usar las funciones **read_dengue_dataset** y la funcion **read**.
-
-## **read**
-
-La función **read** del [densnv](https://fdzul.github.io/densnv/) tiene tres argumentos, path, vbd, & complete.
-
-```{r read_argumentos, eval = TRUE, echo=FALSE}
-tibble::tibble(argumentos = c("path", "vbd", "complete"),
-               valor = c("string", "string", "logical"),
-               definición = c("Es la ruta de la carpeta donde esta alojado el archivo txt",
-                              "Define la ETVS de interes. Hay 11 opciones (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA, & DENGUE)", "Es un valor lógico para definir si sube varias bases de datos de la misma ETV de diferentes años o diferentes ETVs del mismo año, o diferentes ETVs de diferentes años, de lo contrario solo sube una ETV completa" )) |>
-  gt::gt() |>
-  gt::opt_stylize(style = 6, color = "gray")
-  
+``` r
+ruta     <- "dge/denv/2026"                  # carpeta con los archivos txt
+ruta_txt <- "dge/denv/2026/DENGUE2_.txt"     # archivo de dengue
 ```
 
 
-```{r read_uso_complete_true}
-densnv::read(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025",
-             vbd = "DENGUE", 
-             complete = TRUE) |>
+
+## Columnas principales
+
+
+
+|columna                               |contenido                                                        |
+|:-------------------------------------|:----------------------------------------------------------------|
+|ANO, SEM                              |Año y semana epidemiológica                                      |
+|FEC_INI_SIGNOS_SINT                   |Fecha de inicio de síntomas                                      |
+|ESTATUS_CASO                          |1 probable, 2 confirmado, 3 descartado                           |
+|CVE_EDO_RES, CVE_MPO_RES, CVE_LOC_RES |Estado, municipio y localidad de residencia (claves INEGI)       |
+|CVE_EDO_REP, CVE_MPO_REP, CVE_LOC_REP |Estado, municipio y localidad de reporte (claves INEGI)          |
+|DES_DIAG_FINAL                        |Diagnóstico final: dengue no grave, con signos de alarma o grave |
+|IDE_EDA_ANO, IDE_SEX                  |Edad (años) y sexo                                               |
+
+
+
+En las áreas no endémicas, los casos positivos se reportan en el lugar donde se expusieron, así que el lugar de **reporte** (`*_REP`) es el lugar de transmisión. En las áreas endémicas, reporte y residencia casi coinciden.
+
+## `read()`
+
+
+
+|argumento |valor  |definición                                                                                                                                       |
+|:---------|:------|:------------------------------------------------------------------------------------------------------------------------------------------------|
+|path      |texto  |Ruta de la carpeta donde están los archivos txt                                                                                                  |
+|vbd       |texto  |Enfermedad de interés (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA o DENGUE) |
+|complete  |lógico |TRUE para las arbovirosis (dengue, chikungunya y Zika); FALSE para las otras enfermedades                                                        |
+
+
+
+
+``` r
+read(path = ruta, vbd = "DENGUE", complete = TRUE) |>
   dim()
-
-
+#> [1] 81352   432
 ```
 
-```{r read_uso_complete_false}
-densnv::read(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025",
-             vbd = "DENGUE", 
-             complete = FALSE) |>
+
+``` r
+read(path = ruta, vbd = "DENGUE", complete = FALSE) |>
   dim()
+#> [1] 81352    34
+```
+
+Un resumen de la base, sin mostrar renglones:
+
+
+``` r
+read(path = ruta, vbd = "DENGUE", complete = FALSE) |>
+  dplyr::select(dplyr::any_of(c("ANO", "SEM", "ESTATUS_CASO", "IDE_EDA_ANO",
+                                "IDE_SEX", "DES_DIAG_FINAL"))) |>
+  skimr::skim()
 ```
 
 
-```{r read_uso_complete_false_skim}
-densnv::read(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025",
-                  vbd = "DENGUE", 
-                  complete = FALSE) |>
-skimr::skim()
+Table: Data summary
 
-```
-
-## **read_dengue_dataset**
-
-La función **read_dengue_dataset** del [denhotspots](https://fdzul.github.io/denhotspots/) tiene tres argumentos, path, spatial_resolution, & status_caso.
-
-```{r read_dengue_dataset_argumentos, eval = TRUE, echo=FALSE}
-tibble::tibble(argumentos = c("path", "spatial_resolution", "status_caso"),
-               valor = c("string", "string", "integer"),
-               definición = c("Es la ruta de la carpeta donde esta alojado el archivo txt",
-                              "Es la resolución espacial o el nivel administrativo. Las opciones son country, state & municipality", "Es la condición de casos, y tiene tres opciones: 1 probable, 2 confirmado y descartado")) |>
-  gt::gt() |>
-  gt::opt_stylize(style = 6, color = "gray")
-  
-```
+|                         |                   |
+|:------------------------|:------------------|
+|Name                     |dplyr::select(...) |
+|Number of rows           |81352              |
+|Number of columns        |6                  |
+|Key                      |NULL               |
+|_______________________  |                   |
+|Column type frequency:   |                   |
+|character                |1                  |
+|numeric                  |5                  |
+|________________________ |                   |
+|Group variables          |None               |
 
 
-```{r a}
-x <- denhotspots::read_dengue_dataset(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt",
-                                      spatial_resolution = "country",
-                                      status_caso = c(1,2, 3))
+**Variable type: character**
+
+|skim_variable  | n_missing| complete_rate| min| max| empty| n_unique| whitespace|
+|:--------------|---------:|-------------:|---:|---:|-----:|--------:|----------:|
+|DES_DIAG_FINAL |         0|             1|   0|  27| 41471|        6|          0|
+
+
+**Variable type: numeric**
+
+|skim_variable | n_missing| complete_rate|    mean|    sd|   p0|  p25|  p50|  p75| p100|hist  |
+|:-------------|---------:|-------------:|-------:|-----:|----:|----:|----:|----:|----:|:-----|
+|ANO           |         0|             1| 2025.99|  0.08| 2025| 2026| 2026| 2026| 2026|▁▁▁▁▇ |
+|SEM           |         0|             1|   28.19| 13.19|    1|   18|   31|   40|   53|▃▃▆▇▃ |
+|ESTATUS_CASO  |         0|             1|    1.85|  0.92|    1|    1|    1|    3|    3|▇▁▂▁▆ |
+|IDE_EDA_ANO   |         0|             1|   29.59| 18.53|    0|   15|   27|   42|  105|▇▇▃▁▁ |
+|IDE_SEX       |         0|             1|    1.53|  0.50|    1|    1|    2|    2|    2|▇▁▁▁▇ |
+
+
+
+## `read_dengue_dataset()`
+
+
+
+|argumento          |valor  |definición                                                              |
+|:------------------|:------|:-----------------------------------------------------------------------|
+|path               |texto  |Ruta del archivo txt de dengue                                          |
+|spatial_resolution |texto  |Nivel geográfico: "country", "state" o "municipality"                   |
+|status_caso        |entero |Estatus del caso: 1 probable, 2 confirmado, 3 descartado (uno o varios) |
+|des_edo_res        |texto  |Estado de residencia, en mayúsculas (para "state" y "municipality")     |
+|des_mpo_res        |texto  |Municipio de residencia, en mayúsculas (para "municipality")            |
+
+
+
+### País
+
+
+``` r
+x <- read_dengue_dataset(path = ruta_txt,
+                         spatial_resolution = "country",
+                         status_caso = c(1, 2, 3))
 dim(x)
+#> [1] 81346    35
 table(x$ESTATUS_CASO)
-table(x$DES_EDO_RES, x$ESTATUS_CASO) |>
-  kableExtra::kable()
+#> 
+#>     1     2     3 
+#> 41470 10870 29006
 ```
 
-```{r b}
-densnv::read_dengue_dataset(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt",
-                                      spatial_resolution = "state",
-                                      des_edo_res = "YUCATAN",
-                                      status_caso = c(2)) |>
-  dplyr::group_by(DES_MPO_RES) |>
-  dplyr::summarise(n = dplyr::n()) |>
-  gt::gt() |>
-  gt::opt_row_striping()
-```
+Casos por estado de residencia y estatus:
 
 
-```{r c}
-densnv::read_dengue_dataset(path = "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2025/DENGUE2_.txt",
-                                 spatial_resolution = "municipality",
-                                 des_edo_res = "GUERRERO",
-                                 des_mpo_res = "ACAPULCO DE JUAREZ",
-                                 status_caso = c(2)) |>
-    dplyr::group_by(DES_LOC_RES) |>
-    dplyr::summarise(n = dplyr::n()) |>
-    gt::gt() |>
-    gt::opt_row_striping()
+``` r
+table(estado = x$DES_EDO_RES, estatus = x$ESTATUS_CASO) |>
+  as.data.frame.matrix() |>
+  knitr::kable()
 ```
 
 
+
+|                    |    1|    2|    3|
+|:-------------------|----:|----:|----:|
+|AGUASCALIENTES      |   53|  617|  664|
+|BAJA CALIFORNIA     |   53|   27|   83|
+|BAJA CALIFORNIA SUR | 5385|  719|  529|
+|CAMPECHE            |  808|   87|  421|
+|CHIAPAS             | 2353|  607| 1040|
+|CHIHUAHUA           |   22|   47|   88|
+|COAHUILA            |  252|   78|  392|
+|COLIMA              |  957|    5|  600|
+|DISTRITO FEDERAL    |   25|   22|  107|
+|DURANGO             |   22|   15|   72|
+|GUANAJUATO          |  630|  256|  582|
+|GUERRERO            | 2141|   36|  854|
+|HIDALGO             |  111|   61|  273|
+|JALISCO             | 2098|  286| 4992|
+|MEXICO              |  171|  177|  323|
+|MICHOACAN           | 1175|  274|  940|
+|MORELOS             | 2022|   50| 1362|
+|NAYARIT             | 2431|  292|  629|
+|NUEVO LEON          |  191|   44| 1024|
+|OAXACA              | 2224|   77|  398|
+|PUEBLA              |  561|   99|  563|
+|QUERETARO           |   41|    3|  182|
+|QUINTANA ROO        | 1812|  702| 2298|
+|SAN  LUIS POTOSI    |  231|   54|  490|
+|SINALOA             | 2140|  883| 1339|
+|SONORA              | 2839| 2736| 1975|
+|TABASCO             | 3096|  890| 1880|
+|TAMAULIPAS          |  567|   65|  855|
+|TLAXCALA            |    3|    2|    9|
+|VERACRUZ            | 5475| 1496| 2984|
+|YUCATAN             | 1575|  138| 1024|
+|ZACATECAS           |    6|   25|   34|
+
+
+
+### Estado: Yucatán
+
+Casos confirmados por municipio de residencia:
+
+
+``` r
+read_dengue_dataset(path = ruta_txt,
+                    spatial_resolution = "state",
+                    des_edo_res = "YUCATAN",
+                    status_caso = 2) |>
+  dplyr::count(DES_MPO_RES, name = "casos", sort = TRUE) |>
+  knitr::kable()
+```
+
+
+
+|DES_MPO_RES       | casos|
+|:-----------------|-----:|
+|MERIDA            |    43|
+|TICUL             |    36|
+|TIZIMIN           |    11|
+|KANASIN           |     8|
+|BUCTZOTZ  YUC     |     4|
+|PETO              |     4|
+|CALOTMUL          |     3|
+|CHEMAX            |     3|
+|TECOH             |     3|
+|VALLADOLID        |     3|
+|IZAMAL            |     2|
+|PROGRESO YUC      |     2|
+|TINUM             |     2|
+|TZUCACAB          |     2|
+|CANSAHCAB         |     1|
+|DZILAM DE BRAVO   |     1|
+|DZILAM GONZALEZ   |     1|
+|ESPITA            |     1|
+|MOTUL             |     1|
+|OXKUTZCAB         |     1|
+|SOTUTA            |     1|
+|TEMOZON           |     1|
+|TIXCACALCUPUL YUC |     1|
+|TIXMEHUAC         |     1|
+|TIXPEHUAL         |     1|
+|UMAN              |     1|
+
+
+
+### Municipio: Acapulco de Juárez
+
+Casos confirmados por localidad de residencia:
+
+
+``` r
+read_dengue_dataset(path = ruta_txt,
+                    spatial_resolution = "municipality",
+                    des_edo_res = "GUERRERO",
+                    des_mpo_res = "ACAPULCO DE JUAREZ",
+                    status_caso = 2) |>
+  dplyr::count(DES_LOC_RES, name = "casos", sort = TRUE) |>
+  knitr::kable()
+```
+
+
+
+|DES_LOC_RES        | casos|
+|:------------------|-----:|
+|ACAPULCO DE JUÁREZ |    19|
+
+
+
+## Otra forma de leer la base
+
+Para usar la base completa, sin filtros, con las demás funciones de densnv (`plt_pyramid()`, `mp_animated_mpo()`, `rt_dengue()`...):
+
+
+``` r
+x <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+```
+
+Los argumentos `quote = ""` y `fill = TRUE` evitan errores con las comillas y los renglones incompletos de los archivos del SINAVE.
+
+## Confidencialidad
+
+Las bases tienen domicilios y datos personales. No deben compartirse ni publicarse renglones individuales; en informes, presentaciones y repositorios solo deben aparecer conteos agregados.

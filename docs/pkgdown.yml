@@ -3,9 +3,16 @@ pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   active_foci: active_foci.html
+  animated_maps: animated_maps.html
   base_datos_sinave: base_datos_sinave.html
+  cases_locality: cases_locality.html
+  casos_localidad: casos_localidad.html
   focos_activos: focos_activos.html
+  graficos: graficos.html
+  graphs: graphs.html
+  mapas_animados: mapas_animados.html
   mapas_de_calor: mapas_de_calor.html
   numero_reproductivo: numero_reproductivo.html
   reproduction_number: reproduction_number.html
-last_built: 2026-11-18T21:34Z
+  sinave_dataset: sinave_dataset.html
+last_built: 2026-11-18T22:30Z

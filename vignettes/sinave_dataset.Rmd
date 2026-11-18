@@ -1,0 +1,296 @@
+---
+title: "SINAVE dataset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SINAVE dataset}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Precomputed vignette. Edit sinave_dataset.Rmd.orig (not the .Rmd) and
+     rebuild on the computer with the data, from the vignettes/ folder:
+     knitr::knit("sinave_dataset.Rmd.orig", "sinave_dataset.Rmd")
+     CONFIDENTIALITY: do not print rows of the dataset (addresses, folios);
+     only dimensions, summaries and aggregated counts. -->
+
+
+
+[Versión en español](base_datos_sinave.html)
+
+## Introduction
+
+The National Epidemiological Surveillance System ([SINAVE](https://www.sinave.gob.mx)) of the Ministry of Health of Mexico has 11 datasets of vector-borne diseases: RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA and DENGUE. Their use is restricted to the staff of the Ministry of Health (state and federal), in particular the departments of Epidemiology and of Vector-Borne Diseases.
+
+The temporal resolution of the datasets is daily and the spatial resolution is the house, so they can be aggregated by neighbourhood, locality, municipality and state to make tables, graphs and maps.
+
+In the dengueverse the datasets are loaded into R with two **densnv** functions:
+
+1. `read()`: reads one or several txt files of a folder.
+2. `read_dengue_dataset()`: reads the dengue dataset and filters it by geographic level and case status.
+
+The boldenr package is being replaced by densnv; these two functions are recommended.
+
+
+``` r
+library(densnv)
+```
+
+
+``` r
+path     <- "dge/denv/2026"                  # folder with the txt files
+path_txt <- "dge/denv/2026/DENGUE2_.txt"     # dengue file
+```
+
+
+
+## Main columns
+
+
+
+|column                                |content                                                          |
+|:-------------------------------------|:----------------------------------------------------------------|
+|ANO, SEM                              |Year and epidemiological week                                    |
+|FEC_INI_SIGNOS_SINT                   |Date of onset of symptoms                                        |
+|ESTATUS_CASO                          |1 probable, 2 confirmed, 3 discarded                             |
+|CVE_EDO_RES, CVE_MPO_RES, CVE_LOC_RES |State, municipality and locality of residence (INEGI keys)       |
+|CVE_EDO_REP, CVE_MPO_REP, CVE_LOC_REP |State, municipality and locality of report (INEGI keys)          |
+|DES_DIAG_FINAL                        |Final diagnosis: non-severe dengue, with warning signs or severe |
+|IDE_EDA_ANO, IDE_SEX                  |Age (years) and sex                                              |
+
+
+
+In non-endemic areas the positive cases are reported in the place where they were exposed, so the place of **report** (`*_REP`) is the place of transmission. In endemic areas report and residence are almost the same.
+
+## `read()`
+
+
+
+|argument |value   |definition                                                                                                                                      |
+|:--------|:-------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
+|path     |string  |Path of the folder with the txt files                                                                                                           |
+|vbd      |string  |Disease of interest (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA or DENGUE) |
+|complete |logical |TRUE for the arboviruses (dengue, chikungunya and Zika); FALSE for the other diseases                                                           |
+
+
+
+
+``` r
+read(path = path, vbd = "DENGUE", complete = TRUE) |>
+  dim()
+#> [1] 81352   432
+```
+
+
+``` r
+read(path = path, vbd = "DENGUE", complete = FALSE) |>
+  dim()
+#> [1] 81352    34
+```
+
+A summary of the dataset, without showing rows:
+
+
+``` r
+read(path = path, vbd = "DENGUE", complete = FALSE) |>
+  dplyr::select(dplyr::any_of(c("ANO", "SEM", "ESTATUS_CASO", "IDE_EDA_ANO",
+                                "IDE_SEX", "DES_DIAG_FINAL"))) |>
+  skimr::skim()
+```
+
+
+Table: Data summary
+
+|                         |                   |
+|:------------------------|:------------------|
+|Name                     |dplyr::select(...) |
+|Number of rows           |81352              |
+|Number of columns        |6                  |
+|Key                      |NULL               |
+|_______________________  |                   |
+|Column type frequency:   |                   |
+|character                |1                  |
+|numeric                  |5                  |
+|________________________ |                   |
+|Group variables          |None               |
+
+
+**Variable type: character**
+
+|skim_variable  | n_missing| complete_rate| min| max| empty| n_unique| whitespace|
+|:--------------|---------:|-------------:|---:|---:|-----:|--------:|----------:|
+|DES_DIAG_FINAL |         0|             1|   0|  27| 41471|        6|          0|
+
+
+**Variable type: numeric**
+
+|skim_variable | n_missing| complete_rate|    mean|    sd|   p0|  p25|  p50|  p75| p100|hist  |
+|:-------------|---------:|-------------:|-------:|-----:|----:|----:|----:|----:|----:|:-----|
+|ANO           |         0|             1| 2025.99|  0.08| 2025| 2026| 2026| 2026| 2026|▁▁▁▁▇ |
+|SEM           |         0|             1|   28.19| 13.19|    1|   18|   31|   40|   53|▃▃▆▇▃ |
+|ESTATUS_CASO  |         0|             1|    1.85|  0.92|    1|    1|    1|    3|    3|▇▁▂▁▆ |
+|IDE_EDA_ANO   |         0|             1|   29.59| 18.53|    0|   15|   27|   42|  105|▇▇▃▁▁ |
+|IDE_SEX       |         0|             1|    1.53|  0.50|    1|    1|    2|    2|    2|▇▁▁▁▇ |
+
+
+
+## `read_dengue_dataset()`
+
+
+
+|argument           |value   |definition                                                         |
+|:------------------|:-------|:------------------------------------------------------------------|
+|path               |string  |Path of the dengue txt file                                        |
+|spatial_resolution |string  |Geographic level: "country", "state" or "municipality"             |
+|status_caso        |integer |Case status: 1 probable, 2 confirmed, 3 discarded (one or several) |
+|des_edo_res        |string  |State of residence, in uppercase (for "state" and "municipality")  |
+|des_mpo_res        |string  |Municipality of residence, in uppercase (for "municipality")       |
+
+
+
+### Country
+
+
+``` r
+x <- read_dengue_dataset(path = path_txt,
+                         spatial_resolution = "country",
+                         status_caso = c(1, 2, 3))
+dim(x)
+#> [1] 81346    35
+table(x$ESTATUS_CASO)
+#> 
+#>     1     2     3 
+#> 41470 10870 29006
+```
+
+Cases by state of residence and status:
+
+
+``` r
+table(state = x$DES_EDO_RES, status = x$ESTATUS_CASO) |>
+  as.data.frame.matrix() |>
+  knitr::kable()
+```
+
+
+
+|                    |    1|    2|    3|
+|:-------------------|----:|----:|----:|
+|AGUASCALIENTES      |   53|  617|  664|
+|BAJA CALIFORNIA     |   53|   27|   83|
+|BAJA CALIFORNIA SUR | 5385|  719|  529|
+|CAMPECHE            |  808|   87|  421|
+|CHIAPAS             | 2353|  607| 1040|
+|CHIHUAHUA           |   22|   47|   88|
+|COAHUILA            |  252|   78|  392|
+|COLIMA              |  957|    5|  600|
+|DISTRITO FEDERAL    |   25|   22|  107|
+|DURANGO             |   22|   15|   72|
+|GUANAJUATO          |  630|  256|  582|
+|GUERRERO            | 2141|   36|  854|
+|HIDALGO             |  111|   61|  273|
+|JALISCO             | 2098|  286| 4992|
+|MEXICO              |  171|  177|  323|
+|MICHOACAN           | 1175|  274|  940|
+|MORELOS             | 2022|   50| 1362|
+|NAYARIT             | 2431|  292|  629|
+|NUEVO LEON          |  191|   44| 1024|
+|OAXACA              | 2224|   77|  398|
+|PUEBLA              |  561|   99|  563|
+|QUERETARO           |   41|    3|  182|
+|QUINTANA ROO        | 1812|  702| 2298|
+|SAN  LUIS POTOSI    |  231|   54|  490|
+|SINALOA             | 2140|  883| 1339|
+|SONORA              | 2839| 2736| 1975|
+|TABASCO             | 3096|  890| 1880|
+|TAMAULIPAS          |  567|   65|  855|
+|TLAXCALA            |    3|    2|    9|
+|VERACRUZ            | 5475| 1496| 2984|
+|YUCATAN             | 1575|  138| 1024|
+|ZACATECAS           |    6|   25|   34|
+
+
+
+### State: Yucatán
+
+Confirmed cases by municipality of residence:
+
+
+``` r
+read_dengue_dataset(path = path_txt,
+                    spatial_resolution = "state",
+                    des_edo_res = "YUCATAN",
+                    status_caso = 2) |>
+  dplyr::count(DES_MPO_RES, name = "cases", sort = TRUE) |>
+  knitr::kable()
+```
+
+
+
+|DES_MPO_RES       | cases|
+|:-----------------|-----:|
+|MERIDA            |    43|
+|TICUL             |    36|
+|TIZIMIN           |    11|
+|KANASIN           |     8|
+|BUCTZOTZ  YUC     |     4|
+|PETO              |     4|
+|CALOTMUL          |     3|
+|CHEMAX            |     3|
+|TECOH             |     3|
+|VALLADOLID        |     3|
+|IZAMAL            |     2|
+|PROGRESO YUC      |     2|
+|TINUM             |     2|
+|TZUCACAB          |     2|
+|CANSAHCAB         |     1|
+|DZILAM DE BRAVO   |     1|
+|DZILAM GONZALEZ   |     1|
+|ESPITA            |     1|
+|MOTUL             |     1|
+|OXKUTZCAB         |     1|
+|SOTUTA            |     1|
+|TEMOZON           |     1|
+|TIXCACALCUPUL YUC |     1|
+|TIXMEHUAC         |     1|
+|TIXPEHUAL         |     1|
+|UMAN              |     1|
+
+
+
+### Municipality: Acapulco de Juárez
+
+Confirmed cases by locality of residence:
+
+
+``` r
+read_dengue_dataset(path = path_txt,
+                    spatial_resolution = "municipality",
+                    des_edo_res = "GUERRERO",
+                    des_mpo_res = "ACAPULCO DE JUAREZ",
+                    status_caso = 2) |>
+  dplyr::count(DES_LOC_RES, name = "cases", sort = TRUE) |>
+  knitr::kable()
+```
+
+
+
+|DES_LOC_RES        | cases|
+|:------------------|-----:|
+|ACAPULCO DE JUÁREZ |    19|
+
+
+
+## Another way to read the dataset
+
+To use the whole dataset, without filters, with the other densnv functions (`plt_pyramid()`, `mp_animated_mpo()`, `rt_dengue()`...):
+
+
+``` r
+x <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+```
+
+The arguments `quote = ""` and `fill = TRUE` avoid errors with the quotes and incomplete rows of the SINAVE files.
+
+## Confidentiality
+
+The datasets contain addresses and personal data. Individual rows must not be shared or published; reports, presentations and repositories should show only aggregated counts.

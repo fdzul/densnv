@@ -1,0 +1,174 @@
+---
+title: "SINAVE dataset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SINAVE dataset}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- Precomputed vignette. Edit sinave_dataset.Rmd.orig (not the .Rmd) and
+     rebuild on the computer with the data, from the vignettes/ folder:
+     knitr::knit("sinave_dataset.Rmd.orig", "sinave_dataset.Rmd")
+     CONFIDENTIALITY: do not print rows of the dataset (addresses, folios);
+     only dimensions, summaries and aggregated counts. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+[Versión en español](base_datos_sinave.html)
+
+## Introduction
+
+The National Epidemiological Surveillance System ([SINAVE](https://www.sinave.gob.mx)) of the Ministry of Health of Mexico has 11 datasets of vector-borne diseases: RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA and DENGUE. Their use is restricted to the staff of the Ministry of Health (state and federal), in particular the departments of Epidemiology and of Vector-Borne Diseases.
+
+The temporal resolution of the datasets is daily and the spatial resolution is the house, so they can be aggregated by neighbourhood, locality, municipality and state to make tables, graphs and maps.
+
+In the dengueverse the datasets are loaded into R with two **densnv** functions:
+
+1. `read()`: reads one or several txt files of a folder.
+2. `read_dengue_dataset()`: reads the dengue dataset and filters it by geographic level and case status.
+
+The boldenr package is being replaced by densnv; these two functions are recommended.
+
+```{r setup}
+library(densnv)
+```
+
+```{r paths, eval = FALSE}
+path     <- "dge/denv/2026"                  # folder with the txt files
+path_txt <- "dge/denv/2026/DENGUE2_.txt"     # dengue file
+```
+
+```{r paths_local, include = FALSE}
+# local paths (not shown in the vignette); set the current year
+path     <- "/Users/fdzul/Library/CloudStorage/Dropbox/dataset/dge/denv/2026"
+path_txt <- file.path(path, "DENGUE2_.txt")
+```
+
+## Main columns
+
+```{r columns, echo = FALSE}
+knitr::kable(data.frame(
+  column = c("ANO, SEM", "FEC_INI_SIGNOS_SINT", "ESTATUS_CASO",
+             "CVE_EDO_RES, CVE_MPO_RES, CVE_LOC_RES",
+             "CVE_EDO_REP, CVE_MPO_REP, CVE_LOC_REP",
+             "DES_DIAG_FINAL", "IDE_EDA_ANO, IDE_SEX"),
+  content = c("Year and epidemiological week",
+              "Date of onset of symptoms",
+              "1 probable, 2 confirmed, 3 discarded",
+              "State, municipality and locality of residence (INEGI keys)",
+              "State, municipality and locality of report (INEGI keys)",
+              "Final diagnosis: non-severe dengue, with warning signs or severe",
+              "Age (years) and sex")))
+```
+
+In non-endemic areas the positive cases are reported in the place where they were exposed, so the place of **report** (`*_REP`) is the place of transmission. In endemic areas report and residence are almost the same.
+
+## `read()`
+
+```{r read_arguments, echo = FALSE}
+knitr::kable(data.frame(
+  argument = c("path", "vbd", "complete"),
+  value = c("string", "string", "logical"),
+  definition = c("Path of the folder with the txt files",
+                 "Disease of interest (RICKETT, CHAGAS, FIEBRE_NILO, LEISHMAN, ENCEFALITIS, FIEBREMAYARO, FIEBREAMARILLA, PALUDISMO, ZIKA, CHIKUNGUNYA or DENGUE)",
+                 "TRUE for the arboviruses (dengue, chikungunya and Zika); FALSE for the other diseases")))
+```
+
+```{r read_complete_true}
+read(path = path, vbd = "DENGUE", complete = TRUE) |>
+  dim()
+```
+
+```{r read_complete_false}
+read(path = path, vbd = "DENGUE", complete = FALSE) |>
+  dim()
+```
+
+A summary of the dataset, without showing rows:
+
+```{r read_skim}
+read(path = path, vbd = "DENGUE", complete = FALSE) |>
+  dplyr::select(dplyr::any_of(c("ANO", "SEM", "ESTATUS_CASO", "IDE_EDA_ANO",
+                                "IDE_SEX", "DES_DIAG_FINAL"))) |>
+  skimr::skim()
+```
+
+## `read_dengue_dataset()`
+
+```{r rdd_arguments, echo = FALSE}
+knitr::kable(data.frame(
+  argument = c("path", "spatial_resolution", "status_caso", "des_edo_res", "des_mpo_res"),
+  value = c("string", "string", "integer", "string", "string"),
+  definition = c("Path of the dengue txt file",
+                 "Geographic level: \"country\", \"state\" or \"municipality\"",
+                 "Case status: 1 probable, 2 confirmed, 3 discarded (one or several)",
+                 "State of residence, in uppercase (for \"state\" and \"municipality\")",
+                 "Municipality of residence, in uppercase (for \"municipality\")")))
+```
+
+### Country
+
+```{r rdd_country}
+x <- read_dengue_dataset(path = path_txt,
+                         spatial_resolution = "country",
+                         status_caso = c(1, 2, 3))
+dim(x)
+table(x$ESTATUS_CASO)
+```
+
+Cases by state of residence and status:
+
+```{r rdd_country_table}
+table(state = x$DES_EDO_RES, status = x$ESTATUS_CASO) |>
+  as.data.frame.matrix() |>
+  knitr::kable()
+```
+
+### State: Yucatán
+
+Confirmed cases by municipality of residence:
+
+```{r rdd_state}
+read_dengue_dataset(path = path_txt,
+                    spatial_resolution = "state",
+                    des_edo_res = "YUCATAN",
+                    status_caso = 2) |>
+  dplyr::count(DES_MPO_RES, name = "cases", sort = TRUE) |>
+  knitr::kable()
+```
+
+### Municipality: Acapulco de Juárez
+
+Confirmed cases by locality of residence:
+
+```{r rdd_municipality}
+read_dengue_dataset(path = path_txt,
+                    spatial_resolution = "municipality",
+                    des_edo_res = "GUERRERO",
+                    des_mpo_res = "ACAPULCO DE JUAREZ",
+                    status_caso = 2) |>
+  dplyr::count(DES_LOC_RES, name = "cases", sort = TRUE) |>
+  knitr::kable()
+```
+
+## Another way to read the dataset
+
+To use the whole dataset, without filters, with the other densnv functions (`plt_pyramid()`, `mp_animated_mpo()`, `rt_dengue()`...):
+
+```{r fread, eval = FALSE}
+x <- data.table::fread("DENGUE2_.txt", quote = "", fill = TRUE)
+```
+
+The arguments `quote = ""` and `fill = TRUE` avoid errors with the quotes and incomplete rows of the SINAVE files.
+
+## Confidentiality
+
+The datasets contain addresses and personal data. Individual rows must not be shared or published; reports, presentations and repositories should show only aggregated counts.
