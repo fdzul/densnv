@@ -6,6 +6,10 @@
 <!-- badges: start -->
 
 [![r-universe](https://fdzul.r-universe.dev/badges/densnv)](https://fdzul.r-universe.dev/densnv)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![Project Status:
+Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 [English](README.md) \| **Español**
