@@ -127,7 +127,7 @@ mp_heatmap <- function(locality,
         requireNamespace("tidyterra", quietly = TRUE)   # dplyr verbs for SpatRaster
         kde_rast_b <- kde_rast |>
             dplyr::filter(layer >= kernel) |>
-            ppmData::rast_to_sf()
+            terra::as.polygons() |> sf::st_as_sf()
 
         # Step 3 extract the blocks in the heatmaps ###
         blocks_heatmap <- blocks[kde_rast_b,]

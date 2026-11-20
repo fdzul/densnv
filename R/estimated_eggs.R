@@ -17,6 +17,7 @@ estimated_eggs <- function(path_dengue,
                            fac_axes,
                            municipio,
                            path_ovitraps){
+    rlang::check_installed("deneggs", reason = "to estimate the number of eggs.")
     # Step 1. load the dengue cases data ######
     x <- densnv::read(path = path_dengue,
                       vbd = "DEN",
