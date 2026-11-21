@@ -89,7 +89,8 @@ Rt is estimated with [EpiEstim::estimate_R()] (Cori et al. 2013), method
 `"parametric_si"`, on weekly sliding windows with at least 10 cases
 (curve; with fewer cases the estimate reflects the prior) that start at
 least `mean_si` + 2 `std_si` days after the first date of onset of the
-dataset (before it the infectiousness of the previous cases is unknown and
+dataset or of the period, whichever is later (before it the
+infectiousness of the previous cases is unknown and
 Rt is overestimated), and on the window of
 `window_days` days up to `ref_date`. The phase of the outbreak is given by
 the 95\% credible interval of the Rt of that window: "En ascenso" (lower

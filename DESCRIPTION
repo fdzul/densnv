@@ -48,7 +48,7 @@ Imports:
     png,
     purrr,
     raster,
-    rgeomex,
+    rgeomex (>= 0.2.0),
     rlang,
     rsvg,
     scales,

@@ -43,7 +43,8 @@
 #' `"parametric_si"`, on weekly sliding windows with at least 10 cases
 #' (curve; with fewer cases the estimate reflects the prior) that start at
 #' least `mean_si` + 2 `std_si` days after the first date of onset of the
-#' dataset (before it the infectiousness of the previous cases is unknown and
+#' dataset or of the period, whichever is later (before it the
+#' infectiousness of the previous cases is unknown and
 #' Rt is overestimated), and on the window of
 #' `window_days` days up to `ref_date`. The phase of the outbreak is given by
 #' the 95\% credible interval of the Rt of that window: "En ascenso" (lower
@@ -205,6 +206,10 @@ rt_dengue <- function(dataset,
     # Step 3. Rt (EpiEstim, parametric serial interval) ####
     min_casos_semana <- 10
     historia <- ceiling(mean_si + 2 * std_si)    # days of history of cases
+    # the history counts from the first date of the dataset or of the period
+    # (whichever is later): the cases before the period are not in the
+    # incidence, so their infectiousness is not counted
+    inicio_hist <- max(datos_ini, per_ini)
     rt <- rt_win <- NULL
     if(sum(incidencia$I) > 0 && period_days > window_days){
         # weekly sliding windows with at least min_casos_semana cases (with
@@ -216,7 +221,7 @@ rt_dengue <- function(dataset,
         t_start <- t_end - 6
         casos_w <- vapply(t_end, function(k) sum(incidencia$I[(k - 6):k]), numeric(1))
         ok <- casos_w >= min_casos_semana &
-            incidencia$dates[t_start] >= datos_ini + historia
+            incidencia$dates[t_start] >= inicio_hist + historia
         if(any(ok)){
             rt <- tryCatch(suppressWarnings(suppressMessages(
                 EpiEstim::estimate_R(incidencia,
@@ -236,7 +241,7 @@ rt_dengue <- function(dataset,
                                           t_end = period_days)))))$R,
             error = function(e) NULL)
     }
-    if(win_ini < datos_ini + historia) rt_win <- NULL    # no history: unreliable
+    if(win_ini < inicio_hist + historia) rt_win <- NULL    # no history: unreliable
     rt_med <- if(is.null(rt_win)) NA_real_ else rt_win[["Mean(R)"]][1]
     rt_inf <- if(is.null(rt_win)) NA_real_ else rt_win[["Quantile.0.025(R)"]][1]
     rt_sup <- if(is.null(rt_win)) NA_real_ else rt_win[["Quantile.0.975(R)"]][1]
