@@ -23,7 +23,7 @@ México, a través de gráficos, tablas y mapas, con el objetivo de incidir
 de manera directa en la toma de decisiones racionales y oportunas en los
 programas de prevención y control de las ETV.
 
-densnv forma parte del [dengueverse](https://fdzul.r-universe.dev), un
+densnv forma parte del [dengueverse](https://fdzul.github.io/dengueverse/es/), un
 conjunto de paquetes de R para el análisis de la transmisión del dengue
 en México.
 

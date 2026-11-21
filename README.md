@@ -17,7 +17,7 @@ Epidemiological Surveillance System
 Mexico, through graphs, tables and maps, to support rational and timely
 decisions in the VBD prevention and control programs.
 
-densnv is part of the [dengueverse](https://fdzul.r-universe.dev), a set
+densnv is part of the [dengueverse](https://fdzul.github.io/dengueverse/), a set
 of R packages for the analysis of dengue transmission in Mexico.
 
 ## Installation

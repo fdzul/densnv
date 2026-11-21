@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 
 El objetivo central del paquete densnv es realizar el análisis exploratorio de las bases de datos de las Enfermedades Transmitidas por Vector (ETV) e Intoxicación por Veneno de Artrópodos (IVA) del Sistema Nacional de Vigilancia Epidemiológica ([SINAVE](https://www.sinave.gob.mx)) de la Secretaría de Salud de México, a través de gráficos, tablas y mapas, con el objetivo de incidir de manera directa en la toma de decisiones racionales y oportunas en los programas de prevención y control de las ETV.
 
-densnv forma parte del [dengueverse](https://fdzul.r-universe.dev), un conjunto de paquetes de R para el análisis de la transmisión del dengue en México.
+densnv forma parte del [dengueverse](https://fdzul.github.io/dengueverse/es/), un conjunto de paquetes de R para el análisis de la transmisión del dengue en México.
 
 ## Instalación
 
