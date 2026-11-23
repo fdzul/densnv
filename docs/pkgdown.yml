@@ -1,4 +1,4 @@
-pandoc: '3.10'
+pandoc: '0'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
@@ -16,4 +16,4 @@ articles:
   numero_reproductivo: numero_reproductivo.html
   reproduction_number: reproduction_number.html
   sinave_dataset: sinave_dataset.html
-last_built: 2026-11-19T17:18Z
+last_built: 2026-11-23T02:51Z
