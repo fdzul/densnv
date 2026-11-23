@@ -214,18 +214,17 @@ right of the number of cases so it is not clipped.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"DENGUE2_.txt"</span>, quote <span class="op">=</span> <span class="st">""</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">static_bump_map</span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">dataset</span>, year <span class="op">=</span> <span class="fl">2026</span>, state <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>                size_text_value <span class="op">=</span> <span class="fl">2</span>, size_text_country <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                country_text_x <span class="op">=</span> <span class="fl">0.5</span>, country_text_y <span class="op">=</span> <span class="fl">0.8</span>,</span></span>
-<span class="r-in"><span>                line_size <span class="op">=</span> <span class="fl">1.5</span>, pal_vir <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">static_bump_map</span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">dataset</span>, year <span class="op">=</span> <span class="fl">2026</span>, state <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>                cve_edo <span class="op">=</span> <span class="st">"14"</span>, label_spacing <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
-<span class="r-in"><span>                size_text_value <span class="op">=</span> <span class="fl">2</span>, size_text_country <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>                line_size <span class="op">=</span> <span class="fl">0.6</span>, pal_vir <span class="op">=</span> <span class="st">"turbo"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span>
+<span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu">data.table</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/data.table/man/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"DENGUE2_.txt"</span>, quote <span class="op">=</span> <span class="st">""</span>, fill <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu">static_bump_map</span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">dataset</span>, year <span class="op">=</span> <span class="fl">2026</span>, state <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                size_text_value <span class="op">=</span> <span class="fl">2</span>, size_text_country <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                country_text_x <span class="op">=</span> <span class="fl">0.5</span>, country_text_y <span class="op">=</span> <span class="fl">0.8</span>,</span>
+<span>                line_size <span class="op">=</span> <span class="fl">1.5</span>, pal_vir <span class="op">=</span> <span class="st">"viridis"</span><span class="op">)</span></span>
+<span><span class="fu">static_bump_map</span><span class="op">(</span>dataset <span class="op">=</span> <span class="va">dataset</span>, year <span class="op">=</span> <span class="fl">2026</span>, state <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                cve_edo <span class="op">=</span> <span class="st">"14"</span>, label_spacing <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>                size_text_value <span class="op">=</span> <span class="fl">2</span>, size_text_country <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                line_size <span class="op">=</span> <span class="fl">0.6</span>, pal_vir <span class="op">=</span> <span class="st">"turbo"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="co"># }</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -235,7 +234,7 @@ right of the number of cases so it is not clipped.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Felipe Antonio Dzul Manzanilla, Fabian Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
+  <p></p><p>Developed by Felipe Antonio Dzul Manzanilla, Fabián Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
 </div>
 
 <div class="pkgdown">

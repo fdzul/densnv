@@ -337,7 +337,7 @@ in `dir` (default FALSE).</p></dd>
 number of pairs of cases of the last `perm_days` days that are within
 `spatial_scale` metres and within `temporal_scale` days of each other, the
 same space-time window that defines the foci (and the same statistic as
-`knox::knox_mc()` and `denhotspots::knox()`). Its null distribution is
+`denhotspots::knox_test()`). Its null distribution is
 obtained by permutation: the locations stay fixed (so the spatial
 distribution of the population is respected) and the dates of onset are
 permuted at random (so the epidemic curve is respected). p-value =
@@ -428,64 +428,63 @@ zones are red.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mp_active_foci</span><span class="op">(</span>geocoded_dataset <span class="op">=</span> <span class="va">z</span>,</span></span>
-<span class="r-in"><span>                      cve_edo <span class="op">=</span> <span class="st">"31"</span>,</span></span>
-<span class="r-in"><span>                      locality <span class="op">=</span> <span class="st">"Merida"</span>,</span></span>
-<span class="r-in"><span>                      status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                      spatial_scale <span class="op">=</span> <span class="fl">400</span>,</span></span>
-<span class="r-in"><span>                      temporal_scale <span class="op">=</span> <span class="fl">21</span>,</span></span>
-<span class="r-in"><span>                      min_cases <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span>                      buffer_m <span class="op">=</span> <span class="fl">200</span>,</span></span>
-<span class="r-in"><span>                      ref_date <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                      method <span class="op">=</span> <span class="st">"window"</span>,</span></span>
-<span class="r-in"><span>                      n_sim <span class="op">=</span> <span class="fl">999</span>,</span></span>
-<span class="r-in"><span>                      perm_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
-<span class="r-in"><span>                      alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
-<span class="r-in"><span>                      seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
-<span class="r-in"><span>                      place <span class="op">=</span> <span class="st">"REP"</span>,</span></span>
-<span class="r-in"><span>                      mean_si <span class="op">=</span> <span class="fl">21</span>,</span></span>
-<span class="r-in"><span>                      std_si <span class="op">=</span> <span class="fl">6.1</span>,</span></span>
-<span class="r-in"><span>                      capacity_cases <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                      coverage_min <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                      foci_min <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
-<span class="r-in"><span>                      print_map <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>                      save <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>                      dir <span class="op">=</span> <span class="st">"./"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">foci</span>      <span class="co"># summary of the foci</span></span></span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">blocks</span>    <span class="co"># blocks to control</span></span></span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">knox</span>      <span class="co"># global Knox test</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">knox</span><span class="op">$</span><span class="va">sim</span><span class="op">)</span>                      <span class="co"># null distribution of the pairs</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">knox</span><span class="op">$</span><span class="va">knox</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>  <span class="co"># observed pairs</span></span></span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">diagnostico</span><span class="op">$</span><span class="va">tabla</span>       <span class="co"># scenario, criteria and action</span></span></span>
-<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">diagnostico</span><span class="op">$</span><span class="va">casos_mes</span>   <span class="co"># cases by month of the period</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># space-time DBSCAN: transmission chains, new and persistent foci</span></span></span>
-<span class="r-in"><span><span class="va">res_st</span> <span class="op">&lt;-</span> <span class="fu">mp_active_foci</span><span class="op">(</span>geocoded_dataset <span class="op">=</span> <span class="va">z</span>,</span></span>
-<span class="r-in"><span>                         cve_edo <span class="op">=</span> <span class="st">"31"</span>,</span></span>
-<span class="r-in"><span>                         locality <span class="op">=</span> <span class="st">"Merida"</span>,</span></span>
-<span class="r-in"><span>                         status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                         spatial_scale <span class="op">=</span> <span class="fl">400</span>,</span></span>
-<span class="r-in"><span>                         temporal_scale <span class="op">=</span> <span class="fl">21</span>,</span></span>
-<span class="r-in"><span>                         min_cases <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span>                         buffer_m <span class="op">=</span> <span class="fl">200</span>,</span></span>
-<span class="r-in"><span>                         ref_date <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                         method <span class="op">=</span> <span class="st">"st-dbscan"</span>,</span></span>
-<span class="r-in"><span>                         n_sim <span class="op">=</span> <span class="fl">999</span>,</span></span>
-<span class="r-in"><span>                         perm_days <span class="op">=</span> <span class="fl">365</span>,</span></span>
-<span class="r-in"><span>                         alpha <span class="op">=</span> <span class="fl">0.05</span>,</span></span>
-<span class="r-in"><span>                         seed <span class="op">=</span> <span class="fl">123</span>,</span></span>
-<span class="r-in"><span>                         place <span class="op">=</span> <span class="st">"REP"</span>,</span></span>
-<span class="r-in"><span>                         mean_si <span class="op">=</span> <span class="fl">21</span>,</span></span>
-<span class="r-in"><span>                         std_si <span class="op">=</span> <span class="fl">6.1</span>,</span></span>
-<span class="r-in"><span>                         capacity_cases <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                         coverage_min <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>                         foci_min <span class="op">=</span> <span class="fl">0.9</span>,</span></span>
-<span class="r-in"><span>                         print_map <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>                         save <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>                         dir <span class="op">=</span> <span class="st">"./"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-</code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">mp_active_foci</span><span class="op">(</span>geocoded_dataset <span class="op">=</span> <span class="va">z</span>,</span>
+<span>                      cve_edo <span class="op">=</span> <span class="st">"31"</span>,</span>
+<span>                      locality <span class="op">=</span> <span class="st">"Merida"</span>,</span>
+<span>                      status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                      spatial_scale <span class="op">=</span> <span class="fl">400</span>,</span>
+<span>                      temporal_scale <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>                      min_cases <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                      buffer_m <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>                      ref_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      method <span class="op">=</span> <span class="st">"window"</span>,</span>
+<span>                      n_sim <span class="op">=</span> <span class="fl">999</span>,</span>
+<span>                      perm_days <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>                      alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>                      seed <span class="op">=</span> <span class="fl">123</span>,</span>
+<span>                      place <span class="op">=</span> <span class="st">"REP"</span>,</span>
+<span>                      mean_si <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>                      std_si <span class="op">=</span> <span class="fl">6.1</span>,</span>
+<span>                      capacity_cases <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      coverage_min <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      foci_min <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>                      print_map <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                      save <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      dir <span class="op">=</span> <span class="st">"./"</span><span class="op">)</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">foci</span>      <span class="co"># summary of the foci</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">blocks</span>    <span class="co"># blocks to control</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">knox</span>      <span class="co"># global Knox test</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">knox</span><span class="op">$</span><span class="va">sim</span><span class="op">)</span>                      <span class="co"># null distribution of the pairs</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">knox</span><span class="op">$</span><span class="va">knox</span>, col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>  <span class="co"># observed pairs</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">diagnostico</span><span class="op">$</span><span class="va">tabla</span>       <span class="co"># scenario, criteria and action</span></span>
+<span><span class="va">res</span><span class="op">$</span><span class="va">diagnostico</span><span class="op">$</span><span class="va">casos_mes</span>   <span class="co"># cases by month of the period</span></span>
+<span></span>
+<span><span class="co"># space-time DBSCAN: transmission chains, new and persistent foci</span></span>
+<span><span class="va">res_st</span> <span class="op">&lt;-</span> <span class="fu">mp_active_foci</span><span class="op">(</span>geocoded_dataset <span class="op">=</span> <span class="va">z</span>,</span>
+<span>                         cve_edo <span class="op">=</span> <span class="st">"31"</span>,</span>
+<span>                         locality <span class="op">=</span> <span class="st">"Merida"</span>,</span>
+<span>                         status_caso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                         spatial_scale <span class="op">=</span> <span class="fl">400</span>,</span>
+<span>                         temporal_scale <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>                         min_cases <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>                         buffer_m <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>                         ref_date <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                         method <span class="op">=</span> <span class="st">"st-dbscan"</span>,</span>
+<span>                         n_sim <span class="op">=</span> <span class="fl">999</span>,</span>
+<span>                         perm_days <span class="op">=</span> <span class="fl">365</span>,</span>
+<span>                         alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>                         seed <span class="op">=</span> <span class="fl">123</span>,</span>
+<span>                         place <span class="op">=</span> <span class="st">"REP"</span>,</span>
+<span>                         mean_si <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>                         std_si <span class="op">=</span> <span class="fl">6.1</span>,</span>
+<span>                         capacity_cases <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                         coverage_min <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                         foci_min <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>                         print_map <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>                         save <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                         dir <span class="op">=</span> <span class="st">"./"</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="co"># }</span></span></code></pre></div>
     </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -495,7 +494,7 @@ zones are red.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Felipe Antonio Dzul Manzanilla, Fabian Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
+  <p></p><p>Developed by Felipe Antonio Dzul Manzanilla, Fabián Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
 </div>
 
 <div class="pkgdown">

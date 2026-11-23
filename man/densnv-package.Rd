@@ -20,14 +20,14 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/orcid.org/0000-0002-2085-9141}{ORCID})
+\strong{Maintainer}: Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/0000-0002-2085-9141}{ORCID})
 
 Authors:
 \itemize{
-  \item Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/orcid.org/0000-0002-2085-9141}{ORCID})
-  \item Fabian Correa-Morales \email{fabiancorrea@msn.com} (\href{https://orcid.org/orcid.org/0000-0002-6193-1242}{ORCID})
-  \item Emmanuel Morales García \email{emmorales@uv.mx} (\href{https://orcid.org/orcid.org/0000-0002-6837-9227}{ORCID})
-  \item Cecilia Cruz López \email{ceccruz@uv.mx} (\href{https://orcid.org/orcid.org/0000-0002-9156-5669}{ORCID})
+  \item Felipe Antonio Dzul Manzanilla \email{felipe.dzul.m@gmail.com} (\href{https://orcid.org/0000-0002-2085-9141}{ORCID})
+  \item Fabián Correa-Morales \email{fabiancorrea@msn.com} (\href{https://orcid.org/0000-0002-6193-1242}{ORCID})
+  \item Emmanuel Morales García \email{emmorales@uv.mx} (\href{https://orcid.org/0000-0002-6837-9227}{ORCID})
+  \item Cecilia Cruz López \email{ceccruz@uv.mx} (\href{https://orcid.org/0000-0002-9156-5669}{ORCID})
   \item Héctor Gómez-Dantés \email{hector.gomez@insp.mx} (\href{https://orcid.org/0000-0002-2025-3641}{ORCID})
 }
 

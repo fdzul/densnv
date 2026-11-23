@@ -202,7 +202,7 @@ densidad depende del número de casos y del área, así que conviene
 elegirlo con los percentiles de la densidad de la localidad. Este bloque
 calcula la densidad igual que <code><a href="../reference/mp_heatmap.html">mp_heatmap()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">loc</span> <span class="op">&lt;-</span> <span class="fu">rgeomex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rgeomex/man/extract_locality.html" class="external-link">extract_locality</a></span><span class="op">(</span>cve_edo <span class="op">=</span> <span class="st">"31"</span>, locality <span class="op">=</span> <span class="st">"Merida"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">loc</span> <span class="op">&lt;-</span> <span class="fu">rgeomex</span><span class="fu">::</span><span class="fu"><a href="https://fdzul.github.io/rgeomex/reference/extract_locality.html" class="external-link">extract_locality</a></span><span class="op">(</span>cve_edo <span class="op">=</span> <span class="st">"31"</span>, locality <span class="op">=</span> <span class="st">"Merida"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="fl">4326</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/valid.html" class="external-link">st_make_valid</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">loc</span><span class="op">$</span><span class="va">NOMGEO</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
@@ -356,7 +356,7 @@ casos geocodificados de las semanas indicadas.</li>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Felipe Antonio Dzul Manzanilla, Fabian Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
+<p>Developed by Felipe Antonio Dzul Manzanilla, Fabián Correa-Morales, Emmanuel Morales García, Cecilia Cruz López, Héctor Gómez-Dantés.</p>
 </div>
 
 <div class="pkgdown">

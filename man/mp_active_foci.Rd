@@ -180,7 +180,7 @@ Knox test (space-time interaction; Knox 1964): the Knox statistic is the
 number of pairs of cases of the last `perm_days` days that are within
 `spatial_scale` metres and within `temporal_scale` days of each other, the
 same space-time window that defines the foci (and the same statistic as
-`knox::knox_mc()` and `denhotspots::knox()`). Its null distribution is
+`denhotspots::knox_test()`). Its null distribution is
 obtained by permutation: the locations stay fixed (so the spatial
 distribution of the population is respected) and the dates of onset are
 permuted at random (so the epidemic curve is respected). p-value =

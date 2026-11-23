@@ -95,7 +95,7 @@
 #' number of pairs of cases of the last `perm_days` days that are within
 #' `spatial_scale` metres and within `temporal_scale` days of each other, the
 #' same space-time window that defines the foci (and the same statistic as
-#' `knox::knox_mc()` and `denhotspots::knox()`). Its null distribution is
+#' `denhotspots::knox_test()`). Its null distribution is
 #' obtained by permutation: the locations stay fixed (so the spatial
 #' distribution of the population is respected) and the dates of onset are
 #' permuted at random (so the epidemic curve is respected). p-value =
@@ -429,7 +429,7 @@ mp_active_foci <- function(geocoded_dataset,
     # Step 4.1. Knox test (space-time interaction) ####
     # Knox statistic = number of pairs of cases of the period that are within
     # spatial_scale metres AND within temporal_scale days of each other (the
-    # same statistic as knox::knox_mc() and denhotspots::knox()).
+    # same statistic as denhotspots::knox_test()).
     # H0: the date of each case is independent of its location. The locations
     # stay fixed (population) and the dates of onset are permuted (epidemic
     # curve). The pairs close in space are found once with dbscan::frNN(), so
